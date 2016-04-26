@@ -1,0 +1,133 @@
+define(["data/prodobject"],
+function(prodobject){
+	
+var titleBar = {
+			view:"toolbar",
+			css: "highlighted_header header5",
+			paddingX:5,
+			paddingY:5,
+			height:35,
+			cols:[
+				{view:"select",name:"brandcode",width:200,align: "right", label: '品牌',labelWidth:60,
+					options:urlstr+"/WBProdMng/getBrandList"},
+			    {view:"select", id:"lifestage",name:"lifestage",width:200,align:"right", label:'新旧',labelWidth:60,
+			    		options:[{id:'all',value:'所有'},{id:'新品',value:'新品'},{id:"旧品",value:"旧品"}]},
+			    	{view:"select", id:"maintypecode",name:"maintypecode",width:200,align:"right", label:'大类',labelWidth:60,
+			    		options:urlstr+"/WBProdMng/getMainTypeList"},
+			    		
+			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
+				    click: function(){
+				    	var values =this.getParentView().getValues();
+				    	
+				    	var postData ={};
+				    	if(values.brandcode != 'all') postData.BrandName=values.brandcode;
+				    	if(values.lifestage != 'all') postData.LifeStage=values.lifestage;
+				    	if(values.maintypecode != 'all') postData.MainTypeName=values.maintypecode;
+				    	
+					$$("dt_sugskuprodplan").clearAll();
+					$$("dt_sugskuprodplan").parse(prodobject.getSugSKUProdPlan(postData));
+				 }},
+			    {},
+				{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+					click:function(){webix.toExcel($$("dt_sugskuprodplan"));}}
+		    ]
+	};
+	
+	
+	var gridTree = {
+		view:"datatable",
+		id:"dt_sugskuprodplan",
+		rowHeight:_RowHeight,
+		headerRowHeight:_HeaderRowHeight,
+		headermenu:{width:250,autoheight:false,scroll:true},
+		resizeColumn:true,
+		leftSplit:3,
+		select: true,
+		editable:true,
+		navigation:true,
+		columns:[
+			{ id:"_identify",header:"#",width:35,hidden:true},
+			{ id:"skucode",header:["SKU",{content:"textFilter"}], sort:"string",width:100},
+			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:120},
+//			{ id:"colorname",header:"色", sort:"string",width:50},
+			{ id:"sizename",	header:"码", sort:"string",width:50},
+			{ id:"iskeysize",header:"关键码", sort:"string",width:75,
+			template:function(obj){return (obj.iskeysize==1)? "是":""}},
+			{ id:"lifestage",header:"新旧", sort:"string",width:60},
+			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:60},
+			{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:70},
+			
+			{ id:"existsstockqty",header:[{text:"渠道信息",colspan:7},"成品库存"],sort:"int", width:70},
+			{ id:"storenumcurin",header:[null,"现铺店"],sort:"int", width:70},
+			{ id:"storenumplan",header:[null,"计划铺店"],sort:"int", width:70,editor:"text",css:"bgcolor2"},
+			{ id:"onshelfdays",	header:[null,"上货天数"], sort:"int",width:70},
+			{ id:"lifespan",header:[null,"可销天数"],sort:"int", width:70,editor:"text",css:"bgcolor2"},
+			{ id:"saletotalqty",header:[null,"已销售"],sort:"int", width:70},
+			{ id:"sale14qty",header:[null,"14天销售"],sort:"int", width:70},
+			
+			{ id:"targetqty",	header:[{text:"理论补货",colspan:5},"目标库存"],sort:"int", width:85},
+			{ id:"onhandqty",header:[null,"在手库存"],sort:"int", width:60},
+			{ id:"onroadqty",	header:[null,"实际库存"],sort:"int", width:60},
+			{ id:"addedstockqty",header:[null,"增铺数量"],sort:"int", width:60,editor:"text",css:"bgcolor2"},
+			{ id:"repretqty",	header:[null,"理论补货"],sort:"int",width:60},
+				
+			{ id:"saledaily",header:[{text:"预计数据",colspan:7},"单店日均销售"],sort:"float",width:85},
+			{ id:"saleratio",header:[null,"销售系数"],sort:"float", width:85,editor:"text",css:"bgcolor2"},
+			{ id:"forecastsale",header:[null,"预计销量"],sort:"int", width:85},
+			{ id:"totalseasonsale",header:[null,"总计销量"],sort:"int", width:85},
+			{ id:"endratio",header:[null,"尾货比例"],sort:"float", width:85,editor:"text",css:"#bgcolor2"},
+			{ id:"totalseasonstock",header:[null,"总库存需求"],sort:"int", width:85},
+			{ id:"neededstock",header:[null,"库存需求"],sort:"int", width:85},
+		],
+			on:{
+			onAfterEditStop:function(state, editor, ignoreUpdate){
+				if(state.value != state.old){
+					var id = editor.row;
+					var row = $$("dt_sugskuprodplan").getItem(id);
+										
+					switch(editor.column)
+					{
+						case "storenumplan":
+						row.storenumplan = state.value;
+						break;
+						case "lifespan":
+						row.lifespan = state.value;
+						break;
+						case "addedstockqty":
+						row.lifespan = state.value;
+						break;
+						case "saleratio":
+						row.saleratio = state.value;
+						break;
+					}
+				
+					row.addedstockqty = 3*row.storenumplan-row.storenumcurin;
+					row.repretqty = parseInt(row.addedstockqty)+parseInt(row.targetqty)-row.onhandqty-row.onroadqty;
+					row.saledaily  = row.sale14qty/14/row.storenumcurin;
+					row.saledaily = row.saledaily.toFixed(4);
+										
+					row.forecastsale = parseFloat(row.saledaily)*parseInt(row.lifespan)*parseInt(row.storenumplan)*parseFloat (row.saleratio);
+					row.forecastsale = row.forecastsale.toFixed(0);
+					
+					row.totalseasonsale = parseInt(row.forecastsale)+parseInt(row.saletotalqty);
+					row.totalseasonstock = (parseInt(row.totalseasonsale)/(1-parseFloat(row.endratio))).toFixed(0);
+					row.neededstock = parseInt(row.totalseasonstock)-parseInt(row.existsstockqty);
+//					console.log(row);
+					 $$("dt_sugskuprodplan").updateItem(id,row);
+			    } 
+			}
+		}
+	};
+
+	var layout = {
+		type: "clean",
+		id: "cwhSugSKURepPlanView",
+		rows:[
+			titleBar,gridTree,
+		]
+	};
+
+
+	return { $ui: layout };
+
+});

@@ -54,14 +54,13 @@ function(roleobject,moduleobject){
 								$$("dt_roleprevilege").parse(jsondata);
 								
 								$$('tree').blockEvent();
+
 								$$("tree").uncheckAll();
-								$$('tree').unblockEvent();
-								
 								jsondata.forEach(function(item){
 									$$("tree").checkItem(item.moduleid);
 								});
 								
-
+								$$('tree').unblockEvent();
 						});
 						}
 					}

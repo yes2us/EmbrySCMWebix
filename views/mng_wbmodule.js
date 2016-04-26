@@ -155,15 +155,13 @@ var grid_relation ={
 	return {
 		$ui: layout,
 		$oninit:function(){
-			if(!checkWriteAuth())
-			{
-				$$("dt_wbmodule").define("editable",false);
-				$$("dt_subwbmodule").define("editable",false);
+			var hasWriteAuth = checkWriteAuth();
+				$$("dt_wbmodule").define("editable",hasWriteAuth);
+				$$("dt_subwbmodule").define("editable",hasWriteAuth);
 				
-				$$("editbutton").define("disabled",true);
-				$$("addbutton").define("disabled",true);
-			}
-			
+				$$("editbutton").define("disabled",!hasWriteAuth);
+				$$("addbutton").define("disabled",!hasWriteAuth);
+
 			
 			$$("dt_wbmodule").clearAll();
 			$$("dt_wbmodule").parse(moduleobject.getModuleList());

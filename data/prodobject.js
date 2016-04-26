@@ -2,9 +2,18 @@ define([], function() {
 
 	var prodObject = new Object();
 	
+	prodObject.getSugSKUProdPlan = function(postData){
+		return webix.ajax().post(urlstr+"/WBProdMng/getSugSKUProdPlan",postData);
+	}
+
+	prodObject.getSugSKCProdPlan = function(postData){
+		return webix.ajax().post(urlstr+"/WBProdMng/getSugSKCProdPlan",postData);
+	}
+	
 	prodObject.getProductList = function(postData){
 		return webix.ajax().post(urlstr+"/WBProdMng/getProductList",postData);
 	}
+
 	
 	prodObject.getProdSale = function(PartyCode,SKUCode) {
 		var postData={PartyCode:PartyCode,SKUCode:SKUCode};
