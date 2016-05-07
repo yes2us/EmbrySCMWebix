@@ -29,6 +29,9 @@ button,
 	webix_layout_{type}
 	known types are: line, clean, wide, space;
 */
+.webix_abslayout > .webix_view {
+  position: absolute;
+}
 .webix_layout_space {
   background-color: #ffffff;
 }
@@ -1190,13 +1193,14 @@ div.webix_modal_cover {
   font-family: Tahoma;
   font-size: 15px;
   color: #555555;
+  pointer-events: none;
 }
 .webix_drag_zone .borderless {
   padding: 2px 20px 2px 2px;
 }
 .webix_drag_over,
 .webix_drop_zone {
-  background-color: #ffffaa;
+  background-color: #f4f4f4;
 }
 .webix_transparent {
   opacity: 0;
@@ -1418,7 +1422,8 @@ div.webix_modal_cover {
   padding: 5px 10px 5px 10px;
 }
 .webix_column > .webix_drag_over.webix_cell {
-  background-color: #ffffaa;
+  background-color: #f4f4f4;
+  color: #555555;
 }
 .webix_ss_header th,
 .webix_ss_header td,
@@ -1501,6 +1506,7 @@ div.webix_modal_cover {
   border-top: 1px solid transparent;
   padding: 0px 0px 0px 0px;
   padding-left: 10px;
+  box-sizing: border-box;
 }
 .number .webix_cell {
   text-align: right;
@@ -2853,13 +2859,10 @@ body:not(:-moz-handler-blocked) .webix_el_select select {
   -ms-user-select: none;
   user-select: none;
 }
-.webix_line_break {
-  height: 4.5px;
-}
 .webix_radio_option {
   display: table;
   float: left;
-  margin-top: 4.5px;
+  height: 27px;
   margin-right: 20px;
 }
 .webix_inp_radio_border,
@@ -3404,11 +3407,10 @@ label.webix_required:after {
   filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
 .webix_drop_file {
-  background: #CBE8F5;
+  background: #f4f4f4;
   position: relative;
 }
 .webix_drop_file::before {
-  content: "Drop files here";
   position: absolute;
   bottom: 10px;
   left: 0px;
@@ -3595,8 +3597,6 @@ label.webix_required:after {
 .webix_organogram_item {
   position: absolute;
   z-index: 1;
-  font-family: "PT Sans", Tahoma;
-  font-size: 15px;
   text-align: center;
   border-radius: 4px;
   background-color: #e3f2fd;
@@ -3617,7 +3617,6 @@ label.webix_required:after {
   box-sizing: border-box;
 }
 .webix_organogram_list .webix_organogram_list_item {
-  font-family: "PT Sans", Tahoma;
   border: none;
   text-align: left;
   position: static;
@@ -6204,6 +6203,23 @@ div.webix_item_tab {
 }
 .webix_skin_mark {
   height: 180px;
+}
+.webix_sparklines {
+  padding: 1px 0;
+  box-sizing: border-box;
+}
+.webix_sparklines svg {
+  box-sizing: border-box;
+}
+.webix_sparklines_line {
+  stroke: #3498db;
+  stroke-width: 1;
+  fill: transparent;
+  stroke-linecap: round;
+}
+.webix_sparklines_item {
+  fill: #3498db;
+  stroke-width: 1;
 }
 /*predefined styles for text lables inside a item*/
 .webix_strong {

@@ -9,6 +9,19 @@ function(billobject,repretconditionview){
 		var enddate = new Date();
 		enddate.setDate(enddate.getDate()-7);
 
+var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"查询门店补货和退货计划"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_repretorder"));}},
+		]
+	};
 	
 	var grid = {
 		margin:10,
@@ -23,9 +36,10 @@ function(billobject,repretconditionview){
 				editable:false,
 				select:true,
 				navigation:true,
-				leftSplit:2,
+				leftSplit:3,
 				export: true,
 				columns:[
+					{ id:"rownum",header:"",sort:"int",width:50},
 					{ id:"srcpartycode",	header:["出货仓库编号 ",{content:"textFilter"}], sort:"string",width:100},
 					{ id:"srcpartyname",header:["出货仓库",{content:"selectFilter"}], sort:"string",width:150},
 					{ id:"trgpartycode",	header:["收货仓库编号 ",{content:"textFilter"}], sort:"string",width:100},
@@ -55,7 +69,7 @@ function(billobject,repretconditionview){
 						}
 					}
 				},
-				pager:"storerepret_pagerA"
+//				pager:"storerepret_pagerA"
 			}
 		]
 
@@ -71,9 +85,10 @@ function(billobject,repretconditionview){
 				editable:false,
 				select:true,
 				navigation:true,
-				leftSplit:1,
+				leftSplit:2,
 				export: true,
 				columns:[
+					{ id:"rownum",header:"",sort:"int",width:50},
 					{ id:"skucode",	header:"SKU", sort:"string",width:150,css:"bgcolor2"},			
 					{ id:"skccode",	header:"款色", sort:"string",width:100},
 					{ id:"colorname",header:"颜色", sort:"string",width:100},
@@ -89,15 +104,7 @@ function(billobject,repretconditionview){
 				pager:"storerepretitem_pagerA"
 	};
 	
-	var layout = {
-		type: "line",
-		cols:[
-			repretconditionview,
-			{view:"resizer",width:1},
-			{
-				rows:[
-					grid,
-					{
+	var page1 = {
 						view: "toolbar",
 						css: "highlighted_header header6",
 						paddingX:2,
@@ -110,7 +117,18 @@ function(billobject,repretconditionview){
 							height: 30,
 							group:5
 						}]
-					},
+					};
+					
+	var layout = {
+		type: "line",
+		cols:[
+			repretconditionview,
+			{view:"resizer",width:1},
+			{
+				rows:[
+				toolbar,
+					grid,
+//					page1,
 					{view:"resizer"},
 					grid_orderitem,
 					{

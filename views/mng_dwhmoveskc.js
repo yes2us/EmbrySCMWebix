@@ -61,12 +61,12 @@ return {
 			//显示分仓目标库存
 			$$("dt_dwhmovskc").clearAll();
 			$$("dt_dwhmovskc").showOverlay("正在加载......");
-			$$("dt_dwhmovskc").parse(stockobject.getWHSKCInfo({WHCode:dwhcode}));
+			$$("dt_dwhmovskc").parse(stockobject.getWHSKCInfo({WHCode:_CWHCode}));
 			
 			//显示门店库存结构
 			$$("dt_dwhmovstorestockstruct").clearAll();
 			$$("dt_dwhmovstorestockstruct").showOverlay("正在加载......");
-			$$("dt_dwhmovstorestockstruct").parse(stockobject.getPartyIndex({ParentCode:dwhcode}));
+			$$("dt_dwhmovstorestockstruct").parse(stockobject.getPartyIndex({ParentCode:_CWHCode}));
 			$$("popupid2").clearAll();
 			$$("popupid2").parse(partyobject.getRelPartyList({
 				RegionCode:dwhcode,RelationType:"补货关系",

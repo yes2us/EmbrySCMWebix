@@ -61,9 +61,10 @@ define(function(){
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
 		editable:true,
-		leftSplit:2,
+		leftSplit:3,
 		navigation:true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"skucode",	header:"SKU", sort:"string",fillspace:2},
 			{ id:"partycode",header:"#",hidden:true},
 			{ id:"recorddate",	header:"调整日期", sort:"string",width:100},

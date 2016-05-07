@@ -2,14 +2,16 @@ define([
 	"data/stockobject",
 	"data/billobject",
 	"views/modules/mng_cwhts/cwhListView",
-	"views/modules/mng_cwhts/cwhTSView",
+	"views/modules/mng_cwhts/cwhTargetView",
+	"views/modules/mng_cwhts/cwhTargetGridView",
 	"views/modules/mng_cwhts/cwhBMRecordView",
 	"views/modules/mng_cwhts/cwhImpTSDataView"
 ], function(
 	stockobject,
 	billobject,
 	cwhListView,
-	cwhTSView,
+	cwhTargetView,
+	cwhTargetGridView,
 	cwhBMRecordView,
 	cwhImpTSDataView){
 
@@ -22,15 +24,16 @@ var layout = {
 	{rows:[
 		{view: "tabbar", multiview: true,optionWidth: 130,
 			options:[
-				{id: "cwhTSView", value: "目标库存"},
-//				{id: "cwhSugRepPlanView", value: "理论补货"},
+				{id: "cwhTargetView", value: "目标库存"},
+				{id: "cwhTargetGridView", value: "目标库存"},
 				{id: "cwhBMRecordView", value: "缓冲调整"},
 				{id: "cwhImpTSDataView", value: "导入目标库存"}
 			]
 		},
 		{
 			cells:[
-			    cwhTSView,
+			    cwhTargetView,
+			    cwhTargetGridView,
 				cwhBMRecordView,
 				cwhImpTSDataView
 			]
@@ -43,24 +46,27 @@ var layout = {
 return {
 	$ui:layout,
 	$oninit:function(){
-			if(!checkWriteAuth())
-			{
-				$$("dt_cwhts").define("editable",false);
-				$$("bnclear").define("disabled",true);
-				$$("bnsave").define("disabled",true);
-			}
-			
+
+		var hasWriteAuth = checkWriteAuth();
+		$$("dt_cwhts").define("editable",hasWriteAuth);
+		$$("bnclear2").define("disabled",!hasWriteAuth);
+		$$("bnsave2").define("disabled",!hasWriteAuth);
+		$$("uploaderid2").define("disabled",!hasWriteAuth);
+		
 			
 			$$("cwhListView").hide();
 			
-			var cwhcode = "T";
-			var promzTSData = stockobject.getFGWarehouseTSInfo(cwhcode);
+			var cwhcode = _CWHCode;
+			var promzTSData = stockobject.getFGWHTSInfo(cwhcode);
 
 			//显示目标库存
 			$$("dt_cwhts").showOverlay("正在加载......");
 			$$("dt_cwhts").clearAll();
 			$$("dt_cwhts").parse(promzTSData);
-
+			
+			$$("dt_cwhtspivot").clearAll();
+			$$("dt_cwhtspivot").showOverlay("正在加载......");
+			$$("dt_cwhtspivot").parse(stockobject.getFGWHCrossTSInfo({WHCode:cwhcode}));	
 
 			//显示最近调整记录
 			var promzBMData = billobject.getPartyBMRecord({WHCode:cwhcode,EndDate:'2016-01-01'});

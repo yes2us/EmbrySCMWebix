@@ -5,6 +5,7 @@ define([
 	checkauthorization(false);
 
 	var TargetTable="importstock";
+	var TargetName = "库存表";
 	var PageIndex = 1;
 	
 	function showDatatable(){
@@ -14,7 +15,7 @@ define([
 		$$("dt_loadedDataimportsku").hide();
 		$$("dt_loadedDataimportparty").hide();
 		$$("dt_loadedData"+TargetTable).show();
-		
+		PageIndex = 1;
 	};
 
 	
@@ -32,6 +33,20 @@ define([
 					{ id:"importsku", value:"导入SKU"},{ id:"importparty", value:"导入仓库"}],
 					click:function(){
 						TargetTable = this.getValue();
+						switch (TargetTable){
+							case "importstock":
+								TargetName="库存表";
+								break;
+							case "importsale":
+								TargetName="销售表";
+								break;
+							case "importsku":
+								TargetName="SKU表";
+								break;
+							case "importparty":
+								TargetName="仓库表";
+								break;
+						}
 						showDatatable();
 					}
 				},
@@ -47,7 +62,8 @@ define([
 				  	width:100,
 				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/"+TargetTable
 				},
-				{},
+//				{},
+				{view:"label",label:"单次导入不超过20万行",css:"fontcolor"},
 				{view:"button",id:"execReplenish",value:"拉式补货", width:100,
 				click:function(){
 						$$("execReplenish").define("disabled",true);
@@ -90,7 +106,7 @@ define([
 		paddingY:2,
 		height:45,
 		cols:[		 
-			{ view: "text", type: "iconButton",  label: "单页条数",id:"pagelen",value:200,width: 130,labelWidth:80,maxHeight:40},
+			{ view: "text", type: "iconButton",  label: "单页条数",id:"pagelen",value:200,width: 150,labelWidth:80,maxHeight:40},
 			{ view: "button", type: "iconButton", icon: "arrow-circle-left", label: "上一页", width: 100,height:40,
 			click: function(){
 				 PageIndex = PageIndex - 1;
@@ -118,11 +134,7 @@ define([
 								 webix.message("清空成功！");
 							}}});}
 			},
-//			{ view: "button", type: "iconButton", icon: "save", label: "保存", width: 70,
-//				click: function(){
-//				 impobject.saveImportData(TargetTable);
-//				 webix.message("保存成功！");
-//			}}
+
 		]
 	};
 	
@@ -137,10 +149,10 @@ define([
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
-					{id:"partycode", header:"仓库编号", sort:"string", fillspace:1},
-					{id:"skucode", header:"SKU", sort:"string", fillspace:1},	
-					{id:"onhandqty", header:"在手库存", sort:"int",fillspace:1},
-					{id:"onroadqty", header:"在途库存", sort:"int",fillspace:1}
+					{id:"客户", header:"客户", sort:"string", fillspace:1},
+					{id:"商品号", header:"商品号", sort:"物料号", fillspace:1},	
+					{id:"可用库存", header:"可用库存", sort:"int",fillspace:1},
+					{id:"在途库存", header:"在途库存", sort:"int",fillspace:1}
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};
@@ -155,11 +167,11 @@ define([
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
-					{id:"门店编号", header:"门店编号", sort:"string", fillspace:1},
-					{id:"消费日期", header:"消费日期", sort:"string", fillspace:1},
-					{id:"skucode", header:"SKU", sort:"string", fillspace:1},	
+					{id:"老客户号", header:"老客户号", sort:"string", fillspace:1},
+					{id:"单据日期", header:"单据日期", sort:"string", fillspace:1},
+					{id:"物料号", header:"物料号", sort:"string", fillspace:1},	
 					{id:"销售数量", header:"销售数量", sort:"int",fillspace:1},
-					{id:"销售金额", header:"销售金额", sort:"int",fillspace:1}
+					{id:"实售金额", header:"实售金额", sort:"int",fillspace:1}
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};
@@ -174,19 +186,17 @@ define([
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
-					{id:"skucode", header:"SKU", sort:"string", fillspace:1},
-					{id:"productcode", header:"款式", sort:"string", fillspace:1},	
-					{id:"productname", header:"款名", sort:"string", fillspace:1},	
-					{id:"colorcode", header:"颜色编号", sort:"int",fillspace:1},
-					{id:"colorname", header:"颜色", sort:"int",fillspace:1},
-					{id:"shapename", header:"杯型", sort:"int",fillspace:1},
-					{id:"sizecode", header:"尺码编号", sort:"int",fillspace:1},
-					{id:"sizename", header:"尺码", sort:"int",fillspace:1},
-					{id:"brandname", header:"品牌", sort:"int",fillspace:1},
-					{id:"maintypename", header:"大类", sort:"int",fillspace:1},
-					{id:"subtypename", header:"小类", sort:"int",fillspace:1},
-					{id:"ticketprice", header:"吊牌价", sort:"int",fillspace:1},
-					{id:"onshelfdate", header:"上市日期", sort:"int",fillspace:1}
+					{id:"商品号", header:"商品号", sort:"string", fillspace:1},
+					{id:"款号", header:"款号", sort:"string", fillspace:1},	
+					{id:"系列", header:"系列", sort:"string", fillspace:1},	
+					{id:"杯", header:"杯", sort:"string",fillspace:1},
+					{id:"色", header:"色", sort:"string",fillspace:1},
+					{id:"码组", header:"码组", sort:"string",fillspace:1},
+					{id:"码名", header:"码名", sort:"string",fillspace:1},
+					{id:"物料组名称", header:"物料组名称", sort:"string",fillspace:1},
+					{id:"上市日期", header:"上市日期", sort:"date",fillspace:1},
+					{id:"吊牌价", header:"吊牌价", sort:"int",fillspace:1},
+					{id:"安中零售价", header:"安中零售价", sort:"int",fillspace:1}
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};
@@ -200,9 +210,11 @@ define([
 				select:true,
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
-				    	{id:"_identify", header:"#",fillspace:0.5},
-					{id:"partycode", header:"仓库编号", sort:"string", fillspace:1},
-					{id:"partyname", header:"仓库名称", sort:"string", fillspace:1},	
+//				    	{id:"_identify", header:"#",fillspace:0.5},
+					{id:"区域", header:"区域", sort:"string", fillspace:1},
+					{id:"客户名称", header:"客户名称", sort:"string", fillspace:1},	
+					{id:"老客户号", header:"老客户号", sort:"string", fillspace:1},	
+					{id:"等级", header:"等级", sort:"string", fillspace:1},	
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};
@@ -219,12 +231,10 @@ define([
 	return {
 		$ui: layout,
 		$oninit:function(){
-			if(!checkWriteAuth())
-			{
-				$$("execReplenish").define("disabled",true);
-				$$("uploaderid").define("disabled",true);
-				$$("bnclear").define("disabled",true);
-			}
+			var hasWriteAuth = checkWriteAuth();
+			$$("execReplenish").define("disabled",!hasWriteAuth);
+			$$("uploaderid").define("disabled",!hasWriteAuth);
+			$$("bnclear").define("disabled",!hasWriteAuth);
 			
 			webix.extend($$("execReplenish"), webix.ProgressBar);
 			webix.extend($$("uploaderid"), webix.ProgressBar);
@@ -240,7 +250,9 @@ define([
 
 			$$("uploaderid").attachEvent("onUploadComplete", function(){
     				$$("uploaderid").hideProgress(); 
-    				   			
+    			 
+    			 webix.message({type:"error",text:TargetName+"导入成功",expire:-1});
+    			    		    	
     			$$("dt_loadedData"+TargetTable).showOverlay("正在载入导入的前200条数据...");
 			
 			$$("dt_loadedData"+TargetTable).clearAll();

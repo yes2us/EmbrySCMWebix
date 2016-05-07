@@ -1,41 +1,69 @@
 define([],
 function(){
-			
+	
+var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"门店目标库存报表"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_storetspivot"));}},
+		]
+	};
+	
 	var gridTree = {
-                id:"pivot",
-				view:"pivot",
-                max: false,
-                readonly:true,
-                readonlyTitle: "目标库存",
-                structure: {
-                    rows: ["maintypename", "skccode"],
-                    columns: ["sizename"],
-                    values: [{ name:"targetqty", operation:["sum"]}],
-                    filters:[{name:"lifestage",type:"multiselect"},{name:"maintypename",type:"multiselect"}]
-                },
-                columnWidth: 70,   // width for column 2..N
-				yScaleWidth: 200,    // width for the first column
-				filterWidth: 200,
-				filterMinWidth: 150,
-				filterLabelWidth: 60,
+		view:"datatable",
+		id:"dt_storetspivot",
+		rowHeight:_RowHeight,
+		headerRowHeight:_HeaderRowHeight,
+		headermenu:{width:250,autoheight:false,scroll:true},
+		resizeColumn:true,
+		navigation:true,
+		leftSplit:3,
+		editable:true,
+		select: true,
+		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
+			{ id:"skccode",header:"款色", sort:"string",width:150},
+			{ id:"lifestage",	header:"新旧", sort:"string",width:60},
+			{ id:"maintypename",	header:"大类", sort:"string",width:100},
+			{ id:"subtypename",header:"小类", sort:"string",width:100},
+			
+					{ id:"stock1",header:[{ content:"columnGroup", closed:true, batch:"stock",
+							groupText:"库存", colspan:9, width: 45},"65/S/3"],sort:"int",width:60},				
+					{ id:"stock2",batch:"stock",header:[null,"70/M/5"], sort:"int",width:45},
+					{ id:"stock3",batch:"stock",header:[null,"75/L/7"], sort:"int",width:45},
+					{ id:"stock4",batch:"stock",header:[null,"80/XL/9/EL"], sort:"int",width:45},
+					{ id:"stock5",batch:"stock",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
+					{ id:"stock6",batch:"stock",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
+					{ id:"stock7",batch:"stock",header:[null,"95/4XL/15"], sort:"int",width:45},
+					{ id:"stock8",batch:"stock",header:[null,"100/FREE"], sort:"int",width:45},
+					{ id:"stock9",batch:"stock",header:[null,"105/XS"], sort:"int",width:45},
+					
+					{ id:"target1",header:[{ content:"columnGroup", closed:false, batch:"target",
+							groupText:"目标库存", colspan:9, width: 45},"65/S/3"],sort:"int",width:60},
+					{ id:"target2",batch:"target",header:[null,"70/M/5"], sort:"int",width:45},
+					{ id:"target3",batch:"target",header:[null,"75/L/7"], sort:"int",width:45},
+					{ id:"target4",batch:"target",header:[null,"80/XL/9/EL"], sort:"int",width:45},
+					{ id:"target5",batch:"target",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
+					{ id:"target6",batch:"target",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
+					{ id:"target7",batch:"target",header:[null,"95/4XL/15"], sort:"int",width:45},
+					{ id:"target8",batch:"target",header:[null,"100/FREE"], sort:"int",width:45},
+					{ id:"target9",batch:"target",header:[null,"105/XS"], sort:"int",width:45},
 
-				// change titles
-				fieldMap:{
-					partycode: "门店",
-					lifestage: "新旧",
-					maintypename: "大类",
-					skccode: "款色杯",
-					sizename: "尺码",
-					targetqty: "目标",
-					stockqty: "库存"
-				}
-			};
+		],
+		on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");}}
+	};
 
 
 	var layout = {
 		type: "clean",
 		id: "storeTargetGridView",
-		cols:[
+		rows:[toolbar,
 			gridTree,
 		]
 	};
@@ -44,28 +72,6 @@ function(){
 	return { 
 		$ui: layout ,
 		$oninit:function(){
-			webix.i18n.pivot = {
-			apply: "应用",
-			cancel: "取消",
-			columns: "列",
-			count: "计数",
-			date: "日期",
-			fields: "字段",
-			filters: "筛选",
-			max: "最大",
-			min: "最小",
-			multiselect: "多选",
-			operationNotDefined: "操作没定义",
-			pivotMessage: "[点击配置]",
-			rows: "行",
-			select: "选择",
-			sum: "求和",
-			text: "文字",
-			values: "值",
-			total: "累计",
-			windowTitle: "配置",
-			windowMessage: "[把字段拖到期望的地方]"
-		};
 		}
 	};
 

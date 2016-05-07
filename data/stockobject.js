@@ -1,13 +1,28 @@
 define([], function() {
 	var _UserCode = webix.storage.local.get('_UserCode');
 	var stockObject = new Object();
+	
+	stockObject.synTarget2Stock = function(_TargetSource)
+	{
+		return webix.ajax().post(urlstr+"/WBStockMng/synTarget2Stock",{TargetSource:_TargetSource});
+	}
+	
 	stockObject.getInitTarget = function(postData)
 	{
 		return webix.ajax().post(urlstr+"/WBStockMng/getInitTarget",postData);
 	}
+
+	stockObject.getInitTargetStatistics = function(postData)
+	{
+		return webix.ajax().post(urlstr+"/WBStockMng/getInitTargetStatistics",postData);
+	}
 	
-	stockObject.getFGWarehouseTSInfo = function(WHCode){
-		return webix.ajax().post(urlstr+"/WBStockMng/getFGWarehouseTSInfo",{WHCode:WHCode});
+	stockObject.getFGWHTSInfo = function(WHCode){
+		return webix.ajax().post(urlstr+"/WBStockMng/getFGWHTSInfo",{WHCode:WHCode});
+	}
+	
+	stockObject.getFGWHCrossTSInfo = function(postData){
+		return webix.ajax().post(urlstr+"/WBStockMng/getFGWHCrossTSInfo",postData);
 	}
 	
 	stockObject.getRetTargetWHSubWHTSInfo = function(postData){

@@ -80,6 +80,7 @@ define([
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
+					{ id:"rownum",header:"",sort:"int",width:60},
 					{id:"partycode", header:"仓库编号", sort:"string", fillspace:1},
 					{id:"skucode", header:"SKU", sort:"string", fillspace:1},	
 					{id:"movqty", header:"数量", sort:"int",fillspace:1},
@@ -99,6 +100,7 @@ define([
 				save:urlstr+"/WBCURD/saveMovSKUPlan",
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
+					{ id:"rownum",header:"",sort:"int",width:60},
 				    	{id:"_identify", header:"#",hidden:true},
 				    	{id:"checkbox",header:"选择",template:"{checkbox}"},
 					{id:"makedate", header:"日期", sort:"string", fillspace:1},

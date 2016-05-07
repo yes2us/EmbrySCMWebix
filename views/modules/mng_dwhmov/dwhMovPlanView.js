@@ -1,5 +1,19 @@
 define(function(){
-
+	
+var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"查询调拨计划"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_dwhMovPlan"));}},
+		]
+	};
+	
 	var gridTree = {
 		view:"datatable",
 		id:"dt_dwhMovPlan",
@@ -7,10 +21,11 @@ define(function(){
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:4,
+		leftSplit:5,
 		select: true,
 		navigation:true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"makedate",header:["日期",{content:"selectFilter"}],width:100},
 			{ id:"srcpartycode",	header:"调出门店编号", sort:"string",hidden:true,fillspace:1},
@@ -32,7 +47,7 @@ define(function(){
 	var layout = {
 		type: "clean",
 		id: "dwhMovPlanView",
-		cols:[
+		rows:[toolbar,
 			gridTree,
 		]
 	};

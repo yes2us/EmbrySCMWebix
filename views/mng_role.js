@@ -11,7 +11,6 @@ function(roleobject,userobject,modaladd){
     
   var titleBar = {
 		view: "toolbar",
-		id:"toolbar",
 		css: "highlighted_header header5",
 		paddingX:5,
 		paddingY:5,
@@ -34,7 +33,9 @@ function(roleobject,userobject,modaladd){
 			}},
 			{ view: "button", type: "iconButton", icon: "plus",id:"addbutton", label: "增加",hidden:false, width: 80, 
 			click: function(){this.$scope.ui(modaladd.$ui).show();}},
-
+			   {},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_role"));}},
 		]
 	};
 	

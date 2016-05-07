@@ -53,12 +53,12 @@ return {
 		$$("lt_RetProd_Regions").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			
-			var regionCode = this.getItem(id).id;
+			var regionCode =_CWHCode; //this.getItem(id).id;
 
 			//显示分仓sku
 			$$("dt_RetProdBySKU_DWHSKU").clearAll();
 			$$("dt_RetProdBySKU_DWHSKU").showOverlay("正在加载......");
-			$$("dt_RetProdBySKU_DWHSKU").parse(stockobject.getFGWarehouseTSInfo(regionCode));
+			$$("dt_RetProdBySKU_DWHSKU").parse(stockobject.getFGWHTSInfo(regionCode));
 			
 			//显示分仓skc
 			$$("dt_RetProdBySKC_DWHSKC").clearAll();

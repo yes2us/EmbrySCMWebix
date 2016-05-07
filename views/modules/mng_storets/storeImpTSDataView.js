@@ -1,7 +1,7 @@
 define([
-	"views/menus/export",
-	"data/impobject"
-], function(exports, impobject){
+	"data/impobject",
+	"data/stockobject"
+], function(impobject,stockobject){
 
 	var PageIndex = 1;
 	var titleBar = {
@@ -14,47 +14,49 @@ define([
 			{
 					view:"uploader",
 					multiple:false,
-					id: "uploaderid",
+					id: "uploaderid1",
 					type:"iconButton", 
 					icon:"cloud-upload",
 				  	name:"uploader", 
-				  	label:"上传Excel",
-				  	link:"uploaderid1",
-				  	width:120,
-				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/importstock"
+				  	label:"上传",
+				  	link:"uploaderlist1",
+				  	width:80,
+				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/importtarget"
 				 },
-			{view:"list",  id:"uploaderid1", type:"uploader",	autoheight:true, borderless:true,width:200},
+			{view:"list",  id:"uploaderlist1", type:"uploader",	autoheight:true, borderless:true,width:100},
 
-			{ view: "text", type: "iconButton",  label: "单页条数",id:"pagelen",value:200,width: 130,labelWidth:80},
-			{ view: "button", type: "iconButton", icon: "arrow-circle-left", label: "上一页", width: 100,
+			{ view: "text", type: "iconButton",  label: "单页条数",id:"pagelen",value:200,width: 140,labelWidth:80},
+			{ view: "button", type: "iconButton", icon: "arrow-circle-left", label: "上一页", width: 90,
 			click: function(){
 				 PageIndex = PageIndex - 1;
 				 if(PageIndex<1) PageIndex = 1;
 				 
-				 $$("dt_loadedData").clearAll();
-				 $$("dt_loadedData").parse(impobject.getImportData("importstock",PageIndex,$$('pagelen').getValue()));
+				 $$("dt_loadedDataImportTarget1").clearAll();
+				 $$("dt_loadedDataImportTarget1").parse(impobject.getImportData("importtarget",PageIndex,$$('pagelen').getValue()));
 			}},
-			{ view: "button", type: "iconButton", icon: "arrow-circle-right", label: "下一页", width: 100,
+			{ view: "button", type: "iconButton", icon: "arrow-circle-right", label: "下一页", width: 90,
 			click: function(){
 				 PageIndex = PageIndex + 1;
 				 if(PageIndex<1) PageIndex = 1;
 				 
-				 $$("dt_loadedData").clearAll();
-				 $$("dt_loadedData").parse(impobject.getImportData("importstock",PageIndex,$$('pagelen').getValue()));		 
+				 $$("dt_loadedDataImportTarget1").clearAll();
+				 $$("dt_loadedDataImportTarget1").parse(impobject.getImportData("importtarget",PageIndex,$$('pagelen').getValue()));		 
 			}},
 			{},
 			{},
-			{ view: "button",id:'bnclear', type: "iconButton", icon: "times", label: "请空", width: 70,
+			{ view: "button",id:'bnclear1', type: "iconButton", icon: "times", label: "清空", width: 70,
 			click: function(){
-				 impobject.clearImportData("importstock");
-				 $$("dt_loadedData").clearAll();
+				 impobject.clearImportData("importtarget");
+				 $$("dt_loadedDataImportTarget1").clearAll();
 				 webix.message("清空成功！");
 			}},
-			{ view: "button",id:'bnsave', type: "iconButton", icon: "save", label: "保存", width: 70,
+			{ view: "button",id:'bnsave1', type: "iconButton", icon: "save", label: "保存", width: 70,
 				click: function(){
-				 impobject.saveImportData("importstock");
+				 stockobject.synTarget2Stock("Import");
 				 webix.message("保存成功！");
 			}},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_loadedDataImportTarget1"));}},
 		]
 	};
 	
@@ -62,7 +64,7 @@ define([
 		margin:10,
 		rows:[
 			{
-				id:"dt_loadedData",
+				id:"dt_loadedDataImportTarget1",
 				view:"datatable",
 				rowHeight:_RowHeight,
 				headerRowHeight:_HeaderRowHeight,
@@ -74,19 +76,24 @@ define([
 					    scroll:true
 					},
 				columns:[					
-				    	{id:"checked", header:"#",fillspace:0.5,template:"{common.checkbox()}"},
-					{id:"partycode", header:"仓库编号", sort:"string", fillspace:1},
-					{id:"partyname", header:"仓库名称", sort:"string", fillspace:1},
-					{id:"skucode", header:"SKU", sort:"string", fillspace:1},	
-					{id:"targetqty", header:"目标库存", sort:"int",fillspace:1},
-					{id:"checkinfo", header:"数据验证结果", sort:"string",fillspace:3}
+					{id:"老客户号", header:"老客户号", sort:"string", width:70},
+					{id:"款号", header:"款号", sort:"string", width:100},
+					{id:"色", header:"色", sort:"string", width:60},
+					{id:"杯", header:"杯", sort:"string", width:40},
+					
+					{ id:"65/s/3",header:[{ content:"columnGroup", closed:false, batch:"target",
+							groupText:"目标库存", colspan:9, width: 45},"65/S/3"],sort:"int",width:60},
+					{ id:"70/m/5",batch:"target",header:[null,"70/M/5"], sort:"int",width:45},
+					{ id:"75/l/7",batch:"target",header:[null,"75/L/7"], sort:"int",width:45},
+					{ id:"80/xl/9/el",batch:"target",header:[null,"80/XL/9/EL"], sort:"int",width:45},
+					{ id:"85/2xl/11/eel",batch:"target",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
+					{ id:"90/3xl/13/eeel",batch:"target",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
+					{ id:"95/4xl/15",batch:"target",header:[null,"95/4XL/15"], sort:"int",width:45},
+					{ id:"100/free",batch:"target",header:[null,"100/FREE"], sort:"int",width:45},
+					{ id:"105/xs",batch:"target",header:[null,"105/XS"], sort:"int",width:45},
 				],
 				export: true,
-				on: {
-					onAfterLoad: function(){
-						this.select(1);		
-					}
-				},
+				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 //				pager:"pagerA"
 			}
 		]
@@ -98,28 +105,7 @@ define([
 		id: "storeImpTSDataView",
 		rows:[
 			titleBar,
-			{
-				rows:[
-					grid,
-//					{
-//						view: "toolbar",
-//						css: "highlighted_header header6",
-//						paddingX:5,
-//						paddingY:5,
-//						height:35,
-//						cols:[{
-//							view:"pager", id:"pagerA",
-//							template:"{common.first()}{common.prev()}&nbsp; {common.pages()}&nbsp; {common.next()}{common.last()}",
-//							autosize:true,
-//							height: 35,
-//							group:5
-//						}]
-//					}
-				]
-			}
-
-
-
+			grid
 		]
 
 	};
@@ -127,12 +113,17 @@ define([
 	return {
 		$ui: layout,
 		$oninit:function(){
-			$$("uploaderid").attachEvent("onUploadComplete", function(){
-    			webix.message("done");
-    			$$("dt_loadedData").showOverlay("正在载入导入的前200条数据...");
+			$$("uploaderid1").attachEvent("onItemClick", function(){
+    				 impobject.clearImportData("importtarget");
+				 $$("dt_loadedDataImportTarget1").clearAll();
 			});
-			$$("dt_loadedData").clearAll();
-			$$("dt_loadedData").parse(impobject.getImportData("importstock",1,200));
+			
+			$$("uploaderid1").attachEvent("onUploadComplete", function(){
+    		    	webix.message({type:"error",text:"导入成功",expire:-1});
+    			$$("dt_loadedDataImportTarget1").showOverlay("正在载入导入的前200条数据...");
+			$$("dt_loadedDataImportTarget1").clearAll();
+			$$("dt_loadedDataImportTarget1").parse(impobject.getImportData("importtarget",1,200));
+			});
 		}
 	};
 

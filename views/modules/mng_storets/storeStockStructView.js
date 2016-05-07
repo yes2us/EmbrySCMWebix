@@ -1,5 +1,19 @@
 define([], function(){
 
+var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"门店库存结构"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_stockstruct"));}},
+		]
+	};
+	
 	var gridTree = { 
 			  view:"datatable",
 			  id:"dt_stockstruct",
@@ -9,8 +23,9 @@ define([], function(){
 			  select: true,
 			  resizeColumn:true,
 			  navigation:true,
-			  leftSplit:2,
+			  leftSplit:3,
 			  columns:[
+			  		{ id:"rownum",header:"",sort:"int",width:50},
 			  		{ id:"lifestage",	header:["新旧",{content:"selectFilter"}], sort:"string",width:60,css:"bgcolor2"},
 					{ id:"maintypename", header:["大类",{content:"selectFilter"}], width:100,css:"bgcolor2"},
 					{ id:"skcnum",name:"skcnum",header:[{text:"款色结构", colspan:4},"款色数"] ,width:70},
@@ -29,7 +44,7 @@ define([], function(){
 	var layout = {
 		type: "clean",
 		id: "storeStockStructView",
-		cols:[
+		rows:[toolbar,
 			gridTree,
 		]
 	};

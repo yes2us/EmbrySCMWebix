@@ -1,5 +1,19 @@
 define(function(){
 
+var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"查询退货计划"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_RetWHPlan"));}},
+		]
+	};
+	
 	var gridTree = {
 		view:"datatable",
 		id:"dt_RetWHPlan",
@@ -7,10 +21,11 @@ define(function(){
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:2,
+		leftSplit:3,
 		select: true,
 		navigation:true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"makedate",header:["日期",{content:"selectFilter"}],width:100},
 			{ id:"srcpartycode",header:"出货仓库编号", sort:"string",hidden:true,fillspace:1},
@@ -30,7 +45,7 @@ define(function(){
 	var layout = {
 		type: "clean",
 		id: "retWHPlanView",
-		cols:[
+		rows:[toolbar,
 			gridTree,
 		]
 	};

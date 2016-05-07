@@ -17,6 +17,9 @@ var titleBar = {
 			    		
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
+				    	 
+				    	 $$("dt_sugskuprodplan").showOverlay("正在加载......");
+				    	 	
 				    	var values =this.getParentView().getValues();
 				    	
 				    	var postData ={};
@@ -41,11 +44,12 @@ var titleBar = {
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:3,
+		leftSplit:4,
 		select: true,
 		editable:true,
 		navigation:true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"skucode",header:["SKU",{content:"textFilter"}], sort:"string",width:100},
 			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:120},
@@ -80,6 +84,7 @@ var titleBar = {
 			{ id:"neededstock",header:[null,"库存需求"],sort:"int", width:85},
 		],
 			on:{
+			onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
 			onAfterEditStop:function(state, editor, ignoreUpdate){
 				if(state.value != state.old){
 					var id = editor.row;

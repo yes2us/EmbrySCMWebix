@@ -21,6 +21,9 @@ function(prodobject){
 			    		
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
+				    	
+				    	$$("dt_dimskc").showOverlay("正在加载......");
+				    					    	 
 				    	var values =this.getParentView().getValues();
 				    	
 				    	var postData ={};
@@ -47,21 +50,23 @@ function(prodobject){
 				headerRowHeight:_HeaderRowHeight,
 				headermenu:{width:250,autoheight:false,scroll:true},
 				resizeColumn:true,
-				leftSplit:3,
+				leftSplit:4,
 				editable:true,
 				select:"row",
 				navigation:true,
 				columns:[
+					{ id:"rownum",header:"",sort:"int",width:50},
 					{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:100,css:'bgcolor2'},
 					{ id:"maintypename",header:["大类 ",{content:"selectFilter"}], sort:"string",width:60},
 					{ id:"lifestage",header:["新旧 ",{content:"selectFilter"}], sort:"string",width:60},
 					{ id:"saletype",header:["销售分类 ",{content:"selectFilter"}],width:85},
 					
-					{ id:"saletotalqty",header:[{text:"销量",colspan:5},"总销量"],sort:"int",width:70},
+					{ id:"saletotalqty",header:[{text:"销量",colspan:6},"总销量"],sort:"int",width:70},
 					{ id:"sale14qty",header:[null,"14天销量"],sort:"int",width:85},
 					{ id:"sale7qty",header:[null,"7天销量"],sort:"int",width:85},
 					{ id:"sale1qty",header:[null,"昨天销量"],sort:"int",width:85},
 					{ id:"saledailytdd",header:[null,"日均TDD"],sort:"int",width:85},
+					{ id:"saletrend", header:[null,"八周销售趋势"],template:"{common.sparklines()}",  width:160},
 					
 					{ id:"storenumeverin",header:[{text:"门店铺货",colspan:4},"曾铺店"],sort:"int",width:70},
 					{ id:"storenumcurin",header:[null,"现铺数"],sort:"int",width:70},
@@ -91,9 +96,7 @@ function(prodobject){
 				],
 				export: true,
 				on: {
-					onAfterLoad: function(){
-						this.select(1);		
-					},
+					onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
 					onSelectChange:function()
 					{
 						var selRow = this.getSelectedItem();

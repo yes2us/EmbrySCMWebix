@@ -1,5 +1,20 @@
 define(function(){
 
+var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"查询目标库存调整记录"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_storebmrecord"));}},
+		]
+	};
+	
+	
 	var gridTree = {
 		view:"treetable",
 		id:"dt_storebmrecord",
@@ -10,11 +25,12 @@ define(function(){
 				    autoheight:false,
 				    scroll:true
 		},
-		leftSplit:1,
+		leftSplit:2,
 		resizeColumn:true,
 		navigation:true,
 		select: true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:60},
 			{ id:"skucode",	header:"SKU", sort:"string",fillspace:2},
 			
 			{ id:"recorddate",	header:"调整日期", sort:"string",fillspace:1.5},
@@ -30,7 +46,7 @@ define(function(){
 	var layout = {
 		type: "clean",
 		id: "storeBMRecordView",
-		cols:[
+		rows:[toolbar,
 			gridTree,
 		]
 	};

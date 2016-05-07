@@ -17,8 +17,9 @@ var titleBar = {
 			    		
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
-				    	var values =this.getParentView().getValues();
+				    	$$("dt_sugskcprodplan").showOverlay("正在加载......");
 				    	
+				    	var values =this.getParentView().getValues();
 				    	var postData ={};
 				    	if(values.brandcode != 'all') postData.BrandName=values.brandcode;
 				    	if(values.lifestage != 'all') postData.LifeStage=values.lifestage;
@@ -41,13 +42,14 @@ var titleBar = {
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:3,
+		leftSplit:4,
 		select: true,
 		editable:true,
 		navigation:true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
-			{ id:"skucode",header:["SKU",{content:"textFilter"}], sort:"string",width:100},
+			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:100},
 			{ id:"lifestage",header:"新旧", sort:"string",width:60},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:60},
 			{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:70},
@@ -76,6 +78,7 @@ var titleBar = {
 			
 		],
 		on:{
+			onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
 			onAfterEditStop:function(state, editor, ignoreUpdate){
 				if(state.value != state.old){
 					var id = editor.row;

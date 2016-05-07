@@ -19,5 +19,8 @@ define([], function() {
      	return webix.ajax().post(urlstr+"/WBBillMng/getMovSKCPlanItem",postData);
      }
      
+     billObject.getSaleOrder = function(postData){
+     	return webix.ajax().post(urlstr+"/WBBillMng/getSaleOrder",postData);
+     }
 	return billObject;
 });

@@ -16,7 +16,7 @@ define(function(){
 					{ view:"text",id:"moduleicon",name:"moduleicon",label:"模块图标", required:true,width:500},
 					{ view:"text",id:"moduledesc",name:"moduledesc",label:"模块描述", required:true,width:500},
 					{ view:"text",id:"openstate",name:"openstate",label:"展示状态", required:true,width:500},
-					{ view:"text",id:"modulelevel",name:"moduleorder",label:"模块级别", required:true,width:500},
+					{ view:"text",id:"modulelevel",name:"modulelevel",label:"模块级别", required:true,width:500},
 					{
 						margin:10,
 						cols:[

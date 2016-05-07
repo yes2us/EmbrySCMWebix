@@ -13,10 +13,11 @@ define([
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:1,
+		leftSplit:2,
 		select: true,
 		navigation:true,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 //			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:100,css:'bgcolor2'},
 			{ id:"partycode",header:"#",width:35,hidden:true},
@@ -30,7 +31,7 @@ define([
 			{ id:"saletype",	header:["销售分类",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"onshelfdays",header:"上货天数", sort:"string",width:85},
 			{ id:"stockqty",	header:"实际库存",sort:"int", width:85},
-			{ id:"sale30qty",header:"30天销量",sort:"int", width:85},
+			{ id:"sale28qty",header:"四周销量",sort:"int", width:85},
 			{ id:"saletotalqty",header:"累计销量",sort:"int", width:85},
 			{ id:"check",header:"退出",sort:"int",width:60,template:"{common.checkbox()}"}
 		],
@@ -71,6 +72,7 @@ define([
 		editable:true,
 		save:urlstr+"/WBCURDMng/saveMovSKCPlan",
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"id",width:35,hidden:true},
 //			{ id:"delete",header:"&nbsp;", width:35,template:"<span  style='color:#777777; cursor:pointer;' class='webix_icon fa-trash-o'></span>"},
 			{ id:"srcpartycode",	header:"调出门店编号",hidden:true,fillspace:2},
@@ -103,9 +105,10 @@ define([
 		editable:true,
 		select:true,
 		navigation:true,
-		leftSplit:4,
+		leftSplit:5,
 		rules:{"targetqty":webix.rules.isNumber,"operatemov":webix.rules.isNumber},
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			
 			{ id:"partycode",	header:"上级编号", sort:"string",hidden:true},
@@ -118,7 +121,7 @@ define([
 			{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"onshelfdays",header:"上货天数", sort:"string",width:85},
 			{ id:"stockqty",header:"实际库存",sort:"int", width:85},
-			{ id:"sale30qty",header:"30天销量",sort:"int", width:85},
+			{ id:"sale28qty",header:"四周销量",sort:"int", width:85},
 			{ id:"saletotalqty",header:"累计销量",sort:"int", width:85},
 			{ id:"check",header:"补入",sort:"int", width:60,template:"{common.checkbox()}",value:0}
 		],
@@ -160,6 +163,7 @@ define([
 		select:true,
 		save:urlstr+"/WBCURDMng/saveMovSKCPlan",
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"id",width:35,hidden:true},
 //			{ id:"delete",header:"&nbsp;", width:35,template:"<span  style='color:#777777; cursor:pointer;' class='webix_icon fa-trash-o'></span>"},
 			{ id:"srcpartycode",	header:"调出门店编号",hidden:true,fillspace:2},

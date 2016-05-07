@@ -25,6 +25,9 @@ function(prodobject){
 			    		
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
+				    	
+				    	$$("dt_confskcinfo").showOverlay("正在加载......");
+				    	
 				    	var values =this.getParentView().getValues();
 				    	
 				    	var postData ={};
@@ -35,7 +38,9 @@ function(prodobject){
 					$$("dt_confskcinfo").clearAll();
 					$$("dt_confskcinfo").parse(prodobject.getProductList(postData));
 				 }},
-			    {},
+			    	 {},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_confskcinfo"));}},
 
 		    ]
 	};
@@ -58,9 +63,10 @@ function(prodobject){
 				save:urlstr+"/WBCURDMng/saveSKC",
 				columns:[
 					{ id:"_identify",header:"#", hidden:true},
-					{ id:"isstopreplenish",header:"停止生产", sort:"int",width:85,template:"{common.checkbox()}",css:"bgcolor1"},
-					{ id:"isstopproduce",header:"停止补货", sort:"int",width:85,template:"{common.checkbox()}",css:"bgcolor1"},
-					{ id:"isstopanalyze",header:"停止分析", sort:"int",width:85,template:"{common.checkbox()}",css:"bgcolor1"},
+					{ id:"isstopreplenish",header:"停产", sort:"int",width:60,template:"{common.checkbox()}",css:"bgcolor1"},
+					{ id:"isstopproduce",header:"停补", sort:"int",width:60,template:"{common.checkbox()}",css:"bgcolor1"},
+					{ id:"isstopanalyze",header:"停分析", sort:"int",width:70,template:"{common.checkbox()}",css:"bgcolor1"},
+					{ id:"rownum",header:"序号",sort:"int",width:60},
 					{ id:"skccode",header:"款色", sort:"string",width:130,css:'bgcolor2'},
 //					{ id:"skcname",header:"名称", sort:"string",width:150},
 					{ id:"stylecode",header:"款式", sort:"string",width:100},
@@ -77,9 +83,7 @@ function(prodobject){
 				],
 				export: true,
 				on: {
-					onAfterLoad: function(){
-						this.select(1);		
-					}
+						onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
 				},
 //				pager:"confskc_pagerA"
 			}

@@ -11,7 +11,8 @@
 		var _DSSuffix;
 		var _RowHeight = 20;
 		var _HeaderRowHeight = 20;
-		var _ListWidth=200;
+		var _ListWidth=210;
+		var _CWHCode = "DSD1";
 		
 
     urlstr = "http://"+window.location.host+"/EmbrySCMAdmin/index.php/Home";

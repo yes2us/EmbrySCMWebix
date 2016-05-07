@@ -14,8 +14,9 @@ define([
 		select: true,
 		navigation:true,
 		resizeColumn:true,
-		leftSplit:3,
+		leftSplit:4,
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"partycode",header:"#",width:35,hidden:true},
 			
@@ -67,9 +68,10 @@ define([
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
 		editable:true,
-		leftSplit:2,
+		leftSplit:3,
 		rules:{"targetqty":webix.rules.isNumber,"operateret":webix.rules.isNumber},
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"skccode",	header:"款色", sort:"string",width:120},
 			{ id:"partycode",	header:"下属门店编号", sort:"string",hidden:true,fillspace:2},
@@ -91,9 +93,10 @@ define([
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
 		editable:true,
-		leftSplit:2,
+		leftSplit:3,
 		save:urlstr+"/WBCURDMng/saveMovSKCPlan",
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"ID",width:35,hidden:true},
 			{ id:"delete",header:"&nbsp;", width:35,template:"<span  style='color:#777777; cursor:pointer;' class='webix_icon fa-trash-o'></span>"},
 			{ id:"srcpartycode",	header:"出货仓库编号", sort:"string",hidden:true,fillspace:2},

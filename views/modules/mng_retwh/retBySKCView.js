@@ -15,10 +15,11 @@ define([
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:2,
+		leftSplit:3,
 		select:true,
 		navigation:true,
 		columns:[
+					{ id:"rownum",header:"",sort:"int",width:50},
 				     { id:"partycode",name:"partycode",	header:["门店编号",{content:"textFilter"}],css:"bgcolor2", width:70},
 				    { id:"partyname",name:"partyname",	header:"门店", css:"bgcolor2", width:150},
 		  			{ id:"lifestage",name:"lifestage",header:"新旧",css:"bgcolor2",width:60},
@@ -40,7 +41,7 @@ define([
 						if(selRow)
 						{
 							selPartyName = selRow.partyname;
-							var presStoreTSData = stockobject.getWHSKCInfo(selRow.partycode);
+							var presStoreTSData = stockobject.getWHSKCInfo({WHCode:selRow.partycode});
 							$$("dt_RetWHBySKC_StoreTSInfo").clearAll();
 							$$("dt_RetWHBySKC_StoreTSInfo").parse(presStoreTSData);
 							
@@ -68,6 +69,7 @@ define([
 		editable:true,
 		rules:{"targetqty":webix.rules.isNumber,"operateret":webix.rules.isNumber},
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"ID",width:35,hidden:true},
 			{ id:"partycode",header:"门店编号",width:35,hidden:true},
 			{ id:"partyname",header:"门店",width:120,hidden:true},
@@ -101,6 +103,7 @@ define([
 		editable:true,
 		save:urlstr+"/WBCURDMng/saveMovSKCPlan",
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"ID",width:35,hidden:true},
 			{ id:"delete",header:"&nbsp;", width:35,template:"<span  style='color:#777777; cursor:pointer;' class='webix_icon fa-trash-o'></span>"},
 			{ id:"srcpartycode",	header:"出货仓库编号", sort:"string",hidden:true,fillspace:2},

@@ -23,8 +23,9 @@ function(billobject,repretconditionview){
 				editable:true,
 				select:true,
 				navigation:true,
-				leftSplit:3,
+				leftSplit:4,
 				columns:[
+					{ id:"rownum",header:"",sort:"int",width:50},
 					{ id:"srcpartycode",	header:["出货仓库编号 ",{content:"textFilter"}], sort:"string",width:100},
 					{ id:"srcpartyname",header:["出货仓库",{content:"selectFilter"}], sort:"string",width:150},
 					{ id:"trgpartycode",	header:["收货仓库编号 ",{content:"textFilter"}], sort:"string",width:100},

@@ -9,9 +9,10 @@ define(function(){
 		resizeColumn:true,
 		editable:true,
 		navigation:true,
-		leftSplit:2,
+		leftSplit:3,
 		save:urlstr+"/WBCURDMng/saveStock",
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"skucode",	header:"SKU", sort:"string",width:150,css:"bgcolor2"},
 			

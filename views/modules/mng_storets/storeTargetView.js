@@ -1,7 +1,20 @@
 define(
 [],
 function(){
-			
+	var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"管理门店目标库存"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_storets"));}},
+		]
+	};
+	
 	var gridTree = {
 		view:"datatable",
 		id:"dt_storets",
@@ -10,11 +23,12 @@ function(){
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
 		navigation:true,
-		leftSplit:2,
+		leftSplit:3,
 		editable:true,
 		select: true,
 		save:urlstr+"/WBCURDMng/saveStock",
 		columns:[
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"skucode",	header:"SKU", sort:"string",width:100,css:"bgcolor2"},
 			
@@ -36,7 +50,7 @@ function(){
 	var layout = {
 		type: "clean",
 		id: "storeTargetView",
-		cols:[
+		rows:[toolbar,
 			gridTree,
 		]
 	};

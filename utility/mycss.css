@@ -7,6 +7,10 @@
 			color:white;
 			border-radius:3px;
 		}
+	.fontcolor{
+		font-weight:bold;
+		color:red;
+	}
 	.fltr{
         background-color: transparent;
     	}

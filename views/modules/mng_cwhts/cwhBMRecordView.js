@@ -1,4 +1,17 @@
 define(function(){
+	var toolbar = {
+		view: "toolbar",
+		css: "highlighted_header header5",
+		paddingX:5,
+		paddingY:5,
+		height:35,
+		cols:[
+			{  view: "label",label:"查询目标库存调整记录"},
+			{},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_cwhbmrecord"));}},
+		]
+	};
 	
  var chart=	{view:"chart", type:"area",id:"chartid2",
             						xAxis:{ template:"#date#"},
@@ -60,7 +73,7 @@ define(function(){
 		headerRowHeight:_HeaderRowHeight,
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
-		leftSplit:4,
+		leftSplit:5,
 		select: true,
 		navigation:true,
 		editable:true,
@@ -68,6 +81,7 @@ define(function(){
 		columns:[
 			{id:"refusechked", header:"拒绝",width:70,template:"{common.checkbox()}",css:"bgcolor1"},
 			{id:"passchked", header:"通过",width:70,template:"{common.checkbox()}",css:"bgcolor1"},
+			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"ID", sort:"string",css:'bgcolor2'},
 			{ id:"skucode",header:"SKU", sort:"string",width:120,css:'bgcolor2'},
 			{ id:"recorddate",header:"调整日期", sort:"string",width:100},
@@ -93,6 +107,7 @@ define(function(){
 		type: "clean",
 		id: "cwhBMRecordView",
 		rows:[
+		toolbar,
 			gridTree,
 			chart
 		]

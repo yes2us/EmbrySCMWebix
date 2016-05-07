@@ -54,26 +54,23 @@ var layout = {
 return {
 	$ui:layout,
 	$oninit:function(){
-
-			if(!checkWriteAuth())
-			{
-				$$("dt_storets").define("editable",false);
-				$$("bnclear").define("disabled",true);
-				$$("bnsave").define("disabled",true);
-				$$("uploaderid1").define("disabled",true);
-			}
+		var hasWriteAuth = checkWriteAuth();
+		$$("dt_storets").define("editable",hasWriteAuth);
+		$$("bnclear1").define("disabled",!hasWriteAuth);
+		$$("bnsave1").define("disabled",!hasWriteAuth);
+//		$$("uploaderid1").define("disabled",!hasWriteAuth);
 			
 			
 		$$("lt_stores").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			
 			var storecode = this.getItem(id).partycode;
-			var promzStoreTarget = stockobject.getFGWarehouseTSInfo(storecode);
+			var promzStoreTarget = stockobject.getFGWHTSInfo(storecode);
 			
 			//显示库存结构-大类
 			$$("dt_stockstruct").clearAll();
 			$$("dt_stockstruct").showOverlay("正在加载......");
-			$$("dt_stockstruct").parse(stockobject.getPartyIndex({RelationType:"归属关系",StoreCode:storecode}));
+			$$("dt_stockstruct").parse(stockobject.getPartyIndex({RelationType:"补货关系",StoreCode:storecode}));
 
 			//显示目标库存
 			$$("dt_storets").clearAll();
@@ -82,10 +79,12 @@ return {
 			
 			
 			//显示目标库存	
-			$$("pivot").data.clearAll();
-			$$("pivot").data.sync($$("dt_storets").data);
-			$$("pivot").$$("data").define("headerRowHeight",0);
-
+//			$$("pivot").data.clearAll();
+//			$$("pivot").data.sync($$("dt_storets").data);
+//			$$("pivot").$$("data").define("headerRowHeight",0);
+			$$("dt_storetspivot").clearAll();
+			$$("dt_storetspivot").showOverlay("正在加载......");
+			$$("dt_storetspivot").parse(stockobject.getFGWHCrossTSInfo({WHCode:storecode}));	
 			
 			//显示最近调整记录
 			var promzBMData = billobject.getPartyBMRecord({WHCode:storecode,EndDate:'2016-01-01'});
