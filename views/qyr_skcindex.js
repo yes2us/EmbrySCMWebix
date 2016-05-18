@@ -58,7 +58,7 @@ function(prodobject){
 					{ id:"rownum",header:"",sort:"int",width:50},
 					{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:100,css:'bgcolor2'},
 					{ id:"maintypename",header:["大类 ",{content:"selectFilter"}], sort:"string",width:60},
-					{ id:"lifestage",header:["新旧 ",{content:"selectFilter"}], sort:"string",width:60},
+					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 					{ id:"saletype",header:["销售分类 ",{content:"selectFilter"}],width:85},
 					
 					{ id:"saletotalqty",header:[{text:"销量",colspan:6},"总销量"],sort:"int",width:70},

@@ -94,9 +94,9 @@ var toolbar = {
 					{ id:"colorname",header:"颜色", sort:"string",width:100},
 					{ id:"sizename",	header:"尺码", sort:"string",width:80},				
 					{ id:"yearname",	header:"年份", sort:"string",width:80},
-					{ id:"lifestage",	header:"新旧", sort:"string",width:80},
+					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+					{ id:"seriesname",header:"系列", sort:"string",width:100},
 					{ id:"maintypename",header:"大类", sort:"string",width:100},
-					{ id:"subtypename",header:"小类", sort:"string",width:150},		
 					{ id:"plantype",	header:"类型", width:100},
 					{ id:"movqty",header:"数量",width:100}
 				],

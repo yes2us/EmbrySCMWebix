@@ -49,7 +49,15 @@ var layout = {
 return {
 	$ui:layout,
 	$oninit:function(){
-		
+			var hasWriteAuth = checkWriteAuth();
+			$$("dt_RetProdBySKU_SubWHTSInfo").define("editable",hasWriteAuth);
+			$$("dt_RetProdBySKUPlan").define("editable",hasWriteAuth);
+			$$("dt_RetProdBySKC_SubWHTSInfo").define("editable",hasWriteAuth);
+			$$("dt_RetProdBySKCPlan").define("editable",hasWriteAuth);
+				
+			$$("bnreturnsku").define("disabled",!hasWriteAuth);
+			$$("bnreturnskc").define("disabled",!hasWriteAuth);
+			
 		$$("lt_RetProd_Regions").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			

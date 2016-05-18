@@ -10,8 +10,8 @@ var titleBar = {
 			cols:[
 				{view:"select",name:"brandcode",width:200,align: "right", label: '品牌',labelWidth:60,
 					options:urlstr+"/WBProdMng/getBrandList"},
-			    {view:"select", id:"lifestage",name:"lifestage",width:200,align:"right", label:'新旧',labelWidth:60,
-			    		options:[{id:'all',value:'所有'},{id:'新品',value:'新品'},{id:"旧品",value:"旧品"}]},
+			    {view:"select", id:"pricetype",name:"pricetype",width:200,align:"right", label:'价格类型',labelWidth:85,
+			    		options:[{id:'all',value:'所有'},{id:'正价',value:'正价'},{id:"调价",value:"调价"}]},
 			    	{view:"select", id:"maintypecode",name:"maintypecode",width:200,align:"right", label:'大类',labelWidth:60,
 			    		options:urlstr+"/WBProdMng/getMainTypeList"},
 			    		
@@ -24,7 +24,7 @@ var titleBar = {
 				    	
 				    	var postData ={};
 				    	if(values.brandcode != 'all') postData.BrandName=values.brandcode;
-				    	if(values.lifestage != 'all') postData.LifeStage=values.lifestage;
+				    	if(values.pricetype != 'all') postData.PriceType=values.pricetype;
 				    	if(values.maintypecode != 'all') postData.MainTypeName=values.maintypecode;
 				    	
 					$$("dt_sugskuprodplan").clearAll();
@@ -57,29 +57,29 @@ var titleBar = {
 			{ id:"sizename",	header:"码", sort:"string",width:50},
 			{ id:"iskeysize",header:"关键码", sort:"string",width:75,
 			template:function(obj){return (obj.iskeysize==1)? "是":""}},
-			{ id:"lifestage",header:"新旧", sort:"string",width:60},
+			{ id:"pricetype",header:"价格类型", sort:"string",width:85},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:60},
 			{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:70},
 			
 			{ id:"existsstockqty",header:[{text:"渠道信息",colspan:7},"成品库存"],sort:"int", width:70},
 			{ id:"storenumcurin",header:[null,"现铺店"],sort:"int", width:70},
-			{ id:"storenumplan",header:[null,"计划铺店"],sort:"int", width:70,editor:"text",css:"bgcolor2"},
+			{ id:"storenumplan",header:[null,"计划铺店"],sort:"int", width:70,editor:"text",css:"bgcolor1"},
 			{ id:"onshelfdays",	header:[null,"上货天数"], sort:"int",width:70},
-			{ id:"lifespan",header:[null,"可销天数"],sort:"int", width:70,editor:"text",css:"bgcolor2"},
+			{ id:"lifespan",header:[null,"可销天数"],sort:"int", width:70,editor:"text",css:"bgcolor1"},
 			{ id:"saletotalqty",header:[null,"已销售"],sort:"int", width:70},
 			{ id:"sale14qty",header:[null,"14天销售"],sort:"int", width:70},
 			
 			{ id:"targetqty",	header:[{text:"理论补货",colspan:5},"目标库存"],sort:"int", width:85},
 			{ id:"onhandqty",header:[null,"在手库存"],sort:"int", width:60},
 			{ id:"onroadqty",	header:[null,"实际库存"],sort:"int", width:60},
-			{ id:"addedstockqty",header:[null,"增铺数量"],sort:"int", width:60,editor:"text",css:"bgcolor2"},
+			{ id:"addedstockqty",header:[null,"增铺数量"],sort:"int", width:60,editor:"text",css:"bgcolor1"},
 			{ id:"repretqty",	header:[null,"理论补货"],sort:"int",width:60},
 				
 			{ id:"saledaily",header:[{text:"预计数据",colspan:7},"单店日均销售"],sort:"float",width:85},
-			{ id:"saleratio",header:[null,"销售系数"],sort:"float", width:85,editor:"text",css:"bgcolor2"},
+			{ id:"saleratio",header:[null,"销售系数"],sort:"float", width:85,editor:"text",css:"bgcolor1"},
 			{ id:"forecastsale",header:[null,"预计销量"],sort:"int", width:85},
 			{ id:"totalseasonsale",header:[null,"总计销量"],sort:"int", width:85},
-			{ id:"endratio",header:[null,"尾货比例"],sort:"float", width:85,editor:"text",css:"#bgcolor2"},
+			{ id:"endratio",header:[null,"尾货比例"],sort:"float", width:85,editor:"text",css:"bgcolor1"},
 			{ id:"totalseasonstock",header:[null,"总库存需求"],sort:"int", width:85},
 			{ id:"neededstock",header:[null,"库存需求"],sort:"int", width:85},
 		],

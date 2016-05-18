@@ -27,15 +27,16 @@ function(stockobject){
 										optionarray.push({id:item.partycode,value:item.partyname});
 									});
 									
-									$$("storecode").define('options',optionarray);
-									$$("storecode").refresh();
+									$$("storecode1").define('options',optionarray);
+									$$("storecode1").refresh();
 									}
 								});
 						}
 					}
 				}
 				},
-			    {view:"select", id:"storecode",name:"storecode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    {view:"select", id:"storecode1",name:"storecode1",width:250,align: "left", label: '门店',
+			    labelWidth:60,options:[]},
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
 				    	var values =this.getParentView().getValues();
@@ -49,6 +50,7 @@ function(stockobject){
 						{
 							if(regioncode)  postData.RegionCode = regioncode;
 						}
+	
 						$$("dt_storeinittarget").showOverlay("正在加载......");
 						$$("dt_storeinittarget").clearAll();
 						$$("dt_storeinittarget").parse(stockobject.getInitTarget(postData));
@@ -65,22 +67,25 @@ function(stockobject){
 			   },
 			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
 					click: function(){
+						
+						
 						var values =this.getParentView().getValues();
 						if(values.storecode && values.storecode != 'all')
 						{
-							var targeturl= urlstr+"/WBStockMng/getInitTarget/Excel/1/WHCode/"+values.storecode;
+							var targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/WHCode/"+values.storecode;
 							window.open(targeturl, "_blank");
 						}
 						else
 						{
 							if(regioncode)
 							{
-								var targeturl= urlstr+"/WBStockMng/getInitTarget/Excel/1/RegionCode/"+regioncode;
+								var targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/RegionCode/"+regioncode;
 								window.open(targeturl, "_blank");
+		
 							}
 							else
 							{
-								var targeturl= urlstr+"/WBStockMng/getInitTarget/Excel/1";
+								var targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1";
 								window.open(targeturl, "_blank");
 							}
 						}
@@ -119,47 +124,47 @@ function(stockobject){
 					
 					{ id:"skcstockqty",header:[{ content:"columnGroup", closed:true, batch:"stock",
 							groupText:"库存", colspan:10, width: 45},"累计"],sort:"int",width:60},				
-					{ id:"stock1",batch:"stock",header:[null,"65/S/3"],sort:"int",width:45},
-					{ id:"stock2",batch:"stock",header:[null,"70/M/5"], sort:"int",width:45},
-					{ id:"stock3",batch:"stock",header:[null,"75/L/7"], sort:"int",width:45},
-					{ id:"stock4",batch:"stock",header:[null,"80/XL/9/EL"], sort:"int",width:45},
-					{ id:"stock5",batch:"stock",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
-					{ id:"stock6",batch:"stock",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
-					{ id:"stock7",batch:"stock",header:[null,"95/4XL/15"], sort:"int",width:45},
+					{ id:"stock1",batch:"stock",header:[null,"65/S"],sort:"int",width:45},
+					{ id:"stock2",batch:"stock",header:[null,"70/M"], sort:"int",width:45},
+					{ id:"stock3",batch:"stock",header:[null,"75/L"], sort:"int",width:45},
+					{ id:"stock4",batch:"stock",header:[null,"80/XL"], sort:"int",width:45},
+					{ id:"stock5",batch:"stock",header:[null,"85/2XL"], sort:"int",width:45},
+					{ id:"stock6",batch:"stock",header:[null,"90/3XL"], sort:"int",width:45},
+					{ id:"stock7",batch:"stock",header:[null,"95/4XL"], sort:"int",width:45},
 					{ id:"stock8",batch:"stock",header:[null,"100/FREE"], sort:"int",width:45},
 					{ id:"stock9",batch:"stock",header:[null,"105/XS"], sort:"int",width:45},
 
 					{ id:"skcsaleqty",header:[{ content:"columnGroup", closed:true, batch:"sale",
 							groupText:"四周销售", colspan:10, width: 45},"款色60天"],sort:"int",width:60},
-					{ id:"sale1",batch:"sale",header:[null,"65/S/3"],sort:"int",width:45},
-					{ id:"sale2",batch:"sale",header:[null,"70/M/5"], sort:"int",width:45},
-					{ id:"sale3",batch:"sale",header:[null,"75/L/7"], sort:"int",width:45},
-					{ id:"sale4",batch:"sale",header:[null,"80/XL/9/EL"], sort:"int",width:45},
-					{ id:"sale5",batch:"sale",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
-					{ id:"sale6",batch:"sale",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
-					{ id:"sale7",batch:"sale",header:[null,"95/4XL/15"], sort:"int",width:45},
+					{ id:"sale1",batch:"sale",header:[null,"65/S"],sort:"int",width:45},
+					{ id:"sale2",batch:"sale",header:[null,"70/M"], sort:"int",width:45},
+					{ id:"sale3",batch:"sale",header:[null,"75/L"], sort:"int",width:45},
+					{ id:"sale4",batch:"sale",header:[null,"80/XL"], sort:"int",width:45},
+					{ id:"sale5",batch:"sale",header:[null,"85/2XL"], sort:"int",width:45},
+					{ id:"sale6",batch:"sale",header:[null,"90/3XL"], sort:"int",width:45},
+					{ id:"sale7",batch:"sale",header:[null,"95/4XL"], sort:"int",width:45},
 					{ id:"sale8",batch:"sale",header:[null,"100/FREE"], sort:"int",width:45},
 					{ id:"sale9",batch:"sale",header:[null,"105/XS"], sort:"int",width:45},
 					
 					{ id:"sugtarget1",header:[{ content:"columnGroup", closed:false, batch:"sugtarget",
-							groupText:"建议目标", colspan:9, width: 45},"65/S/3"],sort:"int",width:60},
-					{ id:"sugtarget2",batch:"sugtarget",header:[null,"70/M/5"], sort:"int",width:45},
-					{ id:"sugtarget3",batch:"sugtarget",header:[null,"75/L/7"], sort:"int",width:45},
-					{ id:"sugtarget4",batch:"sugtarget",header:[null,"80/XL/9/EL"], sort:"int",width:45},
-					{ id:"sugtarget5",batch:"sugtarget",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
-					{ id:"sugtarget6",batch:"sugtarget",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
-					{ id:"sugtarget7",batch:"sugtarget",header:[null,"95/4XL/15"], sort:"int",width:45},
+							groupText:"建议目标", colspan:9, width: 45},"65/S"],sort:"int",width:60},
+					{ id:"sugtarget2",batch:"sugtarget",header:[null,"70/M"], sort:"int",width:45},
+					{ id:"sugtarget3",batch:"sugtarget",header:[null,"75/L"], sort:"int",width:45},
+					{ id:"sugtarget4",batch:"sugtarget",header:[null,"80/XL"], sort:"int",width:45},
+					{ id:"sugtarget5",batch:"sugtarget",header:[null,"85/2XL"], sort:"int",width:45},
+					{ id:"sugtarget6",batch:"sugtarget",header:[null,"90/3XL"], sort:"int",width:45},
+					{ id:"sugtarget7",batch:"sugtarget",header:[null,"95/4XL"], sort:"int",width:45},
 					{ id:"sugtarget8",batch:"sugtarget",header:[null,"100/FREE"], sort:"int",width:45},
 					{ id:"sugtarget9",batch:"sugtarget",header:[null,"105/XS"], sort:"int",width:45},
 					
 					{ id:"target1",header:[{ content:"columnGroup", closed:false, batch:"target",
-							groupText:"目标库存", colspan:9, width: 45},"65/S/3"],sort:"int",width:60},
-					{ id:"target2",batch:"target",header:[null,"70/M/5"], sort:"int",width:45},
-					{ id:"target3",batch:"target",header:[null,"75/L/7"], sort:"int",width:45},
-					{ id:"target4",batch:"target",header:[null,"80/XL/9/EL"], sort:"int",width:45},
-					{ id:"target5",batch:"target",header:[null,"85/2XL/11/EEL"], sort:"int",width:45},
-					{ id:"target6",batch:"target",header:[null,"90/3XL/13/EEEL"], sort:"int",width:45},
-					{ id:"target7",batch:"target",header:[null,"95/4XL/15"], sort:"int",width:45},
+							groupText:"目标库存", colspan:9, width: 45},"65/S"],sort:"int",width:60},
+					{ id:"target2",batch:"target",header:[null,"70/M"], sort:"int",width:45},
+					{ id:"target3",batch:"target",header:[null,"75/L"], sort:"int",width:45},
+					{ id:"target4",batch:"target",header:[null,"80/XL"], sort:"int",width:45},
+					{ id:"target5",batch:"target",header:[null,"85/2XL"], sort:"int",width:45},
+					{ id:"target6",batch:"target",header:[null,"90/3XL"], sort:"int",width:45},
+					{ id:"target7",batch:"target",header:[null,"95/4XL"], sort:"int",width:45},
 					{ id:"target8",batch:"target",header:[null,"100/FREE"], sort:"int",width:45},
 					{ id:"target9",batch:"target",header:[null,"105/XS"], sort:"int",width:45},
 				],

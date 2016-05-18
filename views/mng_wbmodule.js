@@ -1,9 +1,8 @@
 define([
 	"data/moduleobject",
-	"views/modules/modaladd/addwbmodule",
-	"views/menus/export"
+	"views/modules/modaladd/addwbmodule"
 	],
-function(moduleobject,modaladd,exports){
+function(moduleobject,modaladd){
 	
 	checkauthorization(false);
 	
@@ -32,7 +31,8 @@ function(moduleobject,modaladd,exports){
 				$$('toolbar').reconstruct();
 			}},
 			{ view: "button", type: "iconButton", icon: "plus",id:"addbutton", label: "增加",hidden:false, width: 80, click: function(){this.$scope.ui(modaladd.$ui).show();}},
-			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, popup: exports.print("dt_wbmodule")},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_wbmodule"));}},
 		]
 	};
 	

@@ -81,7 +81,7 @@ function(billobject,repretconditionview){
 					{ id:"yearname",	header:"年份", sort:"string",width:80},
 					{ id:"seasonname",	header:"季节", sort:"string",width:80},
 					{ id:"maintypename",header:"大类", sort:"string",width:100},
-					{ id:"subtypename",header:"小类", sort:"string",width:150},		
+					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},	
 					{ id:"ordertype",	header:"类型", width:100},
 					{ id:"orderqty",header:"数量",width:100}
 				],

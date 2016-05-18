@@ -52,6 +52,14 @@ var layout = {
 return {
 	$ui:layout,
 	$oninit:function(){
+		var hasWriteAuth = checkWriteAuth();
+			$$("dt_dwhMovBySKC").define("editable",hasWriteAuth);
+			$$("dt_dwhMovStoreTSInfo").define("editable",hasWriteAuth);
+			$$("dt_movPlan1").define("editable",hasWriteAuth);
+			$$("dt_movPlan2").define("editable",hasWriteAuth);
+				
+			$$("bnmove1").define("disabled",!hasWriteAuth);
+			$$("bnmove2").define("disabled",!hasWriteAuth);
 		
 		$$("lt_dwhmov").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
@@ -75,7 +83,7 @@ return {
 			//
 			partyobject.getRelPartyList({
 				RegionCode:dwhcode,
-				RelationType:"补货关系",
+				RelationType:"归属关系",
 				FieldStr:"PartyCode,PartyName,PartyLevel"
 				}).then(function(rsData){
 				  var rsJson = rsData.json();

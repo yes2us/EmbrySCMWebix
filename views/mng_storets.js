@@ -29,8 +29,8 @@ var layout = {
 							{view: "tabbar", multiview: true,optionWidth: 130,id:"storets_tabbar",
 								options:[
 									{id: "storeStockStructView", value: "库存结构"},
-									{id: "storeTargetView", value: "目标库存"},
-									{id: "storeTargetGridView", value: "目标库存"},
+									{id: "storeTargetView", value: "目标库存(竖)"},
+									{id: "storeTargetGridView", value: "目标库存(横)"},
 									{id: "storeBMRecordView", value: "缓冲调整"},
 									{id: "storeImpTSDataView", value: "导入目标库存"}
 								]
@@ -58,8 +58,9 @@ return {
 		$$("dt_storets").define("editable",hasWriteAuth);
 		$$("bnclear1").define("disabled",!hasWriteAuth);
 		$$("bnsave1").define("disabled",!hasWriteAuth);
-//		$$("uploaderid1").define("disabled",!hasWriteAuth);
-			
+		$$("uploaderid1").define("disabled",!hasWriteAuth);
+
+		
 			
 		$$("lt_stores").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	

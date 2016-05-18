@@ -24,8 +24,8 @@ var layout = {
 	{rows:[
 		{view: "tabbar", multiview: true,optionWidth: 130,
 			options:[
-				{id: "cwhTargetView", value: "目标库存"},
-				{id: "cwhTargetGridView", value: "目标库存"},
+				{id: "cwhTargetView", value: "目标库存(竖)"},
+				{id: "cwhTargetGridView", value: "目标库存(横)"},
 				{id: "cwhBMRecordView", value: "缓冲调整"},
 				{id: "cwhImpTSDataView", value: "导入目标库存"}
 			]

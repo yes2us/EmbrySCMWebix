@@ -33,9 +33,10 @@ var toolbar = {
 			{ id:"skucode",header:["SKU",{content:"textFilter"}], sort:"string",width:140},
 			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:120},
 			{ id:"sizename",	header:["尺码",{content:"selectFilter"}], sort:"string",width:60},
-			{ id:"lifestage",	header:["新旧",{content:"selectFilter"}], sort:"string",width:60},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:60},
-			{ id:"subtypename",header:["小类",{content:"selectFilter"}], sort:"string",width:120},
+
 			{ id:"dealstate",header:["状态",{content:"selectFilter"}], sort:"string",width:80},
 			{ id:"movqty",header:["计划退货",{content:"numberFilter"}],sort:"int",width:90}
 		],

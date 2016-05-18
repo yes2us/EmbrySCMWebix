@@ -2,6 +2,10 @@ define([], function() {
 
 	var prodObject = new Object();
 	
+	prodObject.getProdStoreList = function(postData){
+		return webix.ajax().post(urlstr+"/WBProdMng/getProdStoreList",postData);
+	}
+
 	prodObject.getSugSKUProdPlan = function(postData){
 		return webix.ajax().post(urlstr+"/WBProdMng/getSugSKUProdPlan",postData);
 	}

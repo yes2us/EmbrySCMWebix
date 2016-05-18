@@ -19,19 +19,20 @@ define([
 			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
 			{ id:"partycode",header:"#",width:35,hidden:true},
-			{ id:"skucode",header:"SKU", sort:"string",width:140,css:"bgcolor2"},
+			{ id:"skucode",header:"SKU", sort:"string",width:100,css:"bgcolor2"},
 			
 			{ id:"skccode",header:"款色", sort:"string",width:100},
 			{ id:"colorname",header:"颜色", sort:"string",width:80},
 			{ id:"sizename",	header:"尺码", sort:"string",width:70},
 			
-			{ id:"lifestage",header:"新旧", sort:"string",width:60},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",header:"大类", sort:"string",width:100},
-			{ id:"subtypename",header:"小类", sort:"string",width:150},
 			
 			{ id:"targetqty",header:"目标库存",sort:"int", width:85},
 			{ id:"stockqty",header:"实际库存",sort:"int", width:85},
-			{ id:"orderqty",header:"库存缺口",sort:"int",align:"right", width:85}
+			{ id:"sugrepqty",header:"库存缺口",sort:"int",align:"right", width:85,
+			template:function(obj){return obj.sugrepqty>0? obj.sugrepqty:'';}}
 		],
 		on:{
 			onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
@@ -138,7 +139,7 @@ define([
 				{ 
 					view:"form",height:300, width:300, scroll:false,type: "clean",
 					elements:[
-					{ view:"button", label:"退货", type:"next", height:30, width:100, align:"left",
+					{ view:"button", id:"bnreturnsku",label:"退货", type:"next", height:30, width:100, align:"left",
 					click:function(){
 						$$("dt_RetProdBySKU_SubWHTSInfo").eachRow(function(rowId){
 							var row = $$("dt_RetProdBySKU_SubWHTSInfo").getItem(rowId);

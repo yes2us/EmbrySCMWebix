@@ -26,7 +26,7 @@ var toolbar = {
 			  leftSplit:3,
 			  columns:[
 			  		{ id:"rownum",header:"",sort:"int",width:50},
-			  		{ id:"lifestage",	header:["新旧",{content:"selectFilter"}], sort:"string",width:60,css:"bgcolor2"},
+			  		{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 					{ id:"maintypename", header:["大类",{content:"selectFilter"}], width:100,css:"bgcolor2"},
 					{ id:"skcnum",name:"skcnum",header:[{text:"款色结构", colspan:4},"款色数"] ,width:70},
 					{ id:"frskcnuminparent",name:"frskcnuminparent",header:[null,"上级畅销"],width:85},

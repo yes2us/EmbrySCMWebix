@@ -6,9 +6,12 @@ define([], function() {
 	}
 
 	userObject.getUserRole = function(usercode) {
-		return webix.ajax().post(urlstr+"/WBUserMng/getUserRole",
-		{UserCode:usercode});
+		return webix.ajax().post(urlstr+"/WBUserMng/getUserRole",{UserCode:usercode});
 	}
 
+	userObject.reviseUserPWD = function(postData){
+		return webix.ajax().post(urlstr+"/WBUserMng/reviseUserPWD",postData);
+	}
+	
 	return userObject;
 });

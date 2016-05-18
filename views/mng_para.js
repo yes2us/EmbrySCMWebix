@@ -1,9 +1,8 @@
 define([
 	"data/paraobject",
 	"views/modules/modaladd/addpara",
-	"views/menus/export"
 	],
-function(paraobject,modaladd,exports){
+function(paraobject,modaladd){
 	
 	checkauthorization(false);
 	
@@ -36,7 +35,7 @@ var grid;
 				$$('toolbar').reconstruct();
 			}},
 			{ view: "button", type: "iconButton", icon: "plus",id:"addbutton", label: "增加",hidden:false, width: 80, click: function(){this.$scope.ui(modaladd.$ui).show();}},
-			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, popup: exports.print("dt_para")},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, click:function(){webix.toExcel($$("dt_para"));}},
 		]
 	};
 	

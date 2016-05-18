@@ -1,7 +1,6 @@
 define([
-	"views/menus/export",
 	"data/impobject"
-], function(exports, impobject){
+], function(impobject){
 
 checkauthorization(false);
 

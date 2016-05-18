@@ -5,6 +5,7 @@ define([
 	function(stockobject,billobject){
 	   var parentcode;
 	   var storecode;
+      var hasWriteAuth = checkWriteAuth();
      
 	var grid_storeexistsskc = {
 		view:"datatable",
@@ -23,9 +24,9 @@ define([
 			{ id:"partycode",header:"#",width:35,hidden:true},
 			{ id:"parentcode",header:"#",width:35,hidden:true},
 			
-			{ id:"lifestage",	header:["新旧",{content:"selectFilter"}], sort:"string",width:70},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:100},
-			{ id:"subtypename",header:["小类",{content:"selectFilter"}], sort:"string",width:100},
 			
 //			{ id:"colorname",header:"颜色", sort:"string",fillspace:1},
 			{ id:"saletype",	header:["销售分类",{content:"selectFilter"}], sort:"string",width:85},
@@ -33,7 +34,7 @@ define([
 			{ id:"stockqty",	header:"实际库存",sort:"int", width:85},
 			{ id:"sale28qty",header:"四周销量",sort:"int", width:85},
 			{ id:"saletotalqty",header:"累计销量",sort:"int", width:85},
-			{ id:"check",header:"退出",sort:"int",width:60,template:"{common.checkbox()}"}
+			{ id:"check",header:"退出",sort:"int",width:60,template:"{common.checkbox()}",hidden:!hasWriteAuth}
 		],
 			on:{
 				onCheck:function(id,e,node){
@@ -114,16 +115,17 @@ define([
 			{ id:"partycode",	header:"上级编号", sort:"string",hidden:true},
 			{ id:"partyname",header:"上级名称", sort:"string",hidden:true},
 			{ id:"skccode",header:["SKC",{content:"textFilter"}], sort:"string",width:100,css:"bgcolor2"},
-			{ id:"lifestage",header:["新旧",{content:"selectFilter"}], sort:"string",width:70},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:100},
-			{ id:"subtypename",header:["小类",{content:"selectFilter"}], sort:"string",width:100},
-			
+						
 			{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"onshelfdays",header:"上货天数", sort:"string",width:85},
 			{ id:"stockqty",header:"实际库存",sort:"int", width:85},
 			{ id:"sale28qty",header:"四周销量",sort:"int", width:85},
 			{ id:"saletotalqty",header:"累计销量",sort:"int", width:85},
-			{ id:"check",header:"补入",sort:"int", width:60,template:"{common.checkbox()}",value:0}
+			{ id:"check",header:"补入",sort:"int", width:60,template:"{common.checkbox()}",value:0,hidden:!hasWriteAuth}
 		],
 			on:{
 				onCheck:function(id,e,node){

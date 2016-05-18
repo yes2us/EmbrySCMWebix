@@ -72,7 +72,7 @@ function(prodobject){
 					{ id:"stylecode",header:"款式", sort:"string",width:100},
 					{ id:"colorname",header:"颜色", sort:"string",width:70},
 					{ id:"otherskucompname",header:"杯", sort:"string",width:40},
-					{ id:"lifestage",header:"新旧", sort:"string",width:70},
+					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 					{ id:"yearname",header:"年份", sort:"string",width:70},
 					{ id:"seriesname",header:"系列", sort:"string",width:100},
 					{ id:"maintypename",header:"大类", sort:"string",width:70},

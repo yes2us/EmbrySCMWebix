@@ -9,7 +9,10 @@ define([], function() {
         return webix.ajax().post(urlstr+"/WBBillMng/getMovSKUPlan",postData);	
      }
 
-
+     billObject.getExportRepBill = function(postData){
+        return webix.ajax().post(urlstr+"/WBBillMng/getExportRepBill",postData);	
+     }
+     
      billObject.getMovSKUPlanItem = function(postData){
         return webix.ajax().post(urlstr+"/WBBillMng/getMovSKUPlanItem",postData);	
      }

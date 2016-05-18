@@ -53,7 +53,7 @@ function(stockobject){
 				 }},
 			    {},
 				{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
-			click:function(){webix.toExcel($$("dt_storeindicator"));}}
+				click:function(){webix.toExcel($$("dt_storeindicator"));}}
 		    ]
 	};
 
@@ -76,7 +76,7 @@ function(stockobject){
 				columns:[
 					{ id:"rownum",header:"",sort:"int",width:50},
 					{ id:"partyname",header:["门店",{content:"selectFilter"}], sort:"string",width:150,css:"bgcolor2"},
-					{ id:"lifestage",header:["新旧",{content:"selectFilter"}], sort:"string",width:60,css:"bgcolor2"},
+					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 					{ id:"maintypename", header:["大类",{content:"selectFilter"}], width:100},
 					{ id:"middlesizenum",	header:[{text:"断码", colspan:3},"核心码"], sort:"int",width:70},
 					{ id:"shortmiddlesizenum",	header:[null,"断码数"], sort:"int",width:70},
@@ -91,7 +91,7 @@ function(stockobject){
 					{ id:"stockonroadqty",	header:[null,"在途库存"], sort:"int",width:85},
 					{ id:"stocktotalqty",	header:[null,"总库存"], sort:"int",width:60},
 					{ id:"stockdayofinventory",header:[null,"库存天"], sort:"int",width:70},
-					{ id:"stockstoredeadglobalhot",	header:[null,"店死整爆"], sort:"int",width:85},
+					{ id:"stockstoredeadglobalhot",	header:[null,"店死整畅"], sort:"int",width:85},
 					{ id:"stockoverinstores",	header:[null,"超额库存"], sort:"int",width:85},
 					{ id:"stockshortinstores",	header:[null,"库存缺口"], sort:"int",width:85},
 					{ id:"stockdailyidd",	header:[null,"日均IDD"], sort:"int",width:90},

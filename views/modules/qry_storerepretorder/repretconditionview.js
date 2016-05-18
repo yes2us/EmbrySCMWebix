@@ -5,7 +5,8 @@ define(
 function(billobject){
 
     var regioncode = null;
-    var startdate,enddate;
+    	var startdate = new Date(new Date().toString("yyyy/M/d"));
+	var enddate  = startdate;
     var plantype="补货";
     
     function loadData(){
@@ -54,14 +55,14 @@ function(billobject){
 					                	     	loadData();
 										}
 									}},					                
-					                	{view:"datepicker", id:"startdate_input",label:"开始日期",
+					                	{view:"datepicker", id:"startdate_input",label:"开始日期",value:startdate,
 					                  on:{onChange:function(newdate,olddate){
 					                  	startdate = newdate;
 					                	     loadData();
 					                  }
 					                  }},
 					             
-					             	{view:"datepicker", id:"enddate_input",label:"结束日期",
+					             	{view:"datepicker", id:"enddate_input",label:"结束日期",value:enddate,
 					                  on:{onChange:function(newdate,olddate){
 											enddate = newdate;
 						                  	loadData();

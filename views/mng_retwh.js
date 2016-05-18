@@ -47,7 +47,16 @@ var layout = {
 return {
 	$ui:layout,
 	$oninit:function(){
-		
+			var hasWriteAuth = checkWriteAuth();
+			$$("dt_RetWHBySKU_StoreTSInfo").define("editable",hasWriteAuth);
+			$$("dt_RetWHBySKUPlan").define("editable",hasWriteAuth);
+			$$("dt_RetWHBySKC_StoreTSInfo").define("editable",hasWriteAuth);
+			$$("dt_RetWHBySKCPlan").define("editable",hasWriteAuth);
+				
+			$$("bnretwhbysku").define("disabled",!hasWriteAuth);
+			$$("bnretwhbyskc").define("disabled",!hasWriteAuth);
+			
+			
 		$$("lt_RetWH_Regions").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			

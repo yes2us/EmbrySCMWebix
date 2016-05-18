@@ -21,7 +21,7 @@ define([
 					{ id:"rownum",header:"",sort:"int",width:50},
 				     { id:"partycode",name:"partycode",	header:["门店编号",{content:"textFilter"}],css:"bgcolor2", width:70},
 				    { id:"partyname",name:"partyname",	header:"门店", css:"bgcolor2", width:150},
-		  			{ id:"lifestage",name:"lifestage",header:"新旧",css:"bgcolor2",width:60},
+		  			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 					{ id:"maintypename",name:"maintypename",header:"大类", css:"bgcolor2", width:60},
 //					{ id:"subtypename",name:"subtypename",header:"小类", css:"bgcolor2",width:150},
 					{ id:"skcnum",name:"skcnum",header:[{text:"款色结构", colspan:3},"款色数"] ,width:70},
@@ -75,13 +75,13 @@ define([
 			{ id:"partyname",header:"门店",width:120,hidden:true},
 			{ id:"skucode",header:"SKU", sort:"string",width:140,css:"bgcolor2"},
 			
-			{ id:"lifestage",	header:"新旧", sort:"string",width:70},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"yearname",	header:"年份", sort:"string",width:70},
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",	header:"大类", sort:"string",width:100},
-			{ id:"subtypename",	header:"小类", sort:"string",width:100},
 			
 			{ id:"saletype",	header:"销售分类", sort:"string",width:85},
-			{ id:"isdeadskc",	header:"死货", sort:"int",width:70},
+//			{ id:"isdeadproduct",	header:"死货", sort:"int",width:70},
 			{ id:"targetqty",	header:"目标库存",sort:"int", width:85,editor:"text",invalidMessage:"必须输入数字",css:'bgcolor1'},
 			{ id:"stockqty",	header:"实际库存",sort:"int", width:85},
 			{ id:"sugretqty",	header:"超额库存",sort:"int",width:85,template:function(obj){return (obj.stockqty>obj.targetqty)? obj.stockqty-obj.targetqty:0;}},
@@ -128,7 +128,7 @@ define([
 	var form_RetWHBySKUPlan=	{ 
 					view:"form", width:300, scroll:false,type: "clean",
 					elements:[
-					{ view:"button", label:"退货", type:"next", height:30, width:100, align:"left",
+					{ view:"button", id:"bnretwhbysku",label:"退货", type:"next", height:30, width:100, align:"left",
 					click:function(){
 						$$("dt_RetWHBySKU_StoreTSInfo").eachRow(function(rowId){
 							var row = $$("dt_RetWHBySKU_StoreTSInfo").getItem(rowId);

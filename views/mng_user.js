@@ -1,9 +1,8 @@
 define([
 	"data/userobject",
-	"views/modules/modaladd/adduser",
-	"views/menus/export"
+	"views/modules/modaladd/adduser"
 	],
-function(userobject,modaladd,exports){
+function(userobject,modaladd){
 	
 	checkauthorization(false);
 	
@@ -23,7 +22,6 @@ function(userobject,modaladd,exports){
 			{},
 			{ view: "button",id:"editbutton", type: "iconButton", icon: "pencil-square-o", label: "编辑", width: 80,
 			click:function(){
-				$$('dt_user').define('editable',true);	
 				$$('deletebutton').show();	
 				$$('addbutton').show();
 				$$('addbutton').refresh();	
@@ -32,7 +30,8 @@ function(userobject,modaladd,exports){
 				$$('toolbar').reconstruct();
 			}},
 			{ view: "button", type: "iconButton", icon: "plus",id:"addbutton", label: "增加",hidden:false, width: 80, click: function(){this.$scope.ui(modaladd.$ui).show();}},
-			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, popup: exports.print("dt_user")},
+			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
+			click:function(){webix.toExcel($$("dt_user"));}},
 		]
 	};
 	
@@ -149,13 +148,12 @@ var grid_relation ={
 	return {
 		$ui: layout,
 		$oninit:function(){
-			{
-				$$("dt_user").define("editable",false);
-				$$("dt_userrole").define("editable",false);
+			var hasWriteAuth = checkWriteAuth();
+				$$("dt_user").define("editable",hasWriteAuth);
+				$$("dt_userrole").define("editable",hasWriteAuth);
 				
-				$$("editbutton").define("disabled",true);
-				$$("addbutton").define("disabled",true);
-			}
+				$$("editbutton").define("disabled",!hasWriteAuth);
+				$$("addbutton").define("disabled",!hasWriteAuth);
 						
 			$$("dt_user").clearAll();
 			$$("dt_user").parse(userobject.getUserList());

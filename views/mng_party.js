@@ -59,28 +59,31 @@ function(partyobject,modaladd){
 					{id:"partyenabled", header:"启用", template:"{common.checkbox()}", sort:"string",width:60},
 					{id:"partycode", header:["仓库编号",{content:"textFilter"}], sort:"string",width:100},
 					{id:"partyname", header:"仓库名", editor:"text", sort:"string",width:150},
-					{id:"partytype", header:"类型", editor:"text", sort:"string",width:60},
+					{id:"partytype", header:"类型", editor:"text", sort:"string",width:60,editor:"select",
+					    options:[{id:"门店",value:"门店"},{id:"总仓",value:"总仓"}
+					    ,{id:"事业部",value:"事业部"},{id:"办事处",value:"办事处"},{id:"工厂",value:"工厂"}]},
 					{id:"partylevel", header:"级别", editor:"text", sort:"string",width:60},
 					
 					{id:"isreplenish", header:"拉补",template:"{common.checkbox()}", sort:"int",width:60},
-					{id:"reppriority", header:"优先级", editor:"text", sort:"string",width:70},
-					{id:"repbatchzize", header:"补货批量", editor:"text", sort:"int",width:85},
-					{id:"repnextdate", header:"补货日期", editor:"date", sort:"string",width:100},
-					{id:"repordercycle", header:"下单间隔", editor:"text", sort:"int",width:85},
-					{id:"repsupplytime", header:"供应时间", editor:"text", sort:"int",width:85},
-					{id:"reprollspan", header:"滚动步长", editor:"text", sort:"int",width:85},					
+//					{id:"reppriority", header:"优先级", editor:"text", sort:"string",width:70},
+					{id:"repschedule", header:"补货计划", editor:"text", sort:"string",width:70},
+//					{id:"repbatchzize", header:"补货批量", editor:"text", sort:"int",width:85},
+//					{id:"repnextdate", header:"补货日期", editor:"date", sort:"string",width:100},
+//					{id:"repordercycle", header:"下单间隔", editor:"text", sort:"int",width:85},
+//					{id:"repsupplytime", header:"供应时间", editor:"text", sort:"int",width:85},
+//					{id:"reprollspan", header:"滚动步长", editor:"text", sort:"int",width:85},					
 					
-					{id:"isreturnstock", header:"退货", template:"{common.checkbox()}", sort:"int",width:60},
-					{id:"retbatchsize", header:"退货批量", editor:"text", sort:"int",width:85},
-					{id:"isretoverstock", header:"退超量", template:"{common.checkbox()}", sort:"int",width:100},
-					{id:"retoverstocknextdate", header:"退超日期", editor:"date", sort:"string",width:85},
-					{id:"retoverstockcycle", header:"退超间隔", editor:"text", sort:"int",width:85},
-					{id:"isretdeadstock", header:"退死货", template:"{common.checkbox()}", sort:"int",width:70},							
-					{id:"retdeadstocknextdate", header:"退死日期", editor:"date", sort:"string",width:100},
-					{id:"adjdeadstockcycle", header:"退死间隔", editor:"text", sort:"int",width:85},							
+//					{id:"isreturnstock", header:"退货", template:"{common.checkbox()}", sort:"int",width:60},
+//					{id:"retbatchsize", header:"退货批量", editor:"text", sort:"int",width:85},
+//					{id:"isretoverstock", header:"退超量", template:"{common.checkbox()}", sort:"int",width:100},
+//					{id:"retoverstocknextdate", header:"退超日期", editor:"date", sort:"string",width:85},
+//					{id:"retoverstockcycle", header:"退超间隔", editor:"text", sort:"int",width:85},
+//					{id:"isretdeadstock", header:"退死货", template:"{common.checkbox()}", sort:"int",width:70},							
+//					{id:"retdeadstocknextdate", header:"退死日期", editor:"date", sort:"string",width:100},
+//					{id:"adjdeadstockcycle", header:"退死间隔", editor:"text", sort:"int",width:85},							
 					
 					{id:"isadjusttarget", header:"调整目标库存", template:"{common.checkbox()}", sort:"int",width:100},
-					{id:"isUseskuadjpara", header:"按SKU调整", template:"{common.checkbox()}", sort:"int",width:100},
+//					{id:"isUseskuadjpara", header:"按SKU调整", template:"{common.checkbox()}", sort:"int",width:100},
 					
 					{id:"adjupchkperiod", header:"上调周期", editor:"text", sort:"int",width:85},							
 					{id:"adjupfreezeperiod", header:"冻结周期", editor:"text", sort:"int",width:85},
@@ -206,7 +209,7 @@ var grid_relation ={
 		$oninit:function(){
 
 			var hasWriteAuth = checkWriteAuth();
-			console.log(hasWriteAuth);
+
 				$$("dt_party").define("editable",hasWriteAuth);
 				$$("dt_partyrelation").define("editable",hasWriteAuth);
 				$$("bnaddrelation").define("disabled",!hasWriteAuth);

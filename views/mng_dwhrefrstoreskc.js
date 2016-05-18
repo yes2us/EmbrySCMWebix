@@ -46,7 +46,13 @@ var layout = {
 return {
 	$ui:layout,
 	$oninit:function(){
-		
+			var hasWriteAuth = checkWriteAuth();
+			$$("dt_dwhrefrstoreskc").define("editable",hasWriteAuth);
+			$$("dt_refrplan_outskc").define("editable",hasWriteAuth);
+			$$("dt_dwhStoreNewSKC").define("editable",hasWriteAuth);
+			$$("dt_refrplan_inskc").define("editable",hasWriteAuth);
+
+			
 		$$("lt_refrstores").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			

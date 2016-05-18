@@ -5,7 +5,8 @@ function(stockobject){
 	 
 	checkauthorization(false);
 	
-	 var regioncode = 'all';
+	 var bizUnitCode = 'all';
+	 var branchCode = 'all';
 	    
 	var titleBar = {
 			view:"toolbar",
@@ -14,41 +15,57 @@ function(stockobject){
 			paddingY:5,
 			height:35,
 			cols:[
-				{view:"select",name:"regioncode", width:250,align: "left", label: '区域',labelWidth:60,
-				options:urlstr+"/WBPartyMng/getRegionList",
+				{view:"select",name:"bizUnitCode", width:150,align: "left", label: '事业部',labelWidth:60,
+				options:urlstr+"/WBPartyMng/getBizUnitList",
 				on:{
 					onChange:function(newv,oldv){
 						if(newv)
 						{
-							regioncode = newv;
-							webix.ajax().post(urlstr+"/WBPartyMng/getRelPartyList",{RegionCode:newv},function(response){
-								   if(response){
-									var optionarray = [{id:'all',value:"所有"}];
-									JSON.parse(response).forEach(function(item){
-										optionarray.push({id:item.partycode,value:item.partyname});
-									});
-									
-									$$("storecode").define('options',optionarray);
-									$$("storecode").refresh();
-									}
-								});
+							bizUnitCode = newv;
+							if(bizUnitCode!='all')
+							$$("branchCode").define('options',urlstr+"/WBPartyMng/getBranchList/BizUnitCode/"+bizUnitCode);
+//							webix.ajax().post(urlstr+"/WBPartyMng/getBranchList",{BizUnitCode:newv},function(response){
+//								   if(response){
+//									var optionarray = [{id:'all',value:"所有"}];
+//									JSON.parse(response).forEach(function(item){
+//										optionarray.push({id:item.partycode,value:item.partyname});
+//									});
+//									
+//									$$("branchCode").define('options',optionarray);
+//									$$("branchCode").refresh();
+//									}
+//								});
 						}
 					}
 				}
 				},
-			    {view:"select", id:"storecode",name:"storecode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
-			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
+			    {view:"select", id:"branchCode",name:"branchCode",width:250,align: "left", label: '办事处',labelWidth:60,
+			    options:[],
+			    	on:{
+						onChange:function(newv,oldv){
+							if(newv)
+							{
+								branchCode = newv;
+//								if(branchCode!='all')
+								$$("storeCode").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BranchCode/"+branchCode);
+							}
+						}
+					}
+			    },
+			    {view:"select", id:"storeCode",name:"storeCode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    
+			    
+			    
+			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70,
 				    click: function(){
 				    	var values =this.getParentView().getValues();
 				    	   var postData = {};
-						if(values.storecode && values.storecode != 'all')
-						{
-							postData.WHCode=values.storecode;
-						}
-						else
-						{
-							if(regioncode)  postData.RegionCode = regioncode;
-						}
+				    	   
+						if(values.bizUnitCode && values.bizUnitCode != 'all')  postData.BizUnitCode = values.bizUnitCode;
+						if(values.branchCode && values.branchCode != 'all') postData.BranchCode=values.branchCode;
+						if(values.storeCode && values.storeCode != 'all') postData.WHCode=values.storeCode;
+
+
 						$$("dt_stockinfo").showOverlay("正在加载......");
 						$$("dt_stockinfo").clearAll();
 						$$("dt_stockinfo").parse(stockobject.getFGWHCrossTSInfo(postData));
@@ -58,21 +75,21 @@ function(stockobject){
 			click:function(){
 //				webix.toExcel($$("dt_stockinfo"));
 						var values =this.getParentView().getValues();
-						if(values.storecode && values.storecode != 'all')
+						if(values.branchCode && values.branchCode != 'all')
 						{
-							var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/Excel/1/WHCode/"+values.storecode;
+							var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/WHCode/"+values.branchCode;
 							window.open(targeturl, "_blank");
 						}
 						else
 						{
-							if(regioncode)
+							if(bizUnitCode)
 							{
-								var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/Excel/1/RegionCode/"+regioncode;
+								var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/bizUnitCode/"+bizUnitCode;
 								window.open(targeturl, "_blank");
 							}
 							else
 							{
-								var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/Excel/1";
+								var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1";
 								window.open(targeturl,"_blank");
 							}
 						}
@@ -102,7 +119,7 @@ function(stockobject){
 				    	{ id:"skccode",header:["款色",{content:"textFilter"}],width:120},
 
 //					{ id:"partyname",header:"门店", sort:"string",width:120,css:"bgcolor2"},
-//					{ id:"partylevel",header:["级别",{content:"selectFilter"}], sort:"string",width:60},
+					{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:60},
 					{ id:"lifestage",header:["新旧",{content:"selectFilter"}], sort:"string",width:60},
 					{ id:"maintypename", header:["大类",{content:"selectFilter"}], width:60},
 					{ id:"onshelfdays",header:"到仓天数", sort:"int",width:60},

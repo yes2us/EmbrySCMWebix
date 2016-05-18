@@ -36,7 +36,7 @@ function(stockobject){
 					}
 				}
 				},
-			    {view:"select", id:"storecode",name:"storecode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    {view:"select", id:"storecode",name:"storecode",width:250,align: "left", label: '门店',labelWidth:60,options:[]},
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
 				    	var values =this.getParentView().getValues();

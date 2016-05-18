@@ -30,7 +30,8 @@ define([
 		{
 			postData.PlanType='自动补货';
 			$$("dt_ExportRepPlan").clearAll();
-			$$("dt_ExportRepPlan").parse(webix.ajax().post(urlstr+"/WBBillMng/getMovSKUPlanItem",postData));
+			$$("dt_ExportRepPlan").showOverlay("正在加载......");
+			$$("dt_ExportRepPlan").parse(webix.ajax().post(urlstr+"/WBBillMng/getExportRepBill",postData));
 		}
 		else
 		{
@@ -62,7 +63,10 @@ define([
 			{view:"button",value:"查询",width:100,click:function(){loadData();}},
 			{},
 			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
-				click:function(){webix.toExcel($$("dt_"+TargetTable));}
+				click:function(){
+					var targeturl= urlstr+"/WBBillMng/getExportRepBill/CSV/1/StartDate/"+startDate+"/EndDate/"+endDate;
+					window.open(targeturl, "_blank");
+				}
 			}
 			]
 	};
@@ -81,9 +85,19 @@ define([
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
 					{ id:"rownum",header:"",sort:"int",width:60},
-					{id:"partycode", header:"仓库编号", sort:"string", fillspace:1},
-					{id:"skucode", header:"SKU", sort:"string", fillspace:1},	
-					{id:"movqty", header:"数量", sort:"int",fillspace:1},
+					{id:"补货日期", header:"补货日期", sort:"string", fillspace:1},
+					{id:"老供应商", header:"老供应商", sort:"string", fillspace:1},	
+					{id:"类型", header:"类型", sort:"string", fillspace:1},	
+					{id:"pmc", header:"PMC", sort:"string", fillspace:1},	
+					{id:"老工厂", header:"老工厂", sort:"string", fillspace:1},	
+					{id:"0001", header:"0001", sort:"string", fillspace:1},	
+					{id:"单据类型", header:"单据类型", sort:"string", fillspace:1},	
+					{id:"商品号", header:"商品号", sort:"string", fillspace:1},	
+					{id:"总仓在手", header:"总仓在手", sort:"string", fillspace:1},	
+					{id:"门店在手", header:"门店在手", sort:"string", fillspace:1},	
+					{id:"门店在途", header:"门店在途", sort:"string", fillspace:1},	
+					{id:"门店四周销售", header:"门店四周销售", sort:"string", fillspace:1},	
+					{id:"补货件数", header:"补货件数", sort:"int",fillspace:1},
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};

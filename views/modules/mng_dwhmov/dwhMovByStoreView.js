@@ -1,33 +1,24 @@
 define([
 	"data/stockobject",
 	"data/billobject",
+	"data/prodobject",
 ],
-	function(stockobject,billobject){
+	function(stockobject,billobject,prodobject){
 	
     var selPartyName;
-    	var options1;
 	var regionStores;
  
- 	 function LoadPopStoreList(datastr){
-	 			options1=[];
-	 			
-	 			regionStores.forEach(function(item){
-	 				if(datastr.indexOf(item.partycode.trim())<=0)
-						{
-							options1.push({id:item.partycode,
-							partylevel:item.partylevel,
-							partycode:item.partycode,
-							partyname:item.partyname});		
-						}
-					});
+ 	 function LoadPopStoreList(SKCCode){
+
+				var presData = prodobject.getProdStoreList({SKCCode:SKCCode});
 
 				$$("popupid2").clearAll()
-				$$("popupid2").parse(options1);
+				$$("popupid2").parse(presData);
 	 }
  	 
      function getDistName(distcode){
-     	if(!options1||!distcode) return '';
-		var rs = options1.filter(function(item){return item.partycode.trim()==distcode.trim();});
+     	if(!distcode) return '';
+		var rs = $$("popupid2").find(function(item){return item.id.trim()==distcode.trim();});
 		if(rs.length) return rs[0].partyname; else return '';
      }
      
@@ -43,16 +34,11 @@ define([
 			   headerRowHeight:_HeaderRowHeight,
                 columns:[
                     {id:"partylevel", header:["级别",{content:"selectFilter"}], width:60},
-                    {id:"partycode", header:["店编号",{content:"textFilter"}], width:90},
-                    {id:"partyname", header:"店名", width:150}
+                    {id:"id", header:["店编号",{content:"textFilter"}], width:90},
+                    {id:"partyname", header:"店名", width:150},
+                    {id:"stockqty", header:"库存", width:85},
+                    {id:"sale84qty", header:"12周销量", width:85},
                 ],
-                on:{onAfterLoad:function(){
-                	options1=[];
-                	  $$("popupid2").eachRow(function(rowid){
-                	  	   var row = $$("popupid2").getItem(rowid);
-                	  	   options1.push({partycode:row.partycode,partyname:row.partyname});
-                	  });
-                }}
             }
         });
         
@@ -68,11 +54,12 @@ define([
 		navigation:true,
 		columns:[
 					{ id:"rownum",header:"",sort:"int",width:50},
-				    { id:"partycode",name:"partycode",	header:"门店编号", hidden:true,css:"bgcolor2", fillspace:1},
+				    { id:"partycode",name:"partycode",	header:"门店编号",css:"bgcolor2", width:70},
 				    { id:"partyname",name:"partyname",	header:"门店", css:"bgcolor2", width:100},
-				    { id:"lifestage",name:"lifestage",	header:"新旧", css:"bgcolor2", width:60},
+				    { id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+
 					{ id:"maintypename",name:"maintypename",	header:"大类",width:60},
-//					{ id:"subtypename",name:"subtypename",header:"小类",width:200,width:100},
+
 					{ id:"skcnum",name:"skcnum",header:[{text:"款色结构", colspan:3},"款色数"] ,width:70},
 					{ id:"frskcnuminparty",name:"frskcnuminparty",header:[null,"畅销款色"],width:85},
 					{ id:"deadskcnum",name:"deadskcnum",header:[null,"死货款色"],width:85},		
@@ -124,9 +111,10 @@ define([
 			{ id:"skccode",header:["SKC",{content:"textFilter"}], sort:"string",css:"bgcolor2",width:100},
 			{ id:"partycode",	header:"下属门店编号", sort:"string",hidden:true},
 			{ id:"partyname",	header:"下属门店", sort:"string",hidden:true},
-			{ id:"lifestage",	header:["新旧",{content:"selectFilter"}], sort:"string",width:60},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"maintypename",	header:["大类",{content:"selectFilter"}], sort:"string",width:70},
-			{ id:"subtypename",	header:["小类",{content:"selectFilter"}], sort:"string",width:100},
+
 			{ id:"saletype",	header:["销售分类",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"onshelfdays",header:"上货天数", sort:"string",width:85},
 			{ id:"stockqty",	header:"实际库存",sort:"int", width:85},
@@ -135,13 +123,19 @@ define([
 			{ id:"distcode",header:"目标店号",sort:"string", width:85,editor:"richselect", popup:popup1,css:'bgcolor1'},
 			{ id:"distname",header:"目标店名",sort:"string",width:150,
 				template:function(obj){
-				if(!options1||!obj.distcode) return '';
-				var rs = options1.filter(function(item){return item.partycode.trim()==obj.distcode.trim();});
+				if(!obj.distcode) return '';
+				var rs = $$("popupid2").find(function(item){return item.id.trim()==obj.distcode.trim();});
 				if(rs.length) return rs[0].partyname; else return '';
 			  }
 			},
 		],
-		on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");}}
+		on:{
+			onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
+			onSelectChange:function(){
+				var selRow = this.getSelectedItem();
+				if(selRow)	LoadPopStoreList(selRow.skccode);
+			}
+		}
 	};
 	
 	var grid_movplanorder2 = {
@@ -190,7 +184,7 @@ define([
 	var form_movplan={ 
 					view:"form", scroll:false,type: "clean",minWidth:250,
 					elements:[
-					{ view:"button", label:"调拨", type:"next", height:30, width:100, align:"left",
+					{ view:"button", id:"bnmove2",label:"调拨", type:"next", height:30, width:100, align:"left",
 					click:function(){
 						$$("dt_dwhMovStoreTSInfo").eachRow(function(rowId){
 							var row = $$("dt_dwhMovStoreTSInfo").getItem(rowId);

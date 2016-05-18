@@ -22,15 +22,16 @@ define([
 			
 			{ id:"skccode",header:"款色", sort:"string",width:120,css:"bgcolor2"},
 			{ id:"colorname",header:"颜色", sort:"string",width:80},
-			{ id:"sizename",	header:"尺码", sort:"string",width:70},
+//			{ id:"sizename",	header:"尺码", sort:"string",width:70},
 			
-			{ id:"lifestage",	header:"新旧", sort:"string",width:60},
+			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
+			{ id:"seriesname",	header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",header:"大类", sort:"string",width:100},
-			{ id:"subtypename",header:"小类", sort:"string",width:150},
+
 			
 			{ id:"targetqty",header:"目标库存",sort:"int", width:85},
 			{ id:"stockqty",header:"实际库存",sort:"int", width:85},
-			{ id:"orderqty",header:"库存缺口",sort:"int",align:"right", width:85}
+			{ id:"shortstockqty",header:"库存缺口",sort:"int",align:"right", width:85}
 		],
 		on:{
 			onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
@@ -78,7 +79,7 @@ define([
 			{ id:"partyname",	header:"下属门店", sort:"string",width:150},
 			{ id:"targetqty",	header:"目标库存",sort:"int", fillspace:1,editor:"text",invalidMessage:"必须输入数字",css:'bgcolor1'},
 			{ id:"stockqty",	header:"实际库存",sort:"int", fillspace:1},
-			{ id:"sugretqty",	header:"超额库存",sort:"int",align:"right", fillspace:1,template:function(obj){return (obj.stockqty>obj.targetqty)? obj.stockqty-obj.targetqty:"";}},
+			{ id:"overstockqty",	header:"超额库存",sort:"int",align:"right", fillspace:1},
 			{ id:"operateret",	header:"退货",sort:"int",align:"right", fillspace:1,editor:"text",invalidMessage:"必须输入数字",css:'bgcolor1'}
 		],
 		on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");}},
@@ -135,7 +136,7 @@ define([
 				{ 
 					view:"form",height:300, width:300, scroll:false,type: "clean",
 					elements:[
-					{ view:"button", label:"退货", type:"next", height:30, width:100, align:"left",
+					{ view:"button", id:"bnreturnskc",label:"退货", type:"next", height:30, width:100, align:"left",
 					click:function(){
 						$$("dt_RetProdBySKC_SubWHTSInfo").eachRow(function(rowId){
 							var row = $$("dt_RetProdBySKC_SubWHTSInfo").getItem(rowId);
