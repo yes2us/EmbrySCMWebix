@@ -11,7 +11,8 @@ define(function(){
 				paddingX:30, 
 				elementsConfig:{labelWidth: 140}, 
 				elements:[
-					{ view:"text",id:"rolename",name:"rolename",label:"角色", required:true,width:500},
+					{ view:"text",id:"rolecode",name:"rolecode",label:"角色编号", required:true,width:500},
+					{ view:"text",id:"rolename",name:"rolename",label:"角色名称", required:true,width:500},
 					{ view:"checkbox",id:"roleenabled",name:"roleenabled", label:"启用", required:true,width:500},
 					{ view:"text",id:"roletype",name:"roletype", label:"类型", required:true,width:500},
 					{ view:"text",id:"roledesc",name:"roledesc", label:"描述",width:500},

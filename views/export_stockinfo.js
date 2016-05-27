@@ -2,57 +2,46 @@ define([
 	"data/stockobject",
 	],
 function(stockobject){
-	 
+	 var bizUnitCode;
 	checkauthorization(false);
-	
-	 var bizUnitCode = 'all';
-	 var branchCode = 'all';
 	    
 	var titleBar = {
 			view:"toolbar",
 			css: "highlighted_header header5",
-			paddingX:5,
-			paddingY:5,
-			height:35,
+			paddingX:0,
+			paddingY:0,
+			height:_ToolBarHeight,
 			cols:[
-				{view:"select",name:"bizUnitCode", width:150,align: "left", label: '事业部',labelWidth:60,
-				options:urlstr+"/WBPartyMng/getBizUnitList",
+				{view:"multiselect",name:"bizUnitCode", width:150,align: "left", label: '事业部',labelWidth:60,
+				options:urlstr+"/WBPartyMng/getBizUnitList/UserCode/"+_UserCode,
 				on:{
 					onChange:function(newv,oldv){
 						if(newv)
 						{
-							bizUnitCode = newv;
-							if(bizUnitCode!='all')
-							$$("branchCode").define('options',urlstr+"/WBPartyMng/getBranchList/BizUnitCode/"+bizUnitCode);
-//							webix.ajax().post(urlstr+"/WBPartyMng/getBranchList",{BizUnitCode:newv},function(response){
-//								   if(response){
-//									var optionarray = [{id:'all',value:"所有"}];
-//									JSON.parse(response).forEach(function(item){
-//										optionarray.push({id:item.partycode,value:item.partyname});
-//									});
-//									
-//									$$("branchCode").define('options',optionarray);
-//									$$("branchCode").refresh();
-//									}
-//								});
+								bizUnitCode = newv;
+								if(newv.indexOf('all')>=0)
+								$$("branchCode").define('options',urlstr+"/WBPartyMng/getBranchList/UserCode/"+_UserCode);
+								else
+								$$("branchCode").define('options',urlstr+"/WBPartyMng/getBranchList/BizUnitCode/"+newv+"/UserCode/"+_UserCode);
 						}
 					}
 				}
 				},
-			    {view:"select", id:"branchCode",name:"branchCode",width:250,align: "left", label: '办事处',labelWidth:60,
+			    {view:"multiselect", id:"branchCode",name:"branchCode",width:250,align: "left", label: '办事处',labelWidth:60,
 			    options:[],
 			    	on:{
 						onChange:function(newv,oldv){
 							if(newv)
 							{
-								branchCode = newv;
-//								if(branchCode!='all')
-								$$("storeCode").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BranchCode/"+branchCode);
+								if(newv.indexOf('all')>=0)
+								$$("storeCode").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/UserCode/"+_UserCode);
+								else
+								$$("storeCode").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/BranchCode/"+newv+"/UserCode/"+_UserCode);
 							}
 						}
 					}
 			    },
-			    {view:"select", id:"storeCode",name:"storeCode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    {view:"multiselect", id:"storeCode",name:"storeCode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
 			    
 			    
 			    
@@ -61,9 +50,12 @@ function(stockobject){
 				    	var values =this.getParentView().getValues();
 				    	   var postData = {};
 				    	   
-						if(values.bizUnitCode && values.bizUnitCode != 'all')  postData.BizUnitCode = values.bizUnitCode;
-						if(values.branchCode && values.branchCode != 'all') postData.BranchCode=values.branchCode;
-						if(values.storeCode && values.storeCode != 'all') postData.WHCode=values.storeCode;
+						if(values.storeCode && values.storeCode.indexOf('all')<0 && values.storeCode !="") 
+							postData.WHCode=values.storeCode;
+						else if(values.branchCode && values.branchCode.indexOf('all')<0  && values.branchCode !="") 
+							postData.BranchCode=values.branchCode;
+						else if(values.bizUnitCode && values.bizUnitCode.indexOf('all')<0  && values.bizUnitCode !="")  
+						postData.BizUnitCode = values.bizUnitCode;
 
 
 						$$("dt_stockinfo").showOverlay("正在加载......");
@@ -74,25 +66,25 @@ function(stockobject){
 			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
 			click:function(){
 //				webix.toExcel($$("dt_stockinfo"));
+						var targeturl=null;
 						var values =this.getParentView().getValues();
-						if(values.branchCode && values.branchCode != 'all')
-						{
-							var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/WHCode/"+values.branchCode;
-							window.open(targeturl, "_blank");
-						}
+						if(values.storeCode && values.storeCode.indexOf('all')<0)
+							targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/WHCode/"+values.storeCode+"/UserCode/"+_UserCode;
 						else
 						{
-							if(bizUnitCode)
-							{
-								var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/bizUnitCode/"+bizUnitCode;
-								window.open(targeturl, "_blank");
-							}
+							if(values.branchCode && values.branchCode.indexOf('all')<0)
+								targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/BranchCode/"+values.storeCode+"/UserCode/"+_UserCode;
 							else
 							{
-								var targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1";
-								window.open(targeturl,"_blank");
+								if(values.bizUnitCode && values.bizUnitCode.indexOf('all')<0)
+								targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/BizUnitCode/"+value.bizUnitCode+"/UserCode/"+_UserCode;
+								else
+								targeturl= urlstr+"/WBStockMng/getFGWHCrossTSInfo/CSV/1/UserCode/"+_UserCode;
+								
 							}
 						}
+								window.open(targeturl,"_blank");
+					
 			}},
 		    ]
 	};

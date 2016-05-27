@@ -116,6 +116,7 @@ define([
 			{ id:"maintypename",	header:["大类",{content:"selectFilter"}], sort:"string",width:70},
 
 			{ id:"saletype",	header:["销售分类",{content:"selectFilter"}], sort:"string",width:85},
+			{ id:"subtype1code",header:["商品级别",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"onshelfdays",header:"上货天数", sort:"string",width:85},
 			{ id:"stockqty",	header:"实际库存",sort:"int", width:85},
 			{ id:"sale28qty",header:"四周销量",sort:"int", width:85},

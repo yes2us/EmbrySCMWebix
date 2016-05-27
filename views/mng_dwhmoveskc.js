@@ -61,12 +61,11 @@ return {
 			$$("bnmove1").define("disabled",!hasWriteAuth);
 			$$("bnmove2").define("disabled",!hasWriteAuth);
 		
-		$$("lt_dwhmov").attachEvent("onSelectChange",function(id){
-			if(id==1 || !this.getItem(id)) return;	
+		$$("bnSaveBranchCode116").attachEvent("onItemClick",function(id){
 			
-			var dwhcode = this.getItem(id).id;
+			var branchCode = dwhMovListView.getBranchCode();
 
-			//显示分仓目标库存
+			//显示分仓/总仓目标库存
 			$$("dt_dwhmovskc").clearAll();
 			$$("dt_dwhmovskc").showOverlay("正在加载......");
 			$$("dt_dwhmovskc").parse(stockobject.getWHSKCInfo({WHCode:_CWHCode}));
@@ -74,15 +73,15 @@ return {
 			//显示门店库存结构
 			$$("dt_dwhmovstorestockstruct").clearAll();
 			$$("dt_dwhmovstorestockstruct").showOverlay("正在加载......");
-			$$("dt_dwhmovstorestockstruct").parse(stockobject.getPartyIndex({ParentCode:_CWHCode}));
+			$$("dt_dwhmovstorestockstruct").parse(stockobject.getPartyIndex({BranchCode:branchCode}));
 			$$("popupid2").clearAll();
 			$$("popupid2").parse(partyobject.getRelPartyList({
-				RegionCode:dwhcode,RelationType:"补货关系",
+				RegionCode:_CWHCode,RelationType:"补货关系",
 				FieldStr:"PartyCode as id,PartyCode,PartyName,PartyLevel"}));
 			
 			//
 			partyobject.getRelPartyList({
-				RegionCode:dwhcode,
+				RegionCode:_CWHCode,
 				RelationType:"归属关系",
 				FieldStr:"PartyCode,PartyName,PartyLevel"
 				}).then(function(rsData){
@@ -93,7 +92,9 @@ return {
 			//显示调拨计划
 			$$("dt_dwhMovPlan").clearAll();
 			$$("dt_dwhMovPlan").showOverlay("正在加载......");
-			$$("dt_dwhMovPlan").parse(billobject.getMovSKCPlanItem({ParentCode:dwhcode,PlanType:"人工调拨"}));
+			$$("dt_dwhMovPlan").parse(billobject.getMovSKCPlanItem({BranchCode:branchCode,PlanType:"人工调拨"}));
+
+			
 			
 			});
 	}

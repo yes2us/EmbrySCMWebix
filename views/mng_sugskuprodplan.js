@@ -4,9 +4,9 @@ function(prodobject){
 var titleBar = {
 			view:"toolbar",
 			css: "highlighted_header header5",
-			paddingX:5,
-			paddingY:5,
-			height:35,
+			paddingX:0,
+			paddingY:0,
+			height:_ToolBarHeight,
 			cols:[
 				{view:"select",name:"brandcode",width:200,align: "right", label: '品牌',labelWidth:60,
 					options:urlstr+"/WBProdMng/getBrandList"},

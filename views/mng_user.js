@@ -10,9 +10,9 @@ function(userobject,modaladd){
 		view: "toolbar",
 		id:"toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+		paddingX:0,
+		paddingY:0,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "button", type: "iconButton", icon: "refresh", label: "刷新",hidden:false, width: 80, 
 			click: function(){
@@ -111,26 +111,12 @@ var grid_relation ={
 		editable:true,
 		select:true,
 		navigation:true,
-		save:urlstr+"/WBCURDMng/saveRoleUser",
 	 columns:[
-	    	{id:"deletebutton", header:"&nbsp;",hidden:false, width:60, template:"<span  style='color:#777777; cursor:pointer;' class='webix_icon fa-trash-o'></span>"},
 	    {id:"_identify",header:"",hidden:true,width:30},
 	    {id:"rolename",header:"角色",fillspace:1},
 	    {id:"roletype",header:"角色类型",fillspace:1},
 	    {id:"roledesc",header:"角色描述",fillspace:1},
-	 ],
-	 onClick:{
-					webix_icon:function(e,id,node){
-						webix.confirm({
-							text:"你将删除本条记录.<br/>确定吗?", ok:"确定", cancel:"取消",
-							callback:function(res){
-								if(res){
-									webix.$$("dt_userrole").remove(id);
-								}
-							}
-						});
-					}
-				},
+	 ]
 }
 	var layout = {
 		type: "line",

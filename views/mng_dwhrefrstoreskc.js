@@ -56,14 +56,14 @@ return {
 		$$("lt_refrstores").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			
-			var storecode = this.getItem(id).partycode;
+			var storecode = this.getItem(id).id;
 			var regioncode = dwhRefrListView.getRegionCode();
 				 dwhRefrByStoreView.setParties(regioncode,storecode);
 
 			//显示库存结构-大类
 			$$("dt_stockstructRefr").clearAll();
 			$$("dt_stockstructRefr").showOverlay("正在加载......");
-			$$("dt_stockstructRefr").parse(stockobject.getPartyIndex({RelationType:"归属关系",StoreCode:storecode}));
+			$$("dt_stockstructRefr").parse(stockobject.getPartyIndex({RelationType:"归属关系",WHCode:storecode}));
 
 
 			//显示门店的款色

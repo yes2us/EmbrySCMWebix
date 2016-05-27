@@ -26,7 +26,7 @@ var layout = {
 					{view:"resizer",width:1},
 					{
 						rows:[
-							{view: "tabbar", multiview: true,optionWidth: 130,id:"storets_tabbar",
+							{view: "tabbar", multiview: true,optionWidth: 130,id:"storets_tabbar",borderless:true,
 								options:[
 									{id: "storeStockStructView", value: "库存结构"},
 									{id: "storeTargetView", value: "目标库存(竖)"},
@@ -65,13 +65,13 @@ return {
 		$$("lt_stores").attachEvent("onSelectChange",function(id){
 			if(id==1 || !this.getItem(id)) return;	
 			
-			var storecode = this.getItem(id).partycode;
+			var storecode = this.getItem(id).id;
 			var promzStoreTarget = stockobject.getFGWHTSInfo(storecode);
 			
 			//显示库存结构-大类
 			$$("dt_stockstruct").clearAll();
 			$$("dt_stockstruct").showOverlay("正在加载......");
-			$$("dt_stockstruct").parse(stockobject.getPartyIndex({RelationType:"补货关系",StoreCode:storecode}));
+			$$("dt_stockstruct").parse(stockobject.getPartyIndex({RelationType:"补货关系",WHCode:storecode}));
 
 			//显示目标库存
 			$$("dt_storets").clearAll();
@@ -80,9 +80,6 @@ return {
 			
 			
 			//显示目标库存	
-//			$$("pivot").data.clearAll();
-//			$$("pivot").data.sync($$("dt_storets").data);
-//			$$("pivot").$$("data").define("headerRowHeight",0);
 			$$("dt_storetspivot").clearAll();
 			$$("dt_storetspivot").showOverlay("正在加载......");
 			$$("dt_storetspivot").parse(stockobject.getFGWHCrossTSInfo({WHCode:storecode}));	

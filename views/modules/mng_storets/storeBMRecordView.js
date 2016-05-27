@@ -3,9 +3,9 @@ define(function(){
 var toolbar = {
 		view: "toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+//		paddingX:5,
+//		paddingY:5,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "label",label:"查询目标库存调整记录"},
 			{},

@@ -69,9 +69,9 @@ define([
 	var dbToolbar = {
 		view: "toolbar",
 		css: "highlighted_header header5",
-		paddingX:2,
-		paddingY:2,
-		height:45,
+		paddingX:0,
+		paddingY:0,
+		height:_ToolBarHeight,
 		cols:[		 
 			{ view: "text", type: "iconButton",  label: "单页条数",id:"pagelen",value:200,width: 150,labelWidth:80,maxHeight:40},
 			{view:"button",value:"查询", width:100,click:function(){loadData(1);}},

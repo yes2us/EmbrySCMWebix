@@ -58,30 +58,27 @@ return {
 			$$("bnreturnsku").define("disabled",!hasWriteAuth);
 			$$("bnreturnskc").define("disabled",!hasWriteAuth);
 			
-		$$("lt_RetProd_Regions").attachEvent("onSelectChange",function(id){
-			if(id==1 || !this.getItem(id)) return;	
+		$$("bnSaveBranchCode115").attachEvent("onItemClick",function(id){
 			
-			var regionCode =_CWHCode; //this.getItem(id).id;
+			var branchCode = retListView.getBranchCode();
 
 			//显示分仓sku
 			$$("dt_RetProdBySKU_DWHSKU").clearAll();
 			$$("dt_RetProdBySKU_DWHSKU").showOverlay("正在加载......");
-			$$("dt_RetProdBySKU_DWHSKU").parse(stockobject.getFGWHTSInfo(regionCode));
+			$$("dt_RetProdBySKU_DWHSKU").parse(stockobject.getFGWHTSInfo(_CWHCode));
 			
 			//显示分仓skc
 			$$("dt_RetProdBySKC_DWHSKC").clearAll();
 			$$("dt_RetProdBySKC_DWHSKC").showOverlay("正在加载......");
-			$$("dt_RetProdBySKC_DWHSKC").parse(stockobject.getWHSKCInfo({WHCode:regionCode}));
+			$$("dt_RetProdBySKC_DWHSKC").parse(stockobject.getWHSKCInfo({WHCode:_CWHCode}));
 			
 			
 	
 			//显示区域退货计划:退码和退款
 			$$("dt_RetProdPlan").clearAll();
-			$$("dt_RetProdPlan").showOverlay("正在加载......");
-//			$$("dt_RetProdPlan").parse(billobject.getMovSKUPlanItem({TrgPartyCode:regionCode,PlanType:"人工退货",DealState:"未处理"}));
-			billobject.getMovSKUPlanItem({TrgPartyCode:regionCode,PlanType:"人工退货",DealState:"未处理"}).then(function(response1){
+			billobject.getMovSKUPlanItem({BranchCode:branchCode,PlanType:"人工退货",DealState:"未处理"}).then(function(response1){
 				var skuPlanData = response1.json();
-				billobject.getMovSKCPlanItem({TrgPartyCode:regionCode,PlanType:"人工退货",DealState:"未处理"}).then(function(response2){
+				billobject.getMovSKCPlanItem({BranchCode:branchCode,PlanType:"人工退货",DealState:"未处理"}).then(function(response2){
 					var skcPlanData = response2.json();
 				$$("dt_RetProdPlan").parse(skcPlanData.concat(skuPlanData));
 				});

@@ -4,52 +4,56 @@ define([
 function(stockobject){
 	checkauthorization(false);
 	
-	    var regioncode = 'all';
+	var bizUnitCode;
 	    
 	var titleBar = {
 			view:"toolbar",
 			css: "highlighted_header header5",
-			paddingX:5,
-			paddingY:5,
-			height:35,
+//			paddingX:5,
+//			paddingY:5,
+			height:_ToolBarHeight,
 			cols:[
-				{view:"select",name:"regioncode", width:250,align: "left", label: '区域',labelWidth:60,
-				options:urlstr+"/WBPartyMng/getRegionList",
+				{view:"multiselect", id:"bizUnitCode101",name:"bizUnitCode101", width:150,align: "left", label: '事业部',labelWidth:60,
+				options:urlstr+"/WBPartyMng/getBizUnitList/UserCode/"+_UserCode,
 				on:{
 					onChange:function(newv,oldv){
 						if(newv)
 						{
-							regioncode = newv;
-							webix.ajax().post(urlstr+"/WBPartyMng/getRelPartyList",{RegionCode:newv},function(response){
-								   if(response){
-									var optionarray = [{id:'all',value:"所有"}];
-									JSON.parse(response).forEach(function(item){
-										optionarray.push({id:item.partycode,value:item.partyname});
-									});
-									
-									$$("storecode1").define('options',optionarray);
-									$$("storecode1").refresh();
-									}
-								});
+							    bizUnitCode = newv;
+								if(newv.indexOf('all')>=0)
+								$$("branchCode101").define('options',urlstr+"/WBPartyMng/getBranchList/UserCode/"+_UserCode);
+								else
+								$$("branchCode101").define('options',urlstr+"/WBPartyMng/getBranchList/BizUnitCode/"+newv+"/UserCode/"+_UserCode);
 						}
 					}
 				}
 				},
-			    {view:"select", id:"storecode1",name:"storecode1",width:250,align: "left", label: '门店',
-			    labelWidth:60,options:[]},
+			    {view:"multiselect", id:"branchCode101",name:"branchCode101",width:250,align: "left", label: '办事处',labelWidth:60,
+			    options:[],
+			    	on:{
+						onChange:function(newv,oldv){
+							if(newv)
+							{
+								if(newv.indexOf('all')>=0)
+								$$("storeCode101").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/UserCode/"+_UserCode);
+								$$("storeCode101").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/BranchCode/"+newv+"/UserCode/"+_UserCode);
+							}
+						}
+					}
+			    },
+			    {view:"multiselect", id:"storeCode101",name:"storeCode101",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
 				    	var values =this.getParentView().getValues();
-//				    	console.log(JSON.stringify(values));
 				    	   var postData = {};
-						if(values.storecode && values.storecode != 'all')
-						{
-							postData.WHCode=values.storecode;
-						}
-						else
-						{
-							if(regioncode)  postData.RegionCode = regioncode;
-						}
+				    	   
+						if(values.storeCode101 && values.storeCode101.indexOf('all')<0 && values.storeCode101 !="") 
+							postData.WHCode=values.storeCode101;
+						else if(values.branchCode101 && values.branchCode101.indexOf('all')<0 && values.branchCode101 !="") 
+							postData.BranchCode=values.branchCode;
+						else if(values.bizUnitCode101 && values.bizUnitCode101.indexOf('all')<0 && values.bizUnitCode101 !="")  
+						postData.BizUnitCode = values.bizUnitCode101;
 	
 						$$("dt_storeinittarget").showOverlay("正在加载......");
 						$$("dt_storeinittarget").clearAll();
@@ -67,32 +71,20 @@ function(stockobject){
 			   },
 			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
 					click: function(){
-						
-						
 						var values =this.getParentView().getValues();
-						if(values.storecode && values.storecode != 'all')
-						{
-							var targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/WHCode/"+values.storecode;
-							window.open(targeturl, "_blank");
-						}
+						var targeturl = null;
+						if(values.storeCode101 && values.storeCode101.indexOf('all')<0)
+							targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/WHCode/"+values.storeCode101+"/UserCode/"+_UserCode;
+						else if(values.branchCode101 && values.branchCode101.indexOf('all')<0)
+								targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/BranchCode/"+values.branchCode101+"/UserCode/"+_UserCode;
+						else if(values.bizUnitCode101 && values.bizUnitCode101.indexOf('all')<0)
+								targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/BizUnitCode/"+values.bizUnitCode101+"/UserCode/"+_UserCode;
 						else
-						{
-							if(regioncode)
-							{
-								var targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/RegionCode/"+regioncode;
-								window.open(targeturl, "_blank");
-		
-							}
-							else
-							{
-								var targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1";
-								window.open(targeturl, "_blank");
-							}
-						}
-
-			
+								targeturl= urlstr+"/WBStockMng/getInitTarget/CSV/1/UserCode/"+_UserCode;
+					window.open(targeturl, "_blank");
+						
+				}
 			}
-			},
 		    ]
 	};
 
@@ -118,8 +110,8 @@ function(stockobject){
 					{ id:"partycode",header:["客户号",{content:"textFilter"}], sort:"string",width:60,css:"bgcolor2"},
 					{ id:"partyname",header:"门店", sort:"string",width:120,css:"bgcolor2"},
 					{ id:"partylevel",header:["级别",{content:"selectFilter"}], sort:"string",width:60},
-					{ id:"lifestage",header:["新旧",{content:"selectFilter"}], sort:"string",width:60},
 					{ id:"maintypename", header:["大类",{content:"selectFilter"}], width:60},
+					{ id:"subtype1code",header:["商品级别",{content:"selectFilter"}], sort:"string",width:60},
 					{ id:"onshelfdays",header:"到仓天数", sort:"int",width:60},
 					
 					{ id:"skcstockqty",header:[{ content:"columnGroup", closed:true, batch:"stock",
@@ -157,16 +149,16 @@ function(stockobject){
 					{ id:"sugtarget8",batch:"sugtarget",header:[null,"100/FREE"], sort:"int",width:45},
 					{ id:"sugtarget9",batch:"sugtarget",header:[null,"105/XS"], sort:"int",width:45},
 					
-					{ id:"target1",header:[{ content:"columnGroup", closed:false, batch:"target",
-							groupText:"目标库存", colspan:9, width: 45},"65/S"],sort:"int",width:60},
-					{ id:"target2",batch:"target",header:[null,"70/M"], sort:"int",width:45},
-					{ id:"target3",batch:"target",header:[null,"75/L"], sort:"int",width:45},
-					{ id:"target4",batch:"target",header:[null,"80/XL"], sort:"int",width:45},
-					{ id:"target5",batch:"target",header:[null,"85/2XL"], sort:"int",width:45},
-					{ id:"target6",batch:"target",header:[null,"90/3XL"], sort:"int",width:45},
-					{ id:"target7",batch:"target",header:[null,"95/4XL"], sort:"int",width:45},
-					{ id:"target8",batch:"target",header:[null,"100/FREE"], sort:"int",width:45},
-					{ id:"target9",batch:"target",header:[null,"105/XS"], sort:"int",width:45},
+//					{ id:"target1",header:[{ content:"columnGroup", closed:false, batch:"target",
+//							groupText:"目标库存", colspan:9, width: 45},"65/S"],sort:"int",width:60},
+//					{ id:"target2",batch:"target",header:[null,"70/M"], sort:"int",width:45},
+//					{ id:"target3",batch:"target",header:[null,"75/L"], sort:"int",width:45},
+//					{ id:"target4",batch:"target",header:[null,"80/XL"], sort:"int",width:45},
+//					{ id:"target5",batch:"target",header:[null,"85/2XL"], sort:"int",width:45},
+//					{ id:"target6",batch:"target",header:[null,"90/3XL"], sort:"int",width:45},
+//					{ id:"target7",batch:"target",header:[null,"95/4XL"], sort:"int",width:45},
+//					{ id:"target8",batch:"target",header:[null,"100/FREE"], sort:"int",width:45},
+//					{ id:"target9",batch:"target",header:[null,"105/XS"], sort:"int",width:45},
 				],
 				export: true,
 				on: {

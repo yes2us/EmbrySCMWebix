@@ -7,33 +7,34 @@ function(roleobject,userobject,modaladd){
 	
 	checkauthorization(false);
 	var userlist;
-    var selrolename;
+    var selrolecode;
     
   var titleBar = {
 		view: "toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+		paddingX:0,
+		paddingY:0,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "button", type: "iconButton", icon: "refresh", label: "刷新",hidden:false, width: 80, 
 			click: function(){
 				$$("dt_role").clearAll();
 				$$("dt_role").parse(roleobject.getRoleList());
 				}},
+//			{},
+//			{ view: "button",id:"editbutton", type: "iconButton", icon: "pencil-square-o", label: "编辑", width: 80,
+//			click:function(){
+//				$$('dt_role').define('editable',true);	
+//				$$('addbutton').show();
+//				$$('addbutton').refresh();	
+//				
+//				$$('toolbar').config.css="highlighted_header header4";
+//				$$('toolbar').reconstruct();
+//			}},
+			
 			{},
-			{ view: "button",id:"editbutton", type: "iconButton", icon: "pencil-square-o", label: "编辑", width: 80,
-			click:function(){
-				$$('dt_role').define('editable',true);	
-				$$('addbutton').show();
-				$$('addbutton').refresh();	
-				
-				$$('toolbar').config.css="highlighted_header header4";
-				$$('toolbar').reconstruct();
-			}},
 			{ view: "button", type: "iconButton", icon: "plus",id:"addbutton", label: "增加",hidden:false, width: 80, 
 			click: function(){this.$scope.ui(modaladd.$ui).show();}},
-			   {},
 			{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
 			click:function(){webix.toExcel($$("dt_role"));}},
 		]
@@ -59,7 +60,8 @@ function(roleobject,userobject,modaladd){
 	    				{id:"_identify",header:"ID",hidden:true,width:30},
 					{id:"deletebutton", header:"&nbsp;",hidden:false, width:35, template:"<span  style='color:#777777; cursor:pointer;' class='webix_icon fa-trash-o'></span>"},
 					{id:"roleenabled", header:"启用", template:"{common.checkbox()}", sort:"string",fillspace:1},
-					{id:"rolename", header:"角色", sort:"string",fillspace:1},
+					{id:"rolecode", header:"角色编号", sort:"string",fillspace:1},
+					{id:"rolename", header:"角色名称", sort:"string",fillspace:1},
 					{id:"roletype", header:"类型", editor:"text", sort:"string",fillspace:1},
 					{id:"roledesc", header:"描述", editor:"text", sort:"string",fillspace:1},
 				],
@@ -69,8 +71,8 @@ function(roleobject,userobject,modaladd){
 						
 						var selRow = this.getSelectedItem();
 						if(selRow){
-						selrolename = selRow.rolename;
-						var premzRolePrevData = roleobject.getRoleUserList(selRow.rolename);
+						selrolecode = selRow.rolecode;
+						var premzRolePrevData = roleobject.getRoleUserList(selRow.rolecode);
 						premzRolePrevData.then(function(response){
 							var jsondata = response.json();
 								$$("dt_roleuser1").clearAll();
@@ -164,8 +166,8 @@ var grid_treetable={
 					url:urlstr+"/WBUserMng/getUserTree",
 					on:{
 						onItemCheck:function(id){
-							console.log(selrolename);
-							if(!selrolename)  return;
+//							console.log(selrolecode);
+							if(!selrolecode)  return;
 							
 							var isChecked = $$("usertree").isChecked(id);						
 							if(!isChecked){
@@ -186,7 +188,7 @@ var grid_treetable={
 									
 									if(!arr.length)
 									$$("dt_roleuser1").add({
-										rolename:selrolename,
+										rolecode:selrolecode,
 										usercode:item.usercode,
 										usertruename:item.usertruename
 									});
@@ -217,7 +219,7 @@ var grid_treetable={
 			$$("dt_role").define("editable",hasWriteAuth);
 			$$("usertree").define("editable",hasWriteAuth);
 			$$("dt_roleuser1").define("editable",hasWriteAuth);
-			$$("editbutton").define("disabled",!hasWriteAuth);
+//			$$("editbutton").define("disabled",!hasWriteAuth);
 			$$("addbutton").define("disabled",!hasWriteAuth);
 			
 			userobject.getUserList().then(function(response){

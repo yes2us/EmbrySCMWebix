@@ -1,7 +1,7 @@
 define(
 ["data/partyobject"],
 function(partyobject){
-
+	var bizUnitCode;
 	return {
 		$ui:{
 			width:_ListWidth,
@@ -14,29 +14,43 @@ function(partyobject){
                 view:"toolbar",
                 elements:[
 					{rows:[
-								{view: "combo",label: "选择区域",//css:"fltr",
-									options:urlstr+'/WBPartyMng/getRegionList',
+								{view: "multiselect",id:"bizUnitCode110",name:"bizUnitCode110",label: "事业部",//css:"fltr",
+									options:urlstr+'/WBPartyMng/getBizUnitList/UserCode/'+_UserCode,
 									on:{
-										onChange:function(newregioncode, oldregioncode){
-											if(newregioncode!=oldregioncode)
-											{
-												 $$("lt_stores").clearAll();
-												 $$("lt_stores").refresh();
+											onChange:function(newv,oldv){
+												if(newv)
+												{
+													bizUnitCode = newv;
+													if(newv.indexOf('all')>=0)
+													$$("branchCode110").define('options',urlstr+"/WBPartyMng/getBranchList/UserCode/"+_UserCode);
+													else
+													$$("branchCode110").define('options',urlstr+"/WBPartyMng/getBranchList/UserCode/"+_UserCode+"/BizUnitCode/"+newv);
+												}
 											}
-											var postData = 
-											{
-												RegionCode:newregioncode,
-												FieldStr:"PartyCode,PartyName"
-											}
-											$$("lt_stores").parse(partyobject.getRelPartyList(postData));
-										}
 									}},
 									
+								{view:"multiselect", id:"branchCode110",name:"branchCode110",align: "left", label: '办事处',
+								    options:[],
+								    	on:{
+											onChange:function(newv,oldv){
+												if(newv)
+												{
+													$$("lt_stores").clearAll();
+													
+													if(newv.indexOf('all')>=0)
+													$$("lt_stores").load(urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/UserCode/"+_UserCode);
+													else
+													$$("lt_stores").load(urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/BranchCode/"+newv+"/UserCode/"+_UserCode);
+												}
+											}
+										}
+								    },
+			    
 					                {view:"text", id:"grouplist_input",label:"查询门店",placeholder:"请输入门店编号，名称进行查询",
 					                  on:{onTimedKeyPress:function(){
-					                	        var value = this.getValue();
+					                	        var v = this.getValue();
 								       	 		$$("lt_stores").filter(function(obj){
-								            	return (obj.partycode && obj.partycode.indexOf(value)>=0) || (obj.partyname && obj.partyname.indexOf(value)>=0);
+								            	return (obj.id && obj.id.indexOf(v)>=0) || (obj.value && obj.value.indexOf(v)>=0);
 					                });
 					                  }}},
 					                
@@ -48,7 +62,7 @@ function(partyobject){
 					id: "lt_stores",
 					select: true,
 					navigation:true,
-				    template:"#partycode# - #partyname#",
+				    template:"#id# - #value#",
 					scheme:{
 					$init:function(obj){
 					}

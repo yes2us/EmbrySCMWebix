@@ -20,13 +20,14 @@ var toolbar = {
 		headermenu:{width:250,autoheight:false,scroll:true},
 		editable:true,
 		resizeColumn:true,
-		leftSplit:3,
+		leftSplit:4,
 		select: true,
 		navigation:true,
 		save:urlstr+"/WBCURDMng/saveStock",
 		columns:[
 			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
+			{ id:"partycode",	header:["门店",{content:"selectFilter"}], sort:"string",width:70,css:"bgcolor2"},
 			{ id:"skucode",	header:["SKU",{content:"textFilter"}], sort:"string",width:100,css:"bgcolor2"},
 			
 			{ id:"skccode",	header:["款色",{content:"textFilter"}], sort:"string",width:150},
@@ -34,7 +35,7 @@ var toolbar = {
 			{ id:"sizename",	header:"尺码", sort:"string",width:60},
 			
 			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
-			{ id:"seriesname",header:"系列", sort:"string",width:100},
+			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",	header:["大类",{content:"selectFilter"}], sort:"string",width:100},
 			
 			{ id:"targetqty",	header:["目标库存",{content:"numberFilter"}],sort:"int", width:100,editor:"text",css:"bgcolor1"},

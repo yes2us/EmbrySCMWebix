@@ -13,9 +13,9 @@ var grid;
 		view: "toolbar",
 		id:"toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+		paddingX:0,
+		paddingY:0,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "button", type: "iconButton", icon: "refresh", label: "刷新",hidden:false, width: 80, 
 			click: function(){

@@ -44,6 +44,7 @@ define([
 			{ id:"maintypename",	header:["大类",{content:"selectFilter"}], sort:"string",width:85},
 
 			{ id:"saletype",	header:["销售分类",{content:"selectFilter"}], sort:"string",width:70},
+			{ id:"subtype1code",header:["商品级别",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"targetqty",	header:"目标库存",sort:"int", width:85},
 			{ id:"stockqty",	header:"实际库存",sort:"int", width:85},
 			{ id:"shortstockqty",header:"缺口库存",sort:"int",align:"right", width:85},
@@ -128,7 +129,7 @@ define([
 			{ id:"distname",header:"目标店名",sort:"string",width:85,
 				template:function(obj){
 				if(!obj.distcode) return '';
-				console.log($$("popupid").data);
+
 				var rs = $$("popupid").find(function(item){return item.id.trim()==obj.distcode.trim();});
 				if(rs.length) return rs[0].partyname; else return '';
 			  }

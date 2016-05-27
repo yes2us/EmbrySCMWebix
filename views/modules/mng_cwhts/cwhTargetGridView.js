@@ -22,15 +22,16 @@ function(){
 		headermenu:{width:250,autoheight:false,scroll:true},
 		resizeColumn:true,
 		navigation:true,
-		leftSplit:3,
+		leftSplit:4,
 		editable:true,
 		select: true,
 		columns:[
 			{ id:"rownum",header:"",sort:"int",width:50},
-			{ id:"skccode",header:"款色", sort:"string",width:150},
+			{ id:"partycode",	header:["门店",{content:"selectFilter"}], sort:"string",width:70,css:"bgcolor2"},
+			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:150},
 			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
-			{ id:"seriesname",header:"系列", sort:"string",width:100},
-			{ id:"maintypename",	header:"大类", sort:"string",width:100},
+			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:100},
+			{ id:"maintypename",	header:["大类",{content:"selectFilter"}], sort:"string",width:100},
 
 			
 					{ id:"stock1",header:[{ content:"columnGroup", closed:true, batch:"stock",

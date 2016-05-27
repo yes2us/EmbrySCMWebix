@@ -12,9 +12,9 @@ function(billobject,repretconditionview){
 var toolbar = {
 		view: "toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+		paddingX:0,
+		paddingY:0,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "label",label:"查询门店补货和退货计划"},
 			{},

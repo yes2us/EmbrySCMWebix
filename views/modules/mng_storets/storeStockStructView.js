@@ -3,9 +3,9 @@ define([], function(){
 var toolbar = {
 		view: "toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+//		paddingX:5,
+//		paddingY:5,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "label",label:"门店库存结构"},
 			{},

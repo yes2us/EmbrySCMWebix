@@ -5,49 +5,62 @@ function(stockobject){
 	 
 	checkauthorization(false);
 	
-		var enddate = new Date();
-		enddate.setDate(enddate.getDate()-7);
-	    var regioncode = 'all';
+	var bizUnitCode = null;
+	var enddate = new Date();
+	enddate.setDate(enddate.getDate()-7);
+
 	    
 	var titleBar = {
 			view:"toolbar",
 			css: "highlighted_header header5",
-			paddingX:5,
-			paddingY:5,
-			height:35,
+			paddingX:0,
+			paddingY:0,
+			height:_ToolBarHeight,
 			cols:[
-				{view:"select",name:"regioncode", width:250,align: "left", label: '区域',labelWidth:60,
-				options:urlstr+"/WBPartyMng/getRegionList",
+				{view:"multiselect", id:"bizUnitCode103",name:"bizUnitCode103", width:150,align: "left", label: '事业部',labelWidth:60,
+				options:urlstr+"/WBPartyMng/getBizUnitList/UserCode/"+_UserCode,
 				on:{
 					onChange:function(newv,oldv){
 						if(newv)
 						{
-							regioncode = newv;
-							webix.ajax().post(urlstr+"/WBPartyMng/getRelPartyList",{RegionCode:newv},function(response){
-								   if(response){
-									var optionarray = [{id:'all',value:"所有"}];
-									JSON.parse(response).forEach(function(item){
-										optionarray.push({id:item.partycode,value:item.partyname});
-									});
-									
-									$$("storecode").define('options',optionarray);
-									$$("storecode").refresh();
-									}
-								});
+								bizUnitCode = newv;
+								if(newv.indexOf('all')>=0)
+								$$("branchCode103").define('options',urlstr+"/WBPartyMng/getBranchList/UserCode/"+_UserCode);
+								else
+								$$("branchCode103").define('options',urlstr+"/WBPartyMng/getBranchList/BizUnitCode/"+newv+"/UserCode/"+_UserCode);	
 						}
 					}
 				}
 				},
-			    {view:"select", id:"storecode",name:"storecode",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    {view:"multiselect", id:"branchCode103",name:"branchCode103",width:250,align: "left", label: '办事处',labelWidth:60,
+			    options:[],
+			    	on:{
+						onChange:function(newv,oldv){
+							if(newv)
+							{
+								if(newv.indexOf('all')>=0)
+								$$("storeCode103").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/UserCode/"+_UserCode);
+								$$("storeCode103").define('options',urlstr+"/WBPartyMng/getBlgRelPartyList/BizUnitCode/"+bizUnitCode+"/BranchCode/"+newv+"/UserCode/"+_UserCode);
+							}
+						}
+					}
+			    },
+			    {view:"multiselect", id:"storeCode103",name:"storeCode103",width:250,align: "left", label: '门店',	labelWidth:60,options:[]},
+			    
 			    { view: "button", type: "iconButton", icon: "search", label: "查询", width: 70, 
 				    click: function(){
 				    	var values =this.getParentView().getValues();
-//				    	console.log(JSON.stringify(values));
-				    	   var postData = {RelationType:"归属关系",ParentCode:regioncode,FieldStr:null};
-						if(values.storecode && values.storecode != 'all')
-						{
-							postData.StoreCode=values.storecode;
-						}
+//				    	console.log(values);
+				    	   var postData = {};
+
+						if(values.storeCode103 && values.storeCode103.indexOf('all')<0 && values.storeCode103 !="") 
+							postData.WHCode=values.storeCode103;
+						else if(values.branchCode103 && values.branchCode103.indexOf('all')<0 && values.branchCode103 !="") 
+							postData.BranchCode=values.branchCode103;
+						else if(values.bizUnitCode103 && values.bizUnitCode103.indexOf('all')<0 && values.bizUnitCode103 !="")  
+						postData.BizUnitCode = values.bizUnitCode103;
+						
+						$$("dt_storeindicator").showOverlay("正在加载......");
 						$$("dt_storeindicator").clearAll();
 						$$("dt_storeindicator").parse(stockobject.getPartyIndex(postData));
 				 }},
@@ -104,9 +117,7 @@ function(stockobject){
 				],
 				export: true,
 				on: {
-					onAfterLoad: function(){
-						this.select(1);		
-					}
+					onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},
 				},
 				pager:"storeindicator_pagerA"
 			}

@@ -11,6 +11,7 @@
 		var _DSSuffix;
 		var _RowHeight = 20;
 		var _HeaderRowHeight = 20;
+		var _ToolBarHeight = 35;
 		var _ListWidth=210;
 		var _CWHCode;
 		

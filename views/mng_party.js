@@ -10,9 +10,9 @@ function(partyobject,modaladd){
 		view: "toolbar",
 		id:"toolbar",
 		css: "highlighted_header header5",
-		paddingX:5,
-		paddingY:5,
-		height:35,
+		paddingX:0,
+		paddingY:0,
+		height:_ToolBarHeight,
 		cols:[
 			{  view: "button", type: "iconButton", icon: "refresh", label: "刷新",hidden:false, width: 80, 
 			click: function(){
@@ -59,7 +59,7 @@ function(partyobject,modaladd){
 					{id:"partyenabled", header:"启用", template:"{common.checkbox()}", sort:"string",width:60},
 					{id:"partycode", header:["仓库编号",{content:"textFilter"}], sort:"string",width:100},
 					{id:"partyname", header:"仓库名", editor:"text", sort:"string",width:150},
-					{id:"partytype", header:"类型", editor:"text", sort:"string",width:60,editor:"select",
+					{id:"partytype", header:["类型",{content:"selectFilter"}], editor:"text", sort:"string",width:60,editor:"select",
 					    options:[{id:"门店",value:"门店"},{id:"总仓",value:"总仓"}
 					    ,{id:"事业部",value:"事业部"},{id:"办事处",value:"办事处"},{id:"工厂",value:"工厂"}]},
 					{id:"partylevel", header:"级别", editor:"text", sort:"string",width:60},

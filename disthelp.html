@@ -20,7 +20,7 @@
 				
 				<p><a href="#item7">7.按门店向中央仓退货</a></p>
 				<p><a href="#item8">8.按款向中央仓退货</a></p>
-				<p><a href="#item9">9.门店批量退货</a></p>
+				<p><a href="#item9">9.门店集中退货</a></p>
 				<p><a href="#item10">10.门店向其它门店调拨</a></p>
 				<p><a href="#item11">11.门店与中央仓换款</a></p>
 				
@@ -168,18 +168,25 @@
 				<img src='assets/imgs/help/按款退货SKC.png' height="500px"/>
 			</ol>	
 	
-			<h4><a name="item9" href="#top">9.门店批量退货(未完成，开发中……)</a></h4>
+			<h4><a name="item9" href="#top">9.门店集中退货</a></h4>
 			<p>
 					这个模块是按款向中央仓退货的一种改进，主要是为了将退货集中在少数几个门店，减少退货费用，减少操作难度。
 			</p>
 			<ol>
-				<li>进入<b><i>商品流转->批量退货</i></b>，可以选择区域/中央仓的一个款，然后参考数据向区域或中央仓退货。如下图</b></li>
-				<img src='assets/imgs/help/按款退货SKU.png' height="500px"/>
-				<li>上表显示区域/中央仓的库存信息，重点参考超额库存和死货库存的总量，决定哪个SKU需要退货</li>
-				<li>下表显示这个SKU在所有铺货门店的信息，重点参考单个SKU的超额库存和死货库存，决定哪个门店退货，在"退货"列填上退货数量</li>
-				<li>点击按钮"退货"，右下角的表将显示退货计划</li>		
-				<li>按款色退货与按SKU退货操作类似，不同之处在于其只能将整个款色库存退出，系统随后自动将款色库存转化成尺码库存</li>		
-				<img src='assets/imgs/help/按款退货SKC.png' height="500px"/>
+				<li>进入<b><i>商品流转->集中退货</i></b>，可以选择区域/中央仓的一个SKU，然后参考数据向区域或中央仓退货。如下图</b></li>
+				<img src='assets/imgs/help/集中退货.png' height="500px"/>
+				<li>具体操作过程如下：</li>	
+				<ol>
+				<li>在上表中，对在手库存天数(<b style="color:green;">1</b>)按由小到大排序</li>		
+				<li>在上表中，参考缺口库存，选择要退货(<b style="color:green;">2</b>)的SKU</li>		
+				<li>在左下表中，会显示所有选择SKU在门店的明细</li>		
+				<li>在左下表中，选择合并(<b style="color:green;">3</b>)，得到门店退货的统计</li>		
+				<li>在左下表中，对SKU数量(<b style="color:green;">4</b>)按由大到小进行倒排序</li>		
+				<li>在左下表中，参考SKU数量和退货数量，选择退出(<b style="color:green;">5</b>)门店</li>		
+				<li>在右下表中，可以修改单个SKU的退货数量(<b style="color:green;">6</b>)</li>		
+				<li>在上表中，会显示退货达成的统计数据(<b style="color:green;">7</b>)</li>		
+
+				</ol>
 			</ol>	
 			
 			<h4><a name="item10" href="#top">10.门店向其它门店调拨</a></h4>

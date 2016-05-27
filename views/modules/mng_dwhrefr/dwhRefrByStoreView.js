@@ -195,13 +195,11 @@ define([
 						{
 							view: "toolbar",
 							css: "highlighted_header header4",
-							paddingX:5,
-							paddingY:5,
-							height:35,
+							paddingX:0,
+							paddingY:0,	
+							height:_ToolBarHeight,
 							cols:[
-								{
-									"template": "<span class='webix_icon fa-adjust'></span>门店退出死款", "css": "sub_title2", borderless: true
-								},
+							{  view: "label",label:"门店退出死款"},
 							]
 						},
 					grid_refrplan_outskc
@@ -214,13 +212,11 @@ define([
 						{
 							view: "toolbar",
 							css: "highlighted_header header4",
-							paddingX:5,
-							paddingY:5,
-							height:35,
+							paddingX:0,
+							paddingY:0,
+							height:_ToolBarHeight,
 							cols:[
-								{
-									"template": "<span class='webix_icon fa-adjust'></span>门店补入新款", "css": "sub_title2", borderless: true
-								},
+								{  view: "label",label:"门店补入新款"},
 							]
 						},
 					grid_refrplan_inskc
