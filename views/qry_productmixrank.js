@@ -1,7 +1,7 @@
 define([],
 function(){
 	
-//	checkauthorization(false);
+	checkauthorization(false);
 
 
 		var myChart;
