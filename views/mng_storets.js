@@ -66,7 +66,7 @@ return {
 			if(id==1 || !this.getItem(id)) return;	
 			
 			var storecode = this.getItem(id).id;
-			var promzStoreTarget = stockobject.getFGWHTSInfo(storecode);
+			var promzStoreTarget = stockobject.getFGWHTSInfo({WHCode:storecode,UserCode:_UserCode});
 			
 			//显示库存结构-大类
 			$$("dt_stockstruct").clearAll();

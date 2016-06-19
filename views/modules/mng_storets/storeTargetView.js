@@ -26,10 +26,12 @@ function(){
 		leftSplit:4,
 		editable:true,
 		select: true,
+		footer:true, header:true,
 		save:urlstr+"/WBCURDMng/saveStock",
 		columns:[
-			{ id:"rownum",header:"",sort:"int",width:50},
 			{ id:"_identify",header:"#",width:35,hidden:true},
+		
+			{ id:"rownum",header:"",sort:"int",width:50,footer:{text:"总计:", colspan:1}},
 			{ id:"partycode",	header:["门店",{content:"selectFilter"}], sort:"string",width:70,css:"bgcolor2"},
 			{ id:"skucode",	header:["SKU",{content:"textFilter"}], sort:"string",width:100,css:"bgcolor2"},
 			
@@ -41,9 +43,9 @@ function(){
 			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",	header:["大类",{content:"selectFilter"}], sort:"string",width:100},
 			
-			{ id:"targetqty",	header:["目标库存",{content:"numberFilter"}],sort:"int", width:100,editor:"text",css:"bgcolor1"},
-			{ id:"stockqty",	header:["实际库存",{content:"numberFilter"}],sort:"int", width:100},
-			{ id:"sugrepqty",	header:["理论补退",{content:"numberFilter"}],sort:"int",align:"right", width:100}
+			{ id:"targetqty",	header:["目标库存",{content:"numberFilter"}],sort:"int", width:100,editor:"text",css:"bgcolor1",footer:{ content:"summColumn" }},
+			{ id:"stockqty",	header:["实际库存",{content:"numberFilter"}],sort:"int", width:100,footer:{ content:"summColumn" }},
+			{ id:"sugrepqty",	header:["理论补退",{content:"numberFilter"}],sort:"int",align:"right", width:100,footer:{ content:"summColumn" }}
 		],
 		on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");}}
 	};

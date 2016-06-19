@@ -22,7 +22,7 @@ checkauthorization(false);
 				  	label:"上传Excel",
 				  	link:"tsdata",
 				  	width:120,
-				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/importstock"
+				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/importstock/UserCode/"+_UserCode
 				 },
 			{view:"list",  id:"tsdata", type:"uploader",	autoheight:true, borderless:true,width:200},
 

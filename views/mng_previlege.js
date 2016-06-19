@@ -73,7 +73,7 @@ function(roleobject){
 									
 									response.forEach(function(item){
 
-										if(item.resourcetype && item.resourcetype==='Module') 
+										if(item.resourcetype && item.resourcetype==='Module' && $$("tree_module").exists(item.resourcecode)) 
 										$$("tree_module").checkItem(item.resourcecode);
 										
 										if(item.resourcetype && item.resourcetype.indexOf('Org')>=0)  

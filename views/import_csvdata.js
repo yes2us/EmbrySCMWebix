@@ -9,7 +9,7 @@ define([
 	var PageIndex = 1;
 	
 	function showDatatable(){
-		$$("uploaderid01").define("upload",urlstr+"/WBUpLoadFile/importCSV2DB/TargetTable/"+TargetTable);
+		$$("uploaderid01").define("upload",urlstr+"/WBUpLoadFile/importCSV2DB/TargetTable/"+TargetTable+"/UserCode/"+_UserCode);
 		$$("dt_loadedDataimportstock").hide();
 		$$("dt_loadedDataimportsale").hide();
 		$$("dt_loadedData"+TargetTable).show();
@@ -57,7 +57,7 @@ define([
 				  	value:"上传",
 				  	link:"mylist",
 				  	width:100,
-				  	upload:urlstr+"/WBUpLoadFile/importCSV2DB/TargetTable/"+TargetTable
+				  	upload:urlstr+"/WBUpLoadFile/importCSV2DB/TargetTable/"+TargetTable+"/UserCode/"+_UserCode
 				},
 				
 				{view:"button",id:"execReplenish",value:"拉式补货", width:100,
@@ -144,12 +144,13 @@ define([
 				select:true,
 				navigation:true,
 				headermenu:{width:250,autoheight:false,scroll:true},
+				footer:true, header:true,
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
-					{id:"客户号", header:"客户号", sort:"string", fillspace:1},
+					{id:"客户号", header:"客户号", sort:"string", fillspace:1,footer:{text:"总计:", colspan:2}},
 					{id:"商品号", header:"商品号", sort:"string", fillspace:1},	
-					{id:"可用库存", header:"可用库存", sort:"int",fillspace:1},
-					{id:"在途库存", header:"在途库存", sort:"int",fillspace:1}
+					{id:"可用库存", header:"可用库存", sort:"int",fillspace:1,footer:{ content:"summColumn" }},
+					{id:"在途库存", header:"在途库存", sort:"int",fillspace:1,footer:{ content:"summColumn" }}
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};
@@ -161,14 +162,15 @@ define([
 				rowHeight:_RowHeight,
 				headerRowHeight:_HeaderRowHeight,
 				select:true,
+				footer:true, header:true,
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
 //				    	{id:"_identify", header:"#",fillspace:0.5},
-					{id:"客户号", header:"客户号", sort:"string", fillspace:1},
+					{id:"客户号", header:"客户号", sort:"string", fillspace:1,footer:{text:"总计:", colspan:3}},
 					{id:"商品号", header:"商品号", sort:"string", fillspace:1},	
 					{id:"单据日期", header:"单据日期", sort:"string", fillspace:1},
-					{id:"销售数量", header:"销售数量", sort:"int",fillspace:1},
-					{id:"实售金额", header:"实售金额", sort:"int",fillspace:1}
+					{id:"销售数量", header:"销售数量", sort:"int",fillspace:1,footer:{ content:"summColumn" }},
+					{id:"实售金额", header:"实售金额", sort:"int",fillspace:1,footer:{ content:"summColumn" }}
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};

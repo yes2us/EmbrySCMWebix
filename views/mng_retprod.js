@@ -65,12 +65,12 @@ return {
 			//显示分仓sku
 			$$("dt_RetProdBySKU_DWHSKU").clearAll();
 			$$("dt_RetProdBySKU_DWHSKU").showOverlay("正在加载......");
-			$$("dt_RetProdBySKU_DWHSKU").parse(stockobject.getFGWHTSInfo(_CWHCode));
+			$$("dt_RetProdBySKU_DWHSKU").parse(stockobject.getFGWHTSInfo({WHCode:_CWHCode,UserCode:_UserCode}));
 			
 			//显示分仓skc
 			$$("dt_RetProdBySKC_DWHSKC").clearAll();
 			$$("dt_RetProdBySKC_DWHSKC").showOverlay("正在加载......");
-			$$("dt_RetProdBySKC_DWHSKC").parse(stockobject.getWHSKCInfo({WHCode:_CWHCode}));
+			$$("dt_RetProdBySKC_DWHSKC").parse(stockobject.getWHSKCInfo({WHCode:_CWHCode,UserCode:_UserCode}));
 			
 			
 	

@@ -41,7 +41,7 @@ define([
 						if(selRow)
 						{
 							selPartyName = selRow.partyname;
-							var premsStoreTSData = stockobject.getFGWHTSInfo(selRow.partycode);
+							var premsStoreTSData = stockobject.getFGWHTSInfo({WHCode:selRow.partycode,UserCode:_UserCode});
 							$$("dt_RetWHBySKU_StoreTSInfo").clearAll();
 							$$("dt_RetWHBySKU_StoreTSInfo").parse(premsStoreTSData);
 							

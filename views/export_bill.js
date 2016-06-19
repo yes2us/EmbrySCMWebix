@@ -83,9 +83,10 @@ define([
 				leftSplit:10,
 				export:true,
 				navigation:true,
+				footer:true, header:true,
 				headermenu:{width:250,autoheight:false,scroll:true},
 				columns:[					
-					{ id:"rownum",header:"",sort:"int",width:60},
+					{ id:"rownum",header:"",sort:"int",width:60,footer:{text:"总计:", colspan:1}},
 					{id:"补货日期", header:"补货日期", sort:"string", width:100},
 					{id:"老供应商", header:"老供应商", sort:"string", width:85,hidden:true},	
 					{id:"类型", header:"类型", sort:"string", width:60,hidden:true},	
@@ -100,7 +101,7 @@ define([
 					{id:"门店在手", header:"门店在手", sort:"string", width:85},	
 					{id:"门店在途", header:"门店在途", sort:"string", width:85},	
 					{id:"门店四周销售", header:"门店四周销售", sort:"string", width:85},	
-					{id:"补货件数", header:"补货件数", sort:"int",width:85},
+					{id:"补货件数", header:"补货件数", sort:"int",width:85,footer:{ content:"summColumn"}},
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};
@@ -116,8 +117,9 @@ define([
 				navigation:true,
 				save:urlstr+"/WBCURD/saveMovSKUPlan",
 				headermenu:{width:250,autoheight:false,scroll:true},
+				footer:true, header:true,
 				columns:[					
-					{ id:"rownum",header:"",sort:"int",width:60},
+					{ id:"rownum",header:"",sort:"int",width:60,footer:{text:"总计:", colspan:1}},
 				    	{id:"_identify", header:"#",hidden:true},
 				    	{id:"checkbox",header:"选择",template:"{checkbox}"},
 					{id:"makedate", header:"日期", sort:"string", fillspace:1},
@@ -127,7 +129,7 @@ define([
 					{id:"trgpartyname", header:"接收仓库", sort:"string", fillspace:1},
 					{id:"skucode", header:"SKU", sort:"string", fillspace:1},	
 					{id:"movqty", header:"数量", sort:"int",fillspace:1},
-					{id:"dealstate", header:"状态", sort:"string",fillspace:1}
+					{id:"dealstate", header:"状态", sort:"string",fillspace:1,footer:{ content:"summColumn"}}
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 			};

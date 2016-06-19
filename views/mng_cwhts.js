@@ -57,7 +57,7 @@ return {
 			$$("cwhListView").hide();
 			
 			var cwhcode = _CWHCode;
-			var promzTSData = stockobject.getFGWHTSInfo(cwhcode);
+			var promzTSData = stockobject.getFGWHTSInfo({WHCode:cwhcode,UserCode:_UserCode});
 
 			//显示目标库存
 			$$("dt_cwhts").showOverlay("正在加载......");
@@ -66,7 +66,7 @@ return {
 			
 			$$("dt_cwhtspivot").clearAll();
 			$$("dt_cwhtspivot").showOverlay("正在加载......");
-			$$("dt_cwhtspivot").parse(stockobject.getFGWHCrossTSInfo({WHCode:cwhcode}));	
+			$$("dt_cwhtspivot").parse(stockobject.getFGWHCrossTSInfo({WHCode:cwhcode,UserCode:_UserCode}));	
 
 			//显示最近调整记录
 			var promzBMData = billobject.getPartyBMRecord({WHCode:cwhcode,EndDate:'2016-01-01'});

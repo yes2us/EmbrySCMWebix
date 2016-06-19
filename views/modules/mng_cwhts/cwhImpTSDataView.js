@@ -8,7 +8,7 @@ define([
 	var PageIndex = 1;
 	
 	function showDatatable(){
-		$$("uploaderid2").define("upload",urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/"+TargetTable);
+		$$("uploaderid2").define("upload",urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/"+TargetTable+"/UserCode/"+_UserCode);
 		$$("dt_storeimporttargeth").hide();
 		$$("dt_storeimporttargetv").hide();
 		$$("dt_store"+TargetTable).show();
@@ -54,7 +54,7 @@ define([
 				  	label:"上传",
 				  	link:"uploaderlist2",
 				  	width:80,
-				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/importtargeth"
+				  	upload:urlstr+"/WBUpLoadFile/importExcel2DB/TargetTable/importtargeth/UserCode/"+_UserCode
 				},
 			{view:"list",  id:"uploaderlist2", type:"uploader",	autoheight:true, borderless:true,width:100},
 
@@ -89,10 +89,11 @@ define([
 						select:true,
 						navigation:true,
 						headermenu:{width:250,autoheight:false,scroll:true},
+						footer:true, header:true,
 						columns:[
-							{id:"客户号", header:"客户号", sort:"string", fillspace:1},
+							{id:"客户号", header:"客户号", sort:"string", fillspace:1,footer:{text:"总计:", colspan:2}},
 							{id:"商品号", header:"商品号", sort:"string", fillspace:1},	
-							{id:"目标库存", header:"目标库存", sort:"int",fillspace:1},
+							{id:"目标库存", header:"目标库存", sort:"int",fillspace:1,footer:{ content:"summColumn"}},
 						],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}
 						
@@ -107,22 +108,23 @@ define([
 				select:true,
 				navigation:true,
 				headermenu:{width:250,autoheight:false,scroll:true},
+				footer:true, header:true,
 				columns:[					
-					{id:"客户号", header:"客户号", sort:"string", width:70},
+					{id:"客户号", header:"客户号", sort:"string", width:70,footer:{text:"总计:", colspan:4}},
 					{id:"款号", header:"款号", sort:"string", width:100},
 					{id:"色", header:"色", sort:"string", width:60},
 					{id:"杯", header:"杯", sort:"string", width:40},
 					
 					{ id:"65/s",header:[{ content:"columnGroup", closed:false, batch:"target",
-							groupText:"目标库存", colspan:9, width: 45},"65/S"],sort:"int",width:55},
-					{ id:"70/m",batch:"target",header:[null,"70/M"], sort:"int",width:55},
-					{ id:"75/l",batch:"target",header:[null,"75/L"], sort:"int",width:55},
-					{ id:"80/xl",batch:"target",header:[null,"80/XL"], sort:"int",width:55},
-					{ id:"85/2xl",batch:"target",header:[null,"85/2XL"], sort:"int",width:55},
-					{ id:"90/3xl",batch:"target",header:[null,"90/3XL"], sort:"int",width:55},
-					{ id:"95/4xl",batch:"target",header:[null,"95/4XL"], sort:"int",width:55},
-					{ id:"100/free",batch:"target",header:[null,"100/FREE"], sort:"int",width:55},
-					{ id:"105/xs",batch:"target",header:[null,"105/XS"], sort:"int",width:55},
+							groupText:"目标库存", colspan:9, width: 45},"65/S"],sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"70/m",batch:"target",header:[null,"70/M"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"75/l",batch:"target",header:[null,"75/L"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"80/xl",batch:"target",header:[null,"80/XL"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"85/2xl",batch:"target",header:[null,"85/2XL"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"90/3xl",batch:"target",header:[null,"90/3XL"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"95/4xl",batch:"target",header:[null,"95/4XL"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"100/free",batch:"target",header:[null,"100/FREE"], sort:"int",width:55,footer:{ content:"summColumn"}},
+					{ id:"105/xs",batch:"target",header:[null,"105/XS"], sort:"int",width:55,footer:{ content:"summColumn"}},
 				],
 				export: true,
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}

@@ -19,8 +19,8 @@ define([], function() {
 		return webix.ajax().post(urlstr+"/WBStockMng/getInitTargetStatistics",postData);
 	}
 	
-	stockObject.getFGWHTSInfo = function(WHCode){
-		return webix.ajax().post(urlstr+"/WBStockMng/getFGWHTSInfo",{WHCode:WHCode,UserCode:_UserCode});
+	stockObject.getFGWHTSInfo = function(postData){
+		return webix.ajax().post(urlstr+"/WBStockMng/getFGWHTSInfo",postData);
 	}
 	
 	stockObject.getFGWHCrossTSInfo = function(postData){

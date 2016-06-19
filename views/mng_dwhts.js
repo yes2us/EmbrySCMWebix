@@ -59,7 +59,7 @@ return {
 			if(id==1 || !this.getItem(id)) return;	
 			
 			var dwhcode = this.getItem(id).id;
-			var promzTSData = stockobject.getFGWHTSInfo(dwhcode);
+			var promzTSData = stockobject.getFGWHTSInfo({WHCode:dwhcode,UserCode:_UserCode});
 
 			//显示目标库存
 			$$("dt_dwhts").clearAll();
