@@ -17,7 +17,7 @@
 		
 
     urlstr = "http://"+window.location.host+"/EmbrySCMAdmin/index.php/Home";
-	homestr = "http://"+window.location.host+"/EmbrySCMWebix";
+	homestr = document.location.href.substr(0,document.location.href.replace("http://",'').indexOf("/",document.location.href.replace("http://",'').indexOf("/",1)+1)+7);
 	localhost = "http://"+window.location.host;
 	
 	webix.ajax().post(urlstr+"/WBUserMng/getMyCWH",{UserCode:''}).then(function(response){

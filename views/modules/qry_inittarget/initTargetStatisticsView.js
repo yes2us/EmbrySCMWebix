@@ -82,7 +82,7 @@ function(stockobject){
 				leftSplit:4,
 				export: true,
 				columns:[
-					{ id:"rownum",header:"",sort:"int",width:60},
+//					{ id:"rownum",header:"",sort:"int",width:60},
 					{ id:"partycode",header:["客户号",{content:"textFilter"}], sort:"string",width:60,css:"bgcolor2"},
 					{ id:"partyname",header:"客户", sort:"string",width:150,css:"bgcolor2"},
 					{ id:"partylevel",header:["级别",{content:"selectFilter"}], sort:"string",width:60,css:"bgcolor2"},

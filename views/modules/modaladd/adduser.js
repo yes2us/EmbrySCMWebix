@@ -3,7 +3,7 @@ define(function(){
 	return {
 		$ui:{
 			view:"window", modal:true, id:"modaladd-user", position:"center",
-			head:"增加仓库",
+			head:"增加用户",
 			body:{
 				view:"form", 
 				id:"user-form",

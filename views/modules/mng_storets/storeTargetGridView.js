@@ -31,7 +31,7 @@ var toolbar = {
 			{ id:"rownum",header:"",sort:"int",width:50,footer:{text:"总计:", colspan:1}},
 			{ id:"partycode",	header:["门店",{content:"selectFilter"}], sort:"string",width:70,css:"bgcolor2"},
 			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:150},
-
+			{ id:"kbscode",	header:["款杯色",{content:"textFilter"}], sort:"string",width:150},
 			{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:100},

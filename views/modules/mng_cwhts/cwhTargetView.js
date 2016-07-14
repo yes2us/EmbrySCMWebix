@@ -32,6 +32,7 @@ var toolbar = {
 			{ id:"skucode",	header:["SKU",{content:"textFilter"}], sort:"string",width:100,css:"bgcolor2"},
 			
 			{ id:"skccode",	header:["款色",{content:"textFilter"}], sort:"string",width:150},
+			{ id:"kbscode",	header:["款杯色",{content:"textFilter"}], sort:"string",width:150},
 			{ id:"colorname",header:"颜色", sort:"string",width:100},
 			{ id:"sizename",	header:"尺码", sort:"string",width:60},
 			

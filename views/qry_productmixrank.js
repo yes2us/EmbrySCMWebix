@@ -27,7 +27,7 @@ function(){
 			var option = {
 			    backgroundColor: '#333',
 			    title: {
-			        text: '品类排名 - 雷达图',
+			        text: '品类相对性分析',
 			        left: 'center',
 			        orient:'vertical',
 			        textStyle: {
@@ -163,7 +163,6 @@ function(){
 			  	option.radar.indicator[i].max=length+1;
 			  }
 
-			console.log(chartArray);
 
 				
 			myChart.hideLoading();

@@ -155,10 +155,14 @@ define([
 					{id:"事业部名称", header:"事业部名称", sort:"string", fillspace:1},
 					{id:"办事处编号", header:"办事处编号", sort:"string", fillspace:1},
 					{id:"办事处名称", header:"办事处名称", sort:"string", fillspace:1},
+					{id:"是否启用", header:"是否启用", sort:"string", fillspace:1},	
+					{id:"是否拉补", header:"是否拉补", sort:"string", fillspace:1},	
 					{id:"客户号", header:"客户号", sort:"string", fillspace:1},	
 					{id:"客户名称", header:"客户名称", sort:"string", fillspace:1},	
 					{id:"等级", header:"等级", sort:"string", fillspace:1},	
 					{id:"补货频率", header:"补货频率", sort:"string", fillspace:1},	
+					{id:"补货仓库", header:"补货仓库", sort:"string", fillspace:1},	
+					
 //					{id:"商品级别", header:"商品级别", sort:"string",fillspace:1},
 				],
 				on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");},}

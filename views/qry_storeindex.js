@@ -88,7 +88,8 @@ function(stockobject){
 				export: true,
 				columns:[
 					{ id:"rownum",header:"",sort:"int",width:50},
-					{ id:"partyname",header:["门店",{content:"selectFilter"}], sort:"string",width:150,css:"bgcolor2"},
+					{ id:"partycode",header:["门店编号",{content:"textFilter"}], sort:"string",width:70,css:"bgcolor2"},
+					{ id:"partyname",header:["门店名称",{content:"selectFilter"}], sort:"string",width:150,css:"bgcolor2"},
 					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
 					{ id:"maintypename", header:["大类",{content:"selectFilter"}], width:100},
 					{ id:"middlesizenum",	header:[{text:"断码", colspan:3},"核心码"], sort:"int",width:70},

@@ -149,10 +149,10 @@ var grid_relation ={
 				$$("dt_user").refresh();   
 			}); 
 
-			webix.dp.$$("dt_userrole").attachEvent("onAfterInsert", function(response, id, object){
-			    $$("dt_userrole").getItem(id)._identify = response;
-				$$("dt_userrole").refresh();   
-			}); 
+//			webix.dp.$$("dt_userrole").attachEvent("onAfterInsert", function(response, id, object){
+//			    $$("dt_userrole").getItem(id)._identify = response;
+//				$$("dt_userrole").refresh();   
+//			}); 
 		}
 	};
 

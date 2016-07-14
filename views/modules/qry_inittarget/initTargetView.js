@@ -106,7 +106,7 @@ function(stockobject){
 				export: true,
 				footer:true, header:true,
 				columns:[
-					{ id:"rownum",header:"",sort:"int",width:60,footer:{text:"总计:", colspan:1}},
+//					{ id:"rownum",header:"",sort:"int",width:60,footer:{text:"总计:", colspan:1}},
 				    	{ id:"skccode",header:["款色",{content:"textFilter"}],width:120},
 					{ id:"partycode",header:["客户号",{content:"textFilter"}], sort:"string",width:60,css:"bgcolor2"},
 					{ id:"partyname",header:"门店", sort:"string",width:120,css:"bgcolor2"},

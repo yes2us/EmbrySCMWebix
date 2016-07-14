@@ -62,5 +62,14 @@ define([], function() {
       	return webix.ajax().post(urlstr+"/WBStockMng/getCWHSKU",{UserCode:_UserCode});
       }
       
+      stockObject.getTargetBySKC=function(WHCode,SKCCode){
+      	var postData={WHCode:WHCode,SKCCode:SKCCode,UserCode:_UserCode};
+      	return webix.ajax().post(urlstr+"/WBStockMng/getTargetBySKC",postData);
+      }
+      
+      stockObject.updateTargetBySKC=function(WHCode,SKCCode,SugTargetQty){
+      	var postData={WHCode:WHCode,SKCCode:SKCCode,SugTargetQty:SugTargetQty,UserCode:_UserCode};
+      	return webix.ajax().post(urlstr+"/WBStockMng/updateTargetBySKC",postData);
+      }
 	return stockObject;
 });
