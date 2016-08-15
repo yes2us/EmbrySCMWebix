@@ -43,6 +43,7 @@ var toolbar = {
 					{ id:"makedate",header:["成交日期",{content:"selectFilter"}], sort:"string",fillspace:1},
 					{ id:"skucode",header:["SKU",{content:"textFilter"}], sort:"string",fillspace:1},
 					{ id:"skccode",header:"款色", sort:"string",fillspace:1},
+					{ id:"kbscode",header:"款杯色", sort:"string",fillspace:1},
 					{ id:"sizename",header:"尺码", sort:"string",fillspace:0.5},
 					{ id:"saleqty",header:"金额", sort:"int",fillspace:0.5},
 					{ id:"salemoney",header:"金额", sort:"int",fillspace:0.5},

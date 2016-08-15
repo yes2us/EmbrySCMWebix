@@ -1,6 +1,8 @@
 define(["data/prodobject"],
 function(prodobject){
 	
+		checkauthorization(false);
+		
 var titleBar = {
 			view:"toolbar",
 			css: "highlighted_header header5",
@@ -32,7 +34,18 @@ var titleBar = {
 				 }},
 			    {},
 				{ view: "button", type: "iconButton", icon: "external-link", label: "导出", width: 70, 
-					click:function(){webix.toExcel($$("dt_sugskuprodplan"));}}
+					click:function(){
+
+					var targeturl=urlstr+"/WBProdMng/getSugSKUProdPlan/Excel/1/UserCode/"+_UserCode;
+					var values =this.getParentView().getValues();
+						
+					if(values.brandcode != 'all') targeturl += "/BrandName/"+values.brandcode;
+				    	if(values.pricetype != 'all') targeturl += "/PriceType/"+values.pricetype;
+				    	if(values.maintypecode != 'all') targeturl += "/MainTypeName/"+values.maintypecode;
+
+					window.open(targeturl,"_blank");
+								
+					}}
 		    ]
 	};
 	
@@ -59,10 +72,11 @@ var titleBar = {
 			template:function(obj){return (obj.iskeysize==1)? "是":""}},
 			{ id:"pricetype",header:"价格类型", sort:"string",width:85},
 			{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:60},
+			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:100},
 			{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:70},
 			
 			{ id:"existsstockqty",header:[{text:"渠道信息",colspan:7},"成品库存"],sort:"int", width:70},
-			{ id:"storenumcurin",header:[null,"现铺店"],sort:"int", width:70},
+			{ id:"storenumcurin",header:[null,"现铺店数"],sort:"int", width:70},
 			{ id:"storenumplan",header:[null,"计划铺店"],sort:"int", width:70,editor:"text",css:"bgcolor1"},
 			{ id:"onshelfdays",	header:[null,"上货天数"], sort:"int",width:70},
 			{ id:"lifespan",header:[null,"可销天数"],sort:"int", width:70,editor:"text",css:"bgcolor1"},
@@ -71,15 +85,15 @@ var titleBar = {
 			
 			{ id:"targetqty",	header:[{text:"理论补货",colspan:5},"目标库存"],sort:"int", width:85},
 			{ id:"onhandqty",header:[null,"在手库存"],sort:"int", width:60},
-			{ id:"onroadqty",	header:[null,"实际库存"],sort:"int", width:60},
+			{ id:"onroadqty",	header:[null,"在途库存"],sort:"int", width:60},
 			{ id:"addedstockqty",header:[null,"增铺数量"],sort:"int", width:60,editor:"text",css:"bgcolor1"},
 			{ id:"repretqty",	header:[null,"理论补货"],sort:"int",width:60},
 				
 			{ id:"saledaily",header:[{text:"预计数据",colspan:7},"单店日均销售"],sort:"float",width:85},
 			{ id:"saleratio",header:[null,"销售系数"],sort:"float", width:85,editor:"text",css:"bgcolor1"},
-			{ id:"forecastsale",header:[null,"预计销量"],sort:"int", width:85},
+			{ id:"forecastsale",header:[null,"后续销量"],sort:"int", width:85},
 			{ id:"totalseasonsale",header:[null,"总计销量"],sort:"int", width:85},
-			{ id:"endratio",header:[null,"尾货比例"],sort:"float", width:85,editor:"text",css:"bgcolor1"},
+			{ id:"sellthroughratio",header:[null,"目标售罄率"],sort:"float", width:85,editor:"text",css:"bgcolor1"},
 			{ id:"totalseasonstock",header:[null,"总库存需求"],sort:"int", width:85},
 			{ id:"neededstock",header:[null,"库存需求"],sort:"int", width:85},
 		],
@@ -94,29 +108,50 @@ var titleBar = {
 					{
 						case "storenumplan":
 						row.storenumplan = state.value;
+						row.addedstockqty = row.storenumplan-row.storenumcurin;
 						break;
+						
 						case "lifespan":
 						row.lifespan = state.value;
 						break;
+						
 						case "addedstockqty":
-						row.lifespan = state.value;
 						break;
+						
 						case "saleratio":
 						row.saleratio = state.value;
 						break;
 					}
 				
-					row.addedstockqty = 3*row.storenumplan-row.storenumcurin;
+				     if('storenumplan|lifespan|addedstockqty|saleratio|sellthroughratio'.indexOf(editor.column)>-1)
+				     {
+				     	var _postData={
+				     		webix_operation:"update",
+				     		_identify:row._identify,
+				     		addedstockqty:row.addedstockqty,
+				     		storenumplan:row.storenumplan,
+				     		saleratio:row.saleratio,
+				     		lifespan:row.lifespan,
+				     		sellthroughratio:row.sellthroughratio
+				     	};
+				     	 webix.ajax().post(urlstr+"/WBCURDMng/saveZdimsku",_postData);
+				     }
+				     
 					row.repretqty = parseInt(row.addedstockqty)+parseInt(row.targetqty)-row.onhandqty-row.onroadqty;
 					row.saledaily  = row.sale14qty/14/row.storenumcurin;
-					row.saledaily = row.saledaily.toFixed(4);
 										
 					row.forecastsale = parseFloat(row.saledaily)*parseInt(row.lifespan)*parseInt(row.storenumplan)*parseFloat (row.saleratio);
 					row.forecastsale = row.forecastsale.toFixed(0);
+					row.saledaily = row.saledaily.toFixed(4);
+					
 					
 					row.totalseasonsale = parseInt(row.forecastsale)+parseInt(row.saletotalqty);
-					row.totalseasonstock = (parseInt(row.totalseasonsale)/(1-parseFloat(row.endratio))).toFixed(0);
+					row.totalseasonstock = parseInt(row.totalseasonsale)/parseFloat(row.sellthroughratio);
+					row.totalseasonstock = row.totalseasonstock.toFixed(0);				
+			
 					row.neededstock = parseInt(row.totalseasonstock)-parseInt(row.existsstockqty);
+					
+					
 //					console.log(row);
 					 $$("dt_sugskuprodplan").updateItem(id,row);
 			    } 

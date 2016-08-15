@@ -84,13 +84,13 @@ function(prodobject){
 					{ id:"isstopanalyze",header:"停分析", sort:"int",width:70,template:"{common.checkbox()}",css:"bgcolor1"},
 					{ id:"rownum",header:"序号",sort:"int",width:60},
 					{ id:"subtype1code",header:["货品级别",{content:"selectFilter"}], sort:"string",editor:"text",width:150,css:"bgcolor2"},
-					{ id:"skccode",header:["款杯色",{content:"textFilter"}], sort:"string",width:130},
+					{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:130},
 					{ id:"brandname",header:["品牌",{content:"selectFilter"}], sort:"string",width:75},
 					{ id:"stylecode",header:["款式",{content:"textFilter"}], sort:"string",width:100},
 					{ id:"colorname",header:"颜色", sort:"string",width:70},
 					{ id:"otherskucompname",header:"杯", sort:"string",width:40},
 					{ id:"pricetype",	header:["价格类别",{content:"selectFilter"}], sort:"string",width:85},
-					{ id:"presentprice",header:"安中价格", sort:"int",width:70},
+					{ id:"presentprice",header:"安中价格", sort:"int",width:70,editor:"text",css:"bgcolor2"},
 					{ id:"yearname",header:"年份", sort:"string",width:70},
 					{ id:"seriesname",header:"系列", sort:"string",width:100},
 					{ id:"maintypename",header:["大类",{content:"selectFilter"}], sort:"string",width:70},
@@ -175,7 +175,7 @@ function(prodobject){
 			{ id:"isstopproduce",header:"停产",sort:"int",width:60},
 			{ id:"isstopreplenish",header:"停补",sort:"int",width:60},
 			{ id:"isstopanalyze",header:"停分析",sort:"int",width:60},
-			{ id:"skccode",header:"款杯色",sort:"string",width:150},
+			{ id:"skccode",header:"款色",sort:"string",width:150},
 		],
 		on:{onAfterLoad:function(){this.hideOverlay();  if(!this.count()) this.showOverlay("没有可以加载的数据");}}
 	};
@@ -190,7 +190,7 @@ function(prodobject){
 				cols:[
 					grid_confskcinfo,
 					{
-						view:"accordion",multi:true,borderless:true,
+						view:"accordion",multi:true,borderless:true,hidden:true,
 						cols:[{ collapsed:true,header:"批量设置", body:{rows:[toolbar_pasteskclist,grid_pasteskclist]}}]
 					}
 					]
@@ -208,7 +208,7 @@ function(prodobject){
 			}
 			
 			$$("dt_confskcinfo").attachEvent("onAfterEditStop", function(state, editor, ignoreUpdate){
-				console.log(editor);
+//				console.log(editor);
 			    if(state.value != state.old){
 			    		var editrow = $$("dt_confskcinfo").getItem(editor.row);
 //			        console.log(editrow);	        

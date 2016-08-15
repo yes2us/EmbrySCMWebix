@@ -17,6 +17,7 @@ define([
 
 checkauthorization(false);
 
+var enddate = new Date();
 
 var layout = {
 	type: "line",
@@ -69,7 +70,7 @@ return {
 			$$("dt_cwhtspivot").parse(stockobject.getFGWHCrossTSInfo({WHCode:cwhcode,UserCode:_UserCode}));	
 
 			//显示最近调整记录
-			var promzBMData = billobject.getPartyBMRecord({WHCode:cwhcode,EndDate:'2016-01-01'});
+			var promzBMData = billobject.getPartyBMRecord({WHCode:cwhcode,EndDate:enddate});
 			$$("dt_cwhbmrecord").showOverlay("正在加载......");
 			$$("dt_cwhbmrecord").clearAll();
 			$$("dt_cwhbmrecord").parse(promzBMData);

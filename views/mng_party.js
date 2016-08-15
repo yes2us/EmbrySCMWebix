@@ -82,16 +82,16 @@ function(partyobject,modaladd){
 //					{id:"retdeadstocknextdate", header:"退死日期", editor:"date", sort:"string",width:100},
 //					{id:"adjdeadstockcycle", header:"退死间隔", editor:"text", sort:"int",width:85},							
 					
-					{id:"isadjusttarget", header:"调整目标库存", template:"{common.checkbox()}", sort:"int",width:100},
-//					{id:"isUseskuadjpara", header:"按SKU调整", template:"{common.checkbox()}", sort:"int",width:100},
+					{id:"isbm", header:"调整目标库存", template:"{common.checkbox()}", sort:"int",width:100},
+//					{id:"isuseskubmpara", header:"按SKU调整", template:"{common.checkbox()}", sort:"int",width:100},
 					
-					{id:"adjupchkperiod", header:"上调周期", editor:"text", sort:"int",width:85},							
-					{id:"adjupfreezeperiod", header:"冻结周期", editor:"text", sort:"int",width:85},
-					{id:"adjuperodelmt", header:"浸入量", editor:"text", sort:"int",width:85},		
+					{id:"bmupchkperiod", header:"上调周期", editor:"text", sort:"int",width:85},							
+					{id:"bmupfreezeperiod", header:"冻结周期", editor:"text", sort:"int",width:85},
+					{id:"bmuperodelmt", header:"浸入量", editor:"text", sort:"int",width:85},		
 											
-					{id:"adjdnchkperiod", header:"下调周期", editor:"text", sort:"int",width:85},							
-					{id:"adjdnfreezeperiod", header:"冻结周期", editor:"text", sort:"int",width:85},
-					{id:"adjdnerodelmt", header:"浸入次数", editor:"text", sort:"int",width:85},
+					{id:"bmdnchkperiod", header:"下调周期", editor:"text", sort:"int",width:85},							
+					{id:"bmdnfreezeperiod", header:"冻结周期", editor:"text", sort:"int",width:85},
+					{id:"bmdnerodelmt", header:"浸入次数", editor:"text", sort:"int",width:85},
 				],
 				on: {
 					onSelectChange:function(){

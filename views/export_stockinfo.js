@@ -132,6 +132,7 @@ function(stockobject){
 					{ id:"rownum",header:"",sort:"int",width:60,footer:{text:"总计:", colspan:1}},
 					{ id:"partycode",header:["客户号",{content:"textFilter"}], sort:"string",width:60,css:"bgcolor2"},
 				    	{ id:"skccode",header:["款色",{content:"textFilter"}],width:120},
+				    	{ id:"kbscode",header:["款杯色",{content:"textFilter"}],width:120},
 
 //					{ id:"partyname",header:"门店", sort:"string",width:120,css:"bgcolor2"},
 					{ id:"saletype",header:["销售分类",{content:"selectFilter"}], sort:"string",width:60},
@@ -188,7 +189,8 @@ var grid_VTarget = {
 			{ id:"partycode",	header:["门店",{content:"selectFilter"}], sort:"string",width:70,css:"bgcolor2"},
 			{ id:"skucode",	header:["SKU",{content:"textFilter"}], sort:"string",width:100,css:"bgcolor2"},
 			
-			{ id:"skccode",	header:["款色",{content:"textFilter"}], sort:"string",width:150},
+			{ id:"skccode",header:["款色",{content:"textFilter"}], sort:"string",width:150},
+			{ id:"kbscode",header:["款杯色",{content:"textFilter"}],width:120},
 			{ id:"colorname",header:"颜色", sort:"string",width:100},
 			{ id:"sizename",	header:"尺码", sort:"string",width:60},
 			

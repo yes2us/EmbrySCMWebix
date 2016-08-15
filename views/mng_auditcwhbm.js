@@ -2,14 +2,14 @@ define(
 	["data/billobject",
 	"data/stockobject"],
 	function(billobject,stockobject){
-
+checkauthorization(false);
     
     var dealstate = '等待确认';
     	var startdate = new Date(new Date().toString("yyyy/M/d"));
 	var enddate  = startdate;
 	
 	function drawChart(WHCode,SKUCode,EndDate){
-		var premzChartData = webix.ajax().post(urlstr+"/WBStockMng/getSKUHSStock",{});
+		var premzChartData = webix.ajax().post(urlstr+"/WBStockMng/getSKUHSStock",{WHCode:_CWHCode,SKUCode:SKUCode,EndDate:EndDate});
 		
 		premzChartData.then(function(repsonse){
 				var rtObject = repsonse.json();
@@ -141,9 +141,11 @@ define(
 			{ id:"partycode",header:"仓库编号",sort:"string",width:75},
 			{ id:"partyname",header:"仓库名称",sort:"string",width:120},
 			{ id:"skucode",header:["SKU",{content:"textFilter"}], sort:"string",width:120},
+			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:120},
 			{ id:"recorddate",header:"调整日期", sort:"string",width:90},
-			{ id:"oldtargetqty",header:"原目标库存", sort:"string",width:60},
-			{ id:"sugtargetqty",	header:"建议目标库存", sort:"string",width:60,editor:"text",css:"bgcolor1"},
+			{ id:"onhandqty",header:"在手库存", sort:"int",width:60},
+			{ id:"oldtargetqty",header:"原目标库存", sort:"int",width:60},
+			{ id:"sugtargetqty",	header:"建议目标库存", sort:"int",width:60,editor:"text",css:"bgcolor1"},
 			
 			{ id:"bmreason",	header:"调整原因", sort:"string",fillspace:1},
 			{ id:"operator",header:"操作人", sort:"string",width:70}
@@ -178,13 +180,13 @@ define(
 							                    type:"area",
 							                    value:"#yellowzone#",
 							                    color:"#e9df40",
-//							                 	label:"#yellowzone#"
+							                 	label:"#yellowzone#"
 							                },
 							                	{
 							                    type:"area",
 							                    value:"#redzone#",
 							                    color:"#ff0000",
-//							                    label:"#redzone#"
+							                    label:"#redzone#"
 							                },
             									{
 							                    type:"line",

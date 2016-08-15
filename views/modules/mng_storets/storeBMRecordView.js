@@ -32,10 +32,11 @@ var toolbar = {
 		columns:[
 			{ id:"rownum",header:"",sort:"int",width:60},
 			{ id:"skucode",	header:"SKU", sort:"string",fillspace:2},
-			
+			{ id:"seriesname",header:["系列",{content:"selectFilter"}], sort:"string",width:120},
 			{ id:"recorddate",	header:"调整日期", sort:"string",fillspace:1.5},
-			{ id:"oldtargetqty",	header:"原目标库存", sort:"string",fillspace:1},
-			{ id:"sugtargetqty",	header:"建议目标库存", sort:"string",fillspace:1},
+			{ id:"onhandqty",header:"在手库存", sort:"int",fillspace:1},
+			{ id:"oldtargetqty",	header:"原目标库存", sort:"int",fillspace:1},
+			{ id:"sugtargetqty",	header:"建议目标库存", sort:"int",fillspace:1},
 			
 			{ id:"bmreason",	header:"调整原因", sort:"string",fillspace:3},
 			{ id:"operator",	header:"操作人", sort:"string",fillspace:1}
